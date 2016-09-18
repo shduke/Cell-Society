@@ -16,13 +16,13 @@ for more flexibility when creating/changing the program.
 
 ### Overview
 
-![alt text](CellSocietyPlan.JPG "Our Cell Society Plan")
+![alt text](data/CellSocietyPlan.JPG "Our Cell Society Plan")
 
 The program will be launched with the main class, which instantiates the controller and starts the game loop. The controller creates the Application View, and opens the window. The user can choose an XML file, which the SimulationController will use to create and run the simulation. The SimulationController updates the Simulation by calling Simulation.update(). This iterates through the Simulation’s Grid, and updates the state of the cells according to their current state and that specific Simulation’s rules and parameters. The Simulation updates its SimulationView according to the new state.
 
 ### User Interface
 
-##Please place picture
+![alt text](data/CellSocietyUI.JPG "Our Cell Society User Interface")
 
 
 When the program is started, a view with the main toolbar and a blank simulation (or grid) section. The user will then select a simulation from a drop-down menu and load XML file in. At that point, the user will choose to run the simulation. While the simulation is running, the user will have the option to speed up or slow down the animation, pause, resume, or step through each phase of the animation. The ‘simulation toolbar’ will be populated with specific data points for each simulation. In terms of erroneous situations that could be encountered, the user will get a notification if a an XML file has not been loaded or if the data inside of the XML file does not comply.
