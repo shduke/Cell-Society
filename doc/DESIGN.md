@@ -16,7 +16,7 @@ for more flexibility when creating/changing the program.
 
 ### Overview
 
-![alt text](CellSocietyPlan.jpg "Logo Title Text 1")
+![alt text](CellSocietyPlan.JPG "Our Cell Society Plan")
 
 The program will be launched with the main class, which instantiates the controller and starts the game loop. The controller creates the Application View, and opens the window. The user can choose an XML file, which the SimulationController will use to create and run the simulation. The SimulationController updates the Simulation by calling Simulation.update(). This iterates through the Simulation’s Grid, and updates the state of the cells according to their current state and that specific Simulation’s rules and parameters. The Simulation updates its SimulationView according to the new state.
 
