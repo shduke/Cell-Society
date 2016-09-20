@@ -10,7 +10,7 @@ public class FishCell extends Cell {
     private int myCurrentBreedTime;
 
     public FishCell (Point2D coordinate, int breedTime, Node node) {
-        super(State.FISH, null, coordinate, node);
+        super(State.FISH, coordinate, node);
         myMaxBreedTime = breedTime;
         myCurrentBreedTime = myMaxBreedTime;
     }

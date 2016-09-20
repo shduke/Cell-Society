@@ -9,7 +9,7 @@ public class SharkCell extends Cell {
     private int myCurrentBreedTime;
     
     public SharkCell (Point2D coordinate, int breedTime, Node node) {
-        super(State.SHARK, null, coordinate, node);
+        super(State.SHARK, coordinate, node);
         myMaxBreedTime = breedTime;
         myCurrentBreedTime = myMaxBreedTime;
     }
