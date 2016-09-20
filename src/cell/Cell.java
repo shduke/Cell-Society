@@ -11,9 +11,9 @@ public abstract class Cell {
     private Point2D myCoordinate;
     private Node myNode;
 
-    public Cell (State currentState, State nextState, Point2D coordinate, Node node) {
+    public Cell (State currentState, Point2D coordinate, Node node) {
         myCurrentState = currentState;
-        myNextState = nextState;
+        myNextState = null;
         myCoordinate = coordinate;
         myNode = node;
     }
