@@ -19,8 +19,4 @@ public class FishCell extends Cell {
         myCurrentBreedTime = myCurrentBreedTime == 0 ? myMaxBreedTime : myCurrentBreedTime--;
     }
 
-    private void breed () {
-        
-    }
-
 }
