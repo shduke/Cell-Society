@@ -1,6 +1,10 @@
 package simulation;
 
 import grid.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Random;
 import cell.*;
 import cell.State;
 
@@ -14,9 +18,9 @@ public class PredatorPreySimulation extends Simulation {
 
     @Override
     public void step () {
-        
+
         updateSharks();
-        updateFish();
+        updateFishes();
         // TODO Auto-generated method stub
 
     }
@@ -25,7 +29,7 @@ public class PredatorPreySimulation extends Simulation {
 
         for (int i = 0; i < myGrid.getNumRows(); i++) {
             for (int j = 0; j < myGrid.getNumColumns(); j++) {
-                Cell cell = myGrid.getMyCells()[i][j];
+                Cell cell = myGrid.getCellGrid()[i][j];
                 if (cell.getMyCurrentState() == State.SHARK) {
                     if (cell.getMyNextState() == State.DEAD) {
                         kill((SharkCell) cell);
@@ -37,16 +41,59 @@ public class PredatorPreySimulation extends Simulation {
             }
         }
     }
-    
-    private void updateFish () {
 
+    private void updateFishes () {
+        for (int i = 0; i < myGrid.getNumRows(); i++) {
+            for (int j = 0; j < myGrid.getNumColumns(); j++) {
+                Cell cell = myGrid.getCellGrid()[i][j];
+                if (cell.getMyCurrentState() == State.FISH) {
+                    if (cell.getMyNextState() == State.DEAD) {
+                        kill((FishCell) cell);
+                    }
+                    else {
+                        updateFish((FishCell) cell);
+                    }
+                }
+            }
+        }
     }
 
     public void kill (Cell cell) {
+        cell.setMyNextState(State.EMPTY);
+    }
+
+    private void updateShark (SharkCell shark) {
+        List<Cell> neighbors = myGrid.getNeighbors(shark.getMyGridCoordinate());
+        List<Cell> canMoveOrBreed = getOpenCells(neighbors);
+        List<Cell> foodCells = getEdibleCells(neighbors);
         
+        if(foodCells.size() > 0){
+            FishCell food = (FishCell)foodCells.get(new Random().nextInt(foodCells.size()));
+            shark.eat(food);
+        }
+    }
+
+    private void updateFish (FishCell fish) {
+
+    }
+
+    private List<Cell> getOpenCells (List<Cell> neighbors) {
+        List<Cell> openCells = new ArrayList<Cell>();
+        for(Cell c : neighbors){
+            if(c.getMyCurrentState()==State.EMPTY && c.getMyNextState() == null){
+                openCells.add(c);
+            }
+        }
+        return openCells;
     }
     
-    private void updateShark(SharkCell cell){
-        
+    private List<Cell> getEdibleCells(List<Cell> neighbors) {
+        List<Cell> edibleCells = new ArrayList<Cell>();
+        for(Cell c : neighbors) {
+            if(c.getMyCurrentState() == State.FISH){
+                edibleCells.add(c);
+            }
+        }
+        return edibleCells;
     }
 }

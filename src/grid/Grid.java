@@ -3,6 +3,7 @@ package grid;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.*;
 import cell.*;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
@@ -24,7 +25,6 @@ public abstract class Grid {
         cellGrid = new Cell[numberOfRows][numberOfColumns];
         setCellGrid(initCells); // should this go here or in an init method?
     }
-
     // Assumes #initCells = numberOfRows * numberOfColumns
     private void setCellGrid (Collection<Cell> initCells) {
         Iterator<Cell> iter = initCells.iterator();
@@ -61,13 +61,13 @@ public abstract class Grid {
     }
 
     // might be unnecessary
-    public void swapCellInGrid (Cell cell) {
+   /* public void swapCellInGrid (Cell cell) {
         int rowIndex = (int) cell.getMyCoordinate().getY();
         int columnIndex = (int) cell.getMyCoordinate().getX();
         cellGroup.getChildren().remove(getCell(rowIndex, columnIndex));
         cellGrid[rowIndex][columnIndex] = cell;
         cellGroup.getChildren().add(cell.getMyNode());
-    }
+    }*/
 
     public Cell getCell (int rowIndex, int columnIndex) {
         return cellGrid[rowIndex][columnIndex];
@@ -77,4 +77,14 @@ public abstract class Grid {
         this.cellGrid = cellGrid;
     }
 
+    /**
+     * TODO--return neighbors of the cell at this location
+     * @param row
+     * @param col
+     * @return
+     */
+    public List<Cell> getNeighbors(Point2D gridCoordinate){
+        return null;
+    }
+    
 }
