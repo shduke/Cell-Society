@@ -13,6 +13,7 @@ public class Toolbar {
     private int toolbarSize;
     Button pause;
     Button step;
+    Button loadXML;
     HBox myToolbar;
     
     protected void initToolbar(int height, int width, Scene myScene, Group root) {
@@ -24,7 +25,8 @@ public class Toolbar {
         ChoiceBox cb = new ChoiceBox(FXCollections.observableArrayList(
                                                                        "Fire", "Game of Life", "Predator-Prey", "Segregation")
                                                                    );
-        myToolbar.getChildren().addAll(slider, pause, step, cb);
+        loadXML = new Button("Load XML File");
+        myToolbar.getChildren().addAll(slider, pause, step, cb, loadXML);
         addToRoot(root);
     }
     
