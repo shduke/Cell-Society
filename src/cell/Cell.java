@@ -8,28 +8,38 @@ public abstract class Cell {
 
     private State myCurrentState;
     private State myNextState;
-    private Point2D myCoordinate;
+    private int myRow, myCol;
     private Node myNode;
 
-    public Cell (State currentState, Point2D coordinate, Node node) {
+    public Cell (State currentState, int row, int col, Node node) {
         myCurrentState = currentState;
         myNextState = null;
-        myCoordinate = coordinate;
+        myRow = row;
+        myCol = col;
         myNode = node;
     }
 
     /* Getters and Setters */
 
-    public Point2D getMyCoordinate () {
-        return myCoordinate;
-    }
-
-    public void setMyCoordinate (Point2D myCoordinate) {
-        this.myCoordinate = myCoordinate;
-    }
 
     public Node getMyNode () {
         return myNode;
+    }
+
+    public int getMyRow () {
+        return myRow;
+    }
+
+    public void setMyRow (int myRow) {
+        this.myRow = myRow;
+    }
+
+    public int getMyCol () {
+        return myCol;
+    }
+
+    public void setMyCol (int myCol) {
+        this.myCol = myCol;
     }
 
     public void setMyNode (Node myNode) {
