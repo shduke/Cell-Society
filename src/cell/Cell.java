@@ -8,24 +8,23 @@ public abstract class Cell {
 
     private State myCurrentState;
     private State myNextState;
-    private Point2D myCoordinate;
     private Node myNode;
 
     public Cell (State currentState, Point2D coordinate, Node node) {
         myCurrentState = currentState;
         myNextState = null;
-        myCoordinate = coordinate;
         myNode = node;
     }
 
     /* Getters and Setters */
 
     public Point2D getMyCoordinate () {
-        return myCoordinate;
+        return new Point2D(myNode.getLayoutX(), myNode.getLayoutY());
     }
 
     public void setMyCoordinate (Point2D myCoordinate) {
-        this.myCoordinate = myCoordinate;
+        myNode.setLayoutX(myCoordinate.getX());
+        myNode.setLayoutX(myCoordinate.getY());
     }
 
     public Node getMyNode () {
