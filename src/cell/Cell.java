@@ -8,40 +8,39 @@ public abstract class Cell {
 
     private State myCurrentState;
     private State myNextState;
-    private int myRow, myCol;
+    private Point2D myGridCoordinate;
     private Node myNode;
 
     public Cell (State currentState, int row, int col, Node node) {
         myCurrentState = currentState;
         myNextState = null;
-        myRow = row;
-        myCol = col;
+        myGridCoordinate = new Point2D(row, col);
         myNode = node;
     }
 
     /* Getters and Setters */
 
+    public Point2D getMyCoordinate () {
+        return new Point2D(myNode.getLayoutX(), myNode.getLayoutY());
+    }
+
+    public void setMyCoordinate (Point2D myCoordinate) {
+        myNode.setLayoutX(myCoordinate.getX());
+        myNode.setLayoutX(myCoordinate.getY());
+    }
 
     public Node getMyNode () {
         return myNode;
     }
 
-    public int getMyRow () {
-        return myRow;
+    public Point2D getMyGridCoordinate() {
+        return this.myGridCoordinate;
     }
-
-    public void setMyRow (int myRow) {
-        this.myRow = myRow;
+    
+    public void setMyGridCoordinate(Point2D myGridCoordinate) {
+        this.myGridCoordinate = myGridCoordinate;
     }
-
-    public int getMyCol () {
-        return myCol;
-    }
-
-    public void setMyCol (int myCol) {
-        this.myCol = myCol;
-    }
-
+    
     public void setMyNode (Node myNode) {
         this.myNode = myNode;
     }

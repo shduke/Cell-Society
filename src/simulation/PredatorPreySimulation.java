@@ -29,7 +29,7 @@ public class PredatorPreySimulation extends Simulation {
 
         for (int i = 0; i < myGrid.getNumRows(); i++) {
             for (int j = 0; j < myGrid.getNumColumns(); j++) {
-                Cell cell = myGrid.getMyCells()[i][j];
+                Cell cell = myGrid.getCellGrid()[i][j];
                 if (cell.getMyCurrentState() == State.SHARK) {
                     if (cell.getMyNextState() == State.DEAD) {
                         kill((SharkCell) cell);
@@ -45,7 +45,7 @@ public class PredatorPreySimulation extends Simulation {
     private void updateFishes () {
         for (int i = 0; i < myGrid.getNumRows(); i++) {
             for (int j = 0; j < myGrid.getNumColumns(); j++) {
-                Cell cell = myGrid.getMyCells()[i][j];
+                Cell cell = myGrid.getCellGrid()[i][j];
                 if (cell.getMyCurrentState() == State.FISH) {
                     if (cell.getMyNextState() == State.DEAD) {
                         kill((FishCell) cell);
@@ -63,7 +63,7 @@ public class PredatorPreySimulation extends Simulation {
     }
 
     private void updateShark (SharkCell shark) {
-        List<Cell> neighbors = myGrid.getNeighbors(shark.getMyRow(), shark.getMyCol());
+        List<Cell> neighbors = myGrid.getNeighbors(shark.getMyGridCoordinate());
         List<Cell> canMoveOrBreed = getOpenCells(neighbors);
         List<Cell> foodCells = getEdibleCells(neighbors);
         

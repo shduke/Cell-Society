@@ -1,6 +1,14 @@
 package simulation;
 
+import grid.Grid;
+import javafx.scene.shape.Shape;
+
+
 public abstract class Simulation {
-    
-    public abstract void step();
+    private Shape simulationShape;
+    private Grid grid;
+
+    public abstract void step ();
+
+    // How to go from the inputed XML ShapeType to making RectangleGrid()
 }
