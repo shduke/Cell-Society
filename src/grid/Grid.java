@@ -12,7 +12,8 @@ import javafx.scene.Group;
 public abstract class Grid {
     private Group cellGroup;
     private Cell[][] cellGrid; /// Might have to change to a Collection structure
-
+//listIterator
+    
     private int numberOfRows;
     private int numberOfColumns;
 
