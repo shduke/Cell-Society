@@ -3,6 +3,8 @@ package xml;
 import java.util.ArrayList;
 import java.util.Collection;
 import cell.Cell;
+import javafx.geometry.Dimension2D;
+import javafx.scene.Node;
 import simulation.FireSimulation;
 import simulation.Simulation;
 
@@ -16,7 +18,7 @@ public class XMLParser {
     }
     
     //filler code
-    public Simulation buildSimulation() {
-        return new FireSimulation();
+    public Collection<Node> buildSimulation() {
+        return new ArrayList<Node>();
     }
 }
