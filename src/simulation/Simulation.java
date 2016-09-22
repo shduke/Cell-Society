@@ -6,8 +6,16 @@ import javafx.scene.shape.Shape;
 
 public abstract class Simulation {
     
-    private Shape simulationShape;
-    private Grid grid;
+    private Shape myCellShape;
+    public Shape getMyCellShape () {
+        return myCellShape;
+    }
+
+    public void setMyCellShape (Shape myCellShape) {
+        this.myCellShape = myCellShape;
+    }
+
+    private Grid myGrid;
 
     public abstract void step ();
     
