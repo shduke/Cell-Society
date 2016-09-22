@@ -11,8 +11,8 @@ public class SharkCell extends Cell {
     private int myMaxHealth;
     private int myCurrentHealth;
     
-    public SharkCell (int row, int col, int breedTime, Node node) {
-        super(State.SHARK, row, col, node);
+    public SharkCell (Point2D gridCoordinate, int breedTime, Node node) {
+        super(State.SHARK, (int)gridCoordinate.getX(), (int)gridCoordinate.getY(), node);
         myMaxBreedTime = breedTime;
         myCurrentBreedTime = myMaxBreedTime;
     }
@@ -30,6 +30,10 @@ public class SharkCell extends Cell {
         else{
             myCurrentHealth--;
         }
+    }
+    
+    public boolean canBreed () {
+        return myCurrentBreedTime == 0;
     }
 
 }

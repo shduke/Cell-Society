@@ -19,4 +19,8 @@ public class FishCell extends Cell {
         myCurrentBreedTime = myCurrentBreedTime == 0 ? myMaxBreedTime : myCurrentBreedTime--;
     }
 
+    public boolean canBreed () {
+        return myCurrentBreedTime == 0;
+    }
+
 }
