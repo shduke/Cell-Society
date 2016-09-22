@@ -67,9 +67,18 @@ public class PredatorPreySimulation extends Simulation {
         List<Cell> canMoveOrBreed = getOpenCells(neighbors);
         List<Cell> foodCells = getEdibleCells(neighbors);
         
-        if(foodCells.size() > 0){
+        if(shark.getMyNextState()==State.DEAD){
+            kill(shark);
+        }
+        else if(foodCells.size() > 0){
             FishCell food = (FishCell)foodCells.get(new Random().nextInt(foodCells.size()));
             shark.eat(food);
+            shark.setMyNextState(shark.getMyCurrentState());
+            shark.setMyCoordinate(food.getMyCoordinate());
+        }
+        else{
+            breed(shark);
+            move(shark);
         }
     }
 
@@ -95,5 +104,24 @@ public class PredatorPreySimulation extends Simulation {
             }
         }
         return edibleCells;
+    }
+    
+    private void breed(Cell cell) {
+        
+    }
+    
+    private void move(Cell cell) {
+        
+    }
+    @Override
+    public void start () {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void init () {
+        // TODO Auto-generated method stub
+        
     }
 }
