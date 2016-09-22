@@ -1,6 +1,7 @@
 package simulation;
 
 import grid.*;
+import javafx.geometry.Dimension2D;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -10,6 +11,11 @@ import cell.State;
 
 
 public class PredatorPreySimulation extends Simulation {
+
+    PredatorPreySimulation (Dimension2D gridViewSize) {
+        super(gridViewSize);
+        // TODO Auto-generated constructor stub
+    }
 
     private int myPreyBreedTime;
     private int myPredatorBreedTime;
