@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Random;
 import cell.*;
 import cell.State;
+import javafx.scene.shape.*;
 
 
 public class PredatorPreySimulation extends Simulation {
@@ -74,10 +75,10 @@ public class PredatorPreySimulation extends Simulation {
             FishCell food = (FishCell)foodCells.get(new Random().nextInt(foodCells.size()));
             shark.eat(food);
             shark.setMyNextState(shark.getMyCurrentState());
-            shark.setMyCoordinate(food.getMyCoordinate());
+            breed(shark, canMoveOrBreed);
         }
         else{
-            breed(shark);
+            breed(shark, canMoveOrBreed);
             move(shark);
         }
     }
@@ -106,10 +107,19 @@ public class PredatorPreySimulation extends Simulation {
         return edibleCells;
     }
     
-    private void breed(Cell cell) {
+    private void breed(Cell cell, List<Cell> openCells) {
         
+        if(cell.getMyCurrentState() == State.SHARK){
+            if(((SharkCell)cell).canBreed()){
+                Cell newShark = openCells.get(new Random().nextInt(openCells.size()));
+                makeNewShark((SharkCell)cell, newShark);//newShark = new SharkCell(cell.getMyGridCoordinate().getX(),cell.getMyGridCoordinate().getY(),myPredatorBreedTime,new Node(this.getMyShape()));
+            }
+        }
     }
     
+    private void makeNewShark(SharkCell oldShark, Cell newShark){
+        newShark = new SharkCell(oldShark.getMyGridCoordinate(),myPredatorBreedTime, getMyCellShape());
+    }
     private void move(Cell cell) {
         
     }
