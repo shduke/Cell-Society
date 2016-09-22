@@ -1,90 +1,99 @@
 package grid;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Iterator;
 import java.util.*;
+import java.util.Map.Entry;
 import cell.*;
-import javafx.geometry.Point2D;
-import javafx.scene.Group;
 
 
 public abstract class Grid {
-    private Group cellGroup;
-    private Cell[][] cellGrid; /// Might have to change to a Collection structure
+    private Map<Coordinate, Cell> cellGrid = new HashMap<Coordinate, Cell>();
 
     private int numberOfRows;
     private int numberOfColumns;
 
-    Grid (int numberOfRows, int numberOfColumns, Collection<Cell> initCells) {// Might be a
-                                                                              // collection of
-                                                                              // States
+    Grid (int numberOfRows, int numberOfColumns, Collection<Cell> initCells) {// Might be a collection of states
         this.numberOfRows = numberOfRows;
         this.numberOfColumns = numberOfColumns;
-        cellGroup = new Group();
-        cellGrid = new Cell[numberOfRows][numberOfColumns];
-        setCellGrid(initCells); // should this go here or in an init method?
+        setUpGrid(initCells);
     }
-    // Assumes #initCells = numberOfRows * numberOfColumns
-    private void setCellGrid (Collection<Cell> initCells) {
-        Iterator<Cell> iter = initCells.iterator();
-        for (int r = 0; r < numberOfRows; r++) {
-            for (int c = 0; c < numberOfColumns; c++) {
-                getCell(r, c).setMyCurrentState(iter.next().getMyCurrentState());
-            }
+    
+    private void setUpGrid(Collection<Cell> initCells) {
+        for(Cell cell : initCells) {
+            addCell(cell);
         }
     }
 
-    /// Make immutable?
-    public Cell[][] getCellGrid () {
+    public Map<Coordinate, Cell> getCellGrid () {
         return cellGrid;
     }
 
-    // DUPLICATE CODE: Passing in a function to apply so I don't have to use a double for loop all
-    // the time
-    // e.g. setting cells to next, changing current state
-    // switch to iterator setup?
+    public Map<Coordinate, Cell> getImmutableCellGrid () {
+        return Collections.unmodifiableMap(getCellGrid());
+    }
+
+    public Iterator<Entry<Coordinate, Cell>> getCellGridIterator () {
+        return getImmutableCellGrid().entrySet().iterator();
+    }
+    
+    public Iterator<Entry<Coordinate, Cell>> getMutableCellGridIterator () {
+        return getCellGrid().entrySet().iterator();
+    }
+
     public void updateGrid () {
-        for (int r = 0; r < numberOfRows; r++) {
-            for (int c = 0; c < numberOfColumns; c++) {
-                getCell(r, c).setMyNextState(getCell(r, c).getMyNextState());
-            }
+        Iterator<Entry<Coordinate, Cell>> iterCell = getMutableCellGridIterator();
+        while (iterCell.hasNext()) {
+            Cell cell = iterCell.next().getValue();
+            cell.setMyCurrentState(cell.getMyNextState());
+            cell.setMyNextState(null);
         }
+    }
+    
+    ///How do I do this?
+    /*public Cell createCell(String CellType, Coordinate coordinate) {
+
+    }*/
+    
+    public Boolean isCreated (Coordinate coordinate) {
+        return cellGrid.containsKey(coordinate);
+        //return coordinate.hashCode() ==
+        //return cellGrid.get(coordinate) != null;
+    }
+    
+    public Boolean isInGrid (Coordinate coordinate) {
+        return (coordinate.getX() > -1 && coordinate.getX() < getNumRows() ||
+                coordinate.getY() > -1 && coordinate.getY() < getNumColumns());
+    }
+    
+    public Cell getCell(Coordinate coordinate) {
+        return cellGrid.get(coordinate);
+    }
+
+    public void addCell (Cell cell) {
+        cellGrid.put(cell.getMyGridCoordinate(), cell);
     }
 
     public int getNumRows () {
-        return cellGrid.length;
+        return numberOfRows;
     }
 
     public int getNumColumns () {
-        return cellGrid[0].length;
+        return numberOfColumns;
     }
 
-    // might be unnecessary
-   /* public void swapCellInGrid (Cell cell) {
-        int rowIndex = (int) cell.getMyCoordinate().getY();
-        int columnIndex = (int) cell.getMyCoordinate().getX();
-        cellGroup.getChildren().remove(getCell(rowIndex, columnIndex));
-        cellGrid[rowIndex][columnIndex] = cell;
-        cellGroup.getChildren().add(cell.getMyNode());
-    }*/
-
-    public Cell getCell (int rowIndex, int columnIndex) {
-        return cellGrid[rowIndex][columnIndex];
-    }
-
-    public void setCellGrid (Cell[][] cellGrid) {
+    public void setCellGrid (Map<Coordinate, Cell> cellGrid) {
         this.cellGrid = cellGrid;
     }
 
+    
     /**
      * TODO--return neighbors of the cell at this location
+     * 
      * @param row
      * @param col
      * @return
      */
-    public List<Cell> getNeighbors(Point2D gridCoordinate){
-        return null;
-    }
-    
+    abstract public Neighbors getNeighbors (Cell cell);
+
+   // abstract public void createNeighbors (Cell cell);
+
 }

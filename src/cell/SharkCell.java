@@ -1,5 +1,6 @@
 package cell;
 
+import grid.Coordinate;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 
@@ -11,8 +12,8 @@ public class SharkCell extends Cell {
     private int myMaxHealth;
     private int myCurrentHealth;
     
-    public SharkCell (int row, int col, int breedTime, Node node) {
-        super(State.SHARK, row, col, node);
+    public SharkCell (int row, int col, int breedTime) {
+        super(State.SHARK, new Coordinate(row, col));
         myMaxBreedTime = breedTime;
         myCurrentBreedTime = myMaxBreedTime;
     }

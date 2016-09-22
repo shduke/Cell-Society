@@ -1,6 +1,7 @@
 package simulation;
 
 import grid.*;
+import javafx.geometry.Dimension2D;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -8,8 +9,15 @@ import java.util.Random;
 import cell.*;
 import cell.State;
 
+/**
+ * Commented out just so I can run/test the program
+ */
+/*public class PredatorPreySimulation extends Simulation {
 
-public class PredatorPreySimulation extends Simulation {
+    PredatorPreySimulation (Dimension2D gridViewSize) {
+        super(gridViewSize);
+        // TODO Auto-generated constructor stub
+    }
 
     private int myPreyBreedTime;
     private int myPredatorBreedTime;
@@ -63,7 +71,7 @@ public class PredatorPreySimulation extends Simulation {
     }
 
     private void updateShark (SharkCell shark) {
-        List<Cell> neighbors = myGrid.getNeighbors(shark.getMyGridCoordinate());
+        List<Cell> neighbors = myGrid.getNeighbors(shark);
         List<Cell> canMoveOrBreed = getOpenCells(neighbors);
         List<Cell> foodCells = getEdibleCells(neighbors);
         
@@ -96,4 +104,4 @@ public class PredatorPreySimulation extends Simulation {
         }
         return edibleCells;
     }
-}
+}*/
