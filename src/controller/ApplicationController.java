@@ -1,24 +1,27 @@
 package controller;
 
-import javafx.geometry.Dimension2D;
-
+import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.scene.paint.Color;
 
 public class ApplicationController {
-
-    private static final Dimension2D DEFAULT_APPLICATION_SIZE = new Dimension2D(1000, 800);
-    private SimulationController simulationController;
-
-    ApplicationController() {
-        this.simulationController = new SimulationController(calcSimulationSize());
+    public static final String TITLE = "Cell Society";
+    
+    public String getTitle() {
+        return TITLE;
     }
-
-    /**
-     * TODO--Calculate the simulation view size. This might need to go in a different location
-     * 
-     * @return
-     */
-    private Dimension2D calcSimulationSize () {
-        return new Dimension2D(DEFAULT_APPLICATION_SIZE.getWidth(),
-                               DEFAULT_APPLICATION_SIZE.getHeight());
+    
+    private SimulationController simulationController;
+    
+    //filler code
+    public Scene init(int width, int height) {
+        Group root = new Group();
+        Scene myScene = new Scene(root, width, height, Color.WHITE);
+        simulationController = new SimulationController(root);
+        return myScene;
+    }
+    
+    public SimulationController getSimulationController() {
+        return simulationController;
     }
 }

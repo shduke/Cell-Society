@@ -9,8 +9,10 @@ import java.util.Random;
 import cell.*;
 import cell.State;
 
-
-public class PredatorPreySimulation extends Simulation {
+/**
+ * Commented out just so I can run/test the program
+ */
+/*public class PredatorPreySimulation extends Simulation {
 
     PredatorPreySimulation (Dimension2D gridViewSize) {
         super(gridViewSize);
@@ -69,7 +71,7 @@ public class PredatorPreySimulation extends Simulation {
     }
 
     private void updateShark (SharkCell shark) {
-        List<Cell> neighbors = myGrid.getNeighbors(shark.getMyGridCoordinate());
+        List<Cell> neighbors = myGrid.getNeighbors(shark);
         List<Cell> canMoveOrBreed = getOpenCells(neighbors);
         List<Cell> foodCells = getEdibleCells(neighbors);
         
@@ -102,4 +104,4 @@ public class PredatorPreySimulation extends Simulation {
         }
         return edibleCells;
     }
-}
+}*/

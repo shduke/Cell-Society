@@ -7,7 +7,8 @@ public enum State {
     SHARK(2, Color.RED),
     DEAD(3, Color.WHITE),
     FIRE(4, Color.RED),
-    BURNING(5, Color.ORANGE);
+    BURNING(5, Color.ORANGE), 
+    TREE(6, Color.GREEN);
     
     
     private final int myValue;
@@ -15,5 +16,13 @@ public enum State {
     State(int value, Color color){
         myValue = value;
         myColor = color;
+    }
+    
+    public int getIntValue() {
+        return myValue;
+    }
+    
+    public Color getColor() {
+        return myColor;
     }
 }

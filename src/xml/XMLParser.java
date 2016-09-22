@@ -18,7 +18,7 @@ public class XMLParser {
     }
     
     //filler code
-    public Collection<Node> buildSimulation() {
-        return new ArrayList<Node>();
-    }
+    /*public Simulation buildSimulation() {
+        return new FireSimulation();
+    }*/
 }

@@ -1,11 +1,11 @@
 package simulation;
 
+import cell.Cell;
 import javafx.geometry.Dimension2D;
 
 public class SegregationSimulation extends Simulation {
 
-    SegregationSimulation (Dimension2D gridViewSize) {
-        super(gridViewSize);
+    SegregationSimulation () {
         // TODO Auto-generated constructor stub
     }
 
@@ -13,6 +13,18 @@ public class SegregationSimulation extends Simulation {
     public void step () {
         // TODO Auto-generated method stub
 
+    }
+
+    @Override
+    public void createNeighbors (Cell cell) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void setNextState (Cell cell) {
+        // TODO Auto-generated method stub
+        
     }
 
 }
