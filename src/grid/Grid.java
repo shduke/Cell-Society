@@ -47,7 +47,7 @@ public abstract class Grid {
     public void updateGrid () {
         for (int r = 0; r < numberOfRows; r++) {
             for (int c = 0; c < numberOfColumns; c++) {
-                getCell(r, c).setMyNextState(getCell(r, c).getMyNextState());
+                getCell(r, c).setMyCurrentState(getCell(r, c).getMyNextState());
             }
         }
     }

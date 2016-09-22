@@ -5,11 +5,19 @@ import xml.XMLParser;
 
 
 public class SimulationController {
-    private Simulation simulation;
-    private XMLParser readerXML;
-
+    private Simulation mySimulation;
+    private XMLParser myXMLParser;
+    
     private void initializeSimulation () {
-        readerXML.buildSimulation();
+        myXMLParser.buildSimulation();
+    }
+    
+    public void startSimulation() {
+        mySimulation.init();
+        play();
+    }
+    private void play() {
+        mySimulation.start();
     }
 
 }
