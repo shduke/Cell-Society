@@ -26,10 +26,10 @@ public class GridView {
     public void displaySquareGrid (Dimension2D gridSize, Grid grid) {
         double cellWidth = gridSize.getWidth() / grid.getNumRows();
         double cellHeight = gridSize.getHeight() / grid.getNumRows();
-        for (int r = 0; r < grid.getNumRows(); r++) {
-            for (int c = 0; c < grid.getNumColumns(); c++) {
-                Double xView = r * cellWidth;
-                Double yView = c * cellHeight;
+        for (int r = 0; r <= grid.getNumRows(); r++) {
+            for (int c = 0; c <= grid.getNumColumns(); c++) {
+                Double xView = (r-1) * cellWidth;
+                Double yView = (c-1) * cellHeight;
                 Rectangle gridCellDisplay = new Rectangle(cellWidth, cellHeight);
                 gridCellDisplay.setX(xView);
                 gridCellDisplay.setY(yView);
