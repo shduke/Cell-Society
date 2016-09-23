@@ -35,7 +35,9 @@ public class Neighbors {
     public Iterator<Coordinate> getUncreatedNeighborCoordinates () {
         return Collections.unmodifiableList(uncreatedNeighborCoordinates).iterator();
     }
-
+    public List<Cell> getNeighbors(){
+        return neighbors;
+    }
     public void addUncreatedNeighbor (Coordinate uncreatedNeighbors) {
         uncreatedNeighborCoordinates.add(uncreatedNeighbors);
     }

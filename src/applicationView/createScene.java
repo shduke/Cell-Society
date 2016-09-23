@@ -1,6 +1,5 @@
 package applicationView;
-
-import java.util.ResourceBundle;
+import controller.ApplicationController;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
