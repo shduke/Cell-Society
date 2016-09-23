@@ -7,6 +7,8 @@ import javafx.scene.Group;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
+import javafx.scene.*;
+import java.util.*;
 
 public class GridView {
     Group root = new Group();
@@ -39,6 +41,18 @@ public class GridView {
         }
     }
     
+    public void updateView() {
+        double cellWidth = gridSize.getWidth() / grid.getNumRows();
+        double cellHeight = gridSize.getHeight() / grid.getNumRows();
+        for(Node node : root.getChildren()){
+            Rectangle shape = (Rectangle) node;
+            int r = (int)(shape.getX()/cellWidth);
+            int c = (int)(shape.getY()/cellHeight);
+            configureShape(shape, new Coordinate(r, c));
+            
+        }
+       
+    }
     public Group getRoot() {
         return root;
     }
