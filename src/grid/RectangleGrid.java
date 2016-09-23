@@ -66,7 +66,7 @@ public class RectangleGrid extends Grid {
                     }
                 }
                 else {
-                    if (x != y) {
+                    if (Math.abs(x)!=Math.abs(y)) {
                         checkAdjacent(cell, neighbors, x, y);
                     }
                 }
