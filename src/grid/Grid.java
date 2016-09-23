@@ -5,7 +5,7 @@ import java.util.Map.Entry;
 import cell.*;
 
 
-public abstract class Grid implements Iterable<Entry<Coordinate, Cell>> {
+public abstract class Grid implements Iterable<Cell> {
     private Map<Coordinate, Cell> cellGrid = new HashMap<Coordinate, Cell>();
 
     private int numberOfRows;
@@ -34,8 +34,8 @@ public abstract class Grid implements Iterable<Entry<Coordinate, Cell>> {
     }
 
     @Override
-    public Iterator<Entry<Coordinate, Cell>> iterator () {
-        return getImmutableCellGrid().entrySet().iterator();
+    public Iterator<Cell> iterator () {
+        return getImmutableCellGrid().values().iterator();
     }
 
     /*
@@ -45,8 +45,7 @@ public abstract class Grid implements Iterable<Entry<Coordinate, Cell>> {
      */
 
     public void updateGrid () {
-        for (Entry<Coordinate, Cell> entry : getImmutableCellGrid().entrySet()) {
-            Cell cell = entry.getValue();
+        for (Cell cell : getImmutableCellGrid().values()) {
             cell.setMyCurrentState(cell.getMyNextState());
             cell.setMyNextState(null);
         }

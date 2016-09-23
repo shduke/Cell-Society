@@ -8,36 +8,18 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 
-public class GridView {
+public abstract class GridView {
     Group root = new Group();
-    String gridCellShape;
     Dimension2D gridSize;
     Grid grid;
 
-    public GridView (Dimension2D gridSize, String gridCellShape, Grid grid) {
+    public GridView (Dimension2D gridSize, Grid grid) {
         this.gridSize = gridSize;
-        this.gridCellShape = gridCellShape;
         this.grid = grid;
         displaySquareGrid(gridSize, grid);
     }
     
-    public void displaySquareGrid (Dimension2D gridSize, Grid grid) {
-        double cellWidth = gridSize.getWidth() / grid.getNumRows();
-        double cellHeight = gridSize.getHeight() / grid.getNumRows();
-        for (int r = 0; r < grid.getNumRows(); r++) {
-            for (int c = 0; c < grid.getNumColumns(); c++) {
-                Double xView = r * cellWidth;
-                Double yView = c * cellHeight;
-                Rectangle gridCellDisplay = new Rectangle(cellWidth, cellHeight);
-                gridCellDisplay.setX(xView);
-                gridCellDisplay.setY(yView);
-                //System.out.println(gridCellDisplay.getX() + " " + gridCellDisplay.getY() + " " + cellWidth + " " + cellHeight);
-                configureShape(gridCellDisplay, new Coordinate(r, c));
-                addCellToRoot(gridCellDisplay);
-
-            }
-        }
-    }
+    public abstract void displayGrid();
     
     public Group getRoot() {
         return root;

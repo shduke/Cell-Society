@@ -35,7 +35,7 @@ public class FireSimulation extends Simulation {
     //very temporary code, just here to make it work
     @Override
     public void step () {
-        Iterator<Map.Entry<Coordinate, Cell>> iterCell = getGrid().getCellGridIterator();
+        Iterator<Map.Entry<Coordinate, Cell>> iterCell = getGrid().getImmutatableCellGridIterator();
         while (iterCell.hasNext()) {
             Cell cell = iterCell.next().getValue();
             createNeighbors(cell);
