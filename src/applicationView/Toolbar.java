@@ -25,6 +25,7 @@ public class Toolbar {
         ChoiceBox cb = new ChoiceBox(FXCollections.observableArrayList(
                                                                        "Fire", "Game of Life", "Predator-Prey", "Segregation")
                                                                    );
+        //cb.set
         loadXML = new Button("Load XML File");
         myToolbar.getChildren().addAll(slider, pause, step, cb, loadXML);
         addToRoot(root);
