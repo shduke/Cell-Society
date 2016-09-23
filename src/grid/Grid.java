@@ -43,7 +43,12 @@ public abstract class Grid {
         Iterator<Entry<Coordinate, Cell>> iterCell = getMutableCellGridIterator();
         while (iterCell.hasNext()) {
             Cell cell = iterCell.next().getValue();
+            //System.out.println("Turn a " + cell.getMyCurrentState() + " into a " + cell.getMyNextState());
+            if(cell.getMyCurrentState()==State.SHARK){
+                System.out.println(cell.getMyGridCoordinate().getX() + ", " + cell.getMyGridCoordinate().getY());
+            }
             cell.setMyCurrentState(cell.getMyNextState());
+            
             cell.setMyNextState(null);
         }
     }
@@ -84,6 +89,7 @@ public abstract class Grid {
         this.cellGrid = cellGrid;
     }
 
+
     
     /**
      * TODO--return neighbors of the cell at this location
@@ -92,7 +98,22 @@ public abstract class Grid {
      * @param col
      * @return
      */
-    abstract public Neighbors getNeighbors (Cell cell);
+    public abstract Neighbors getNeighbors (Cell cell, boolean diagonal);
+
+    /**
+     * @param cell
+     * @param neighbors
+     * @param x
+     * @param y
+     */
+    protected void checkAdjacent (Cell cell, Neighbors neighbors, int x, int y) {
+        Coordinate coord =
+                new Coordinate(x + cell.getMyGridCoordinate().getX(),
+                               y + cell.getMyGridCoordinate().getY());
+        if (cellGrid.containsKey(coord)) {
+            neighbors.addNeighbor(cellGrid.get(coord));
+        }
+    }
 
    // abstract public void createNeighbors (Cell cell);
 
