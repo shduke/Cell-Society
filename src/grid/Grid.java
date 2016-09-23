@@ -5,20 +5,22 @@ import java.util.Map.Entry;
 import cell.*;
 
 
-public abstract class Grid {
+public abstract class Grid implements Iterable<Entry<Coordinate, Cell>> {
     private Map<Coordinate, Cell> cellGrid = new HashMap<Coordinate, Cell>();
 
     private int numberOfRows;
     private int numberOfColumns;
 
-    Grid (int numberOfRows, int numberOfColumns, Collection<Cell> initCells) {// Might be a collection of states
+    Grid (int numberOfRows, int numberOfColumns, Collection<Cell> initCells) {// Might be a
+                                                                              // collection of
+                                                                              // states
         this.numberOfRows = numberOfRows;
         this.numberOfColumns = numberOfColumns;
         setUpGrid(initCells);
     }
-    
-    private void setUpGrid(Collection<Cell> initCells) {
-        for(Cell cell : initCells) {
+
+    private void setUpGrid (Collection<Cell> initCells) {
+        for (Cell cell : initCells) {
             addCell(cell);
         }
     }
@@ -31,40 +33,37 @@ public abstract class Grid {
         return Collections.unmodifiableMap(getCellGrid());
     }
 
-    public Iterator<Entry<Coordinate, Cell>> getCellGridIterator () {
+    @Override
+    public Iterator<Entry<Coordinate, Cell>> iterator () {
         return getImmutableCellGrid().entrySet().iterator();
     }
-    
-    public Iterator<Entry<Coordinate, Cell>> getMutableCellGridIterator () {
-        return getCellGrid().entrySet().iterator();
-    }
+
+    /*
+     * public Iterator<Entry<Coordinate, Cell>> getMutableCellGridIterator () {
+     * return getCellGrid().entrySet().iterator();
+     * }
+     */
 
     public void updateGrid () {
-        Iterator<Entry<Coordinate, Cell>> iterCell = getMutableCellGridIterator();
-        while (iterCell.hasNext()) {
-            Cell cell = iterCell.next().getValue();
+        for (Entry<Coordinate, Cell> entry : getImmutableCellGrid().entrySet()) {
+            Cell cell = entry.getValue();
             cell.setMyCurrentState(cell.getMyNextState());
             cell.setMyNextState(null);
         }
     }
-    
-    ///How do I do this?
-    /*public Cell createCell(String CellType, Coordinate coordinate) {
 
-    }*/
-    
     public Boolean isCreated (Coordinate coordinate) {
         return cellGrid.containsKey(coordinate);
-        //return coordinate.hashCode() ==
-        //return cellGrid.get(coordinate) != null;
+        // return coordinate.hashCode() ==
+        // return cellGrid.get(coordinate) != null;
     }
-    
+
     public Boolean isInGrid (Coordinate coordinate) {
         return (coordinate.getX() > -1 && coordinate.getX() < getNumRows() ||
                 coordinate.getY() > -1 && coordinate.getY() < getNumColumns());
     }
-    
-    public Cell getCell(Coordinate coordinate) {
+
+    public Cell getCell (Coordinate coordinate) {
         return cellGrid.get(coordinate);
     }
 
@@ -84,7 +83,6 @@ public abstract class Grid {
         this.cellGrid = cellGrid;
     }
 
-    
     /**
      * TODO--return neighbors of the cell at this location
      * 
@@ -94,6 +92,6 @@ public abstract class Grid {
      */
     abstract public Neighbors getNeighbors (Cell cell);
 
-   // abstract public void createNeighbors (Cell cell);
+    // abstract public void createNeighbors (Cell cell);
 
 }
