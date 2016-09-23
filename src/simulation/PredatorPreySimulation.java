@@ -27,16 +27,17 @@ public class PredatorPreySimulation extends Simulation {
 
     public PredatorPreySimulation () {
         diagonalNeighbors = false;
-        myPredatorBreedTime = 1000;
-        mySharkMaxHealth = 500000;
+        myPredatorBreedTime = 5;
+        mySharkMaxHealth = 10;
         ArrayList<Cell> input = new ArrayList<Cell>();
 
         input.add(new SharkCell(
                                 new Coordinate(2, 2), myPredatorBreedTime, mySharkMaxHealth));
         input.add(new SharkCell(new Coordinate(3, 3), myPredatorBreedTime, mySharkMaxHealth));
+        input.add(new FishCell(4,4,myPreyBreedTime));
         for(int i = 1; i <= 5; i++){
             for(int j = 1; j<=5; j++){
-                if(!(i==2 && j==2) && !(i==3 && j==3)){
+                if(!(i==2 && j==2) && !(i==3 && j==3) && !(i==4 && j==4)){
                     EmptyCell cell = new EmptyCell(new Coordinate(i,j));
                     
                    
@@ -52,13 +53,13 @@ public class PredatorPreySimulation extends Simulation {
 
     @Override
     public void step () {
-        if (counter % 1000 == 0){
+        if(counter % 1000 == 0){
         updateSharks();
         updateFishes();
-        getGrid().updateGrid();
-        System.out.println(counter);
-        
+        getGrid().updateGrid();        
             this.getGridView().updateView();
+
+        System.out.println(counter);
         }
         counter++;
         // TODO Auto-generated method stub
@@ -80,7 +81,7 @@ public class PredatorPreySimulation extends Simulation {
                 if (cell.getMyNextState() == State.DEAD) {
                     kill((SharkCell) cell);
                 }
-                else {
+                else if(cell.getMyNextState() != State.EMPTY){
                     updateShark((SharkCell) cell);
                 }
             }
@@ -88,6 +89,7 @@ public class PredatorPreySimulation extends Simulation {
     }
 
     private void updateFishes () {
+        
         Iterator<Map.Entry<Coordinate, Cell>> cells = getGrid().getCellGridIterator();
         while (cells.hasNext()) {
             Cell cell = cells.next().getValue();
@@ -95,7 +97,7 @@ public class PredatorPreySimulation extends Simulation {
                 if (cell.getMyNextState() == State.DEAD) {
                     kill((FishCell) cell);
                 }
-                else {
+                else if (cell.getMyNextState() != State.EMPTY){
                     updateFish((FishCell) cell);
                 }
             }
@@ -103,14 +105,27 @@ public class PredatorPreySimulation extends Simulation {
     }
 
     public void kill (Cell cell) {
-        cell.setMyNextState(State.EMPTY);
+        if(cell.getMyCurrentState()==State.FISH){
+            EmptyCell empty = new EmptyCell(cell.getMyGridCoordinate());
+            empty.setMyCurrentState(State.FISH);
+            empty.setMyNextState(State.EMPTY);
+            getGrid().getCellGrid().remove(cell.getMyGridCoordinate());
+            getGrid().getCellGrid().put(empty.getMyGridCoordinate(), empty);
+        }
+        else if(cell.getMyCurrentState()==State.SHARK){
+            EmptyCell empty = new EmptyCell(cell.getMyGridCoordinate());
+            empty.setMyCurrentState(State.SHARK);
+            empty.setMyNextState(State.EMPTY);
+            getGrid().getCellGrid().remove(cell.getMyGridCoordinate());
+            getGrid().getCellGrid().put(empty.getMyGridCoordinate(), empty);
+        }
     }
 
     private void updateShark (SharkCell shark) {
         Neighbors neighbors = getGrid().getNeighbors(shark, diagonalNeighbors);
         List<Cell> canMoveOrBreed = getOpenCells(neighbors.getNeighbors());
         List<Cell> foodCells = getEdibleCells(neighbors.getNeighbors());
-
+        shark.update();
         if (shark.getMyNextState() == State.DEAD) {
             kill(shark);
         }
@@ -130,7 +145,14 @@ public class PredatorPreySimulation extends Simulation {
     }
 
     private void updateFish (FishCell fish) {
-
+        fish.update();
+        Neighbors neighbors = getGrid().getNeighbors(fish, diagonalNeighbors);
+        List<Cell> canMoveOrBreed = getOpenCells(neighbors.getNeighbors());
+        breed(fish, canMoveOrBreed);
+        move(fish, canMoveOrBreed);
+        if(fish.getMyNextState()==null){
+            fish.setMyNextState(fish.getMyCurrentState());
+        }
     }
 
     private List<Cell> getOpenCells (List<Cell> neighbors) {
@@ -156,8 +178,10 @@ public class PredatorPreySimulation extends Simulation {
     private void breed (Cell cell, List<Cell> openCells) {
         if(openCells.size()==0)
             return;
+       
         if (cell.getMyCurrentState() == State.SHARK) {
             if (((SharkCell) cell).canBreed()) {
+                System.out.println("BREED");
                 Cell newShark = openCells.get(new Random().nextInt(openCells.size()));
                 makeNewShark((SharkCell) cell, newShark);// newShark = new
                                                          // SharkCell(cell.getMyGridCoordinate().getX(),cell.getMyGridCoordinate().getY(),myPredatorBreedTime,new
@@ -167,7 +191,14 @@ public class PredatorPreySimulation extends Simulation {
     }
 
     private void makeNewShark (SharkCell oldShark, Cell newShark) {
-        newShark = new SharkCell(oldShark.getMyGridCoordinate(), myPredatorBreedTime, mySharkMaxHealth);
+        
+        SharkCell babyShark = new SharkCell(newShark.getMyGridCoordinate(), myPredatorBreedTime, mySharkMaxHealth);
+        //getGrid().getCellGrid().remove(newShark);
+        babyShark.setMyCurrentState(State.EMPTY);
+        babyShark.setMyNextState(State.SHARK);
+        
+        getGrid().getCellGrid().put(babyShark.getMyGridCoordinate(), babyShark);
+        
     }
 
     private void move (Cell cell, List<Cell> openCells) {
@@ -187,20 +218,26 @@ public class PredatorPreySimulation extends Simulation {
             EmptyCell startCell = new EmptyCell(shark.getMyGridCoordinate());
             startCell.setMyCurrentState(State.SHARK);
             startCell.setMyNextState(State.EMPTY);
-            getGrid().getCellGrid().remove(shark);
-            getGrid().getCellGrid().remove(moveTo);
+            //getGrid().getCellGrid().remove(shark);
+            //getGrid().getCellGrid().remove(moveTo);
             getGrid().getCellGrid().put(endCell.getMyGridCoordinate(), endCell);
             getGrid().getCellGrid().put(startCell.getMyGridCoordinate(), startCell);
-            
-            //moveTo = new SharkCell(moveTo.getMyGridCoordinate(),myPredatorBreedTime, mySharkMaxHealth);
-            //moveTo.setMyNextState(State.SHARK);
-            
-            //moveTo = shark;//new SharkCell(moveTo.getMyGridCoordinate(),myPredatorBreedTime, mySharkMaxHealth);
-            
-            //shark.setMyNextState(State.EMPTY);
-            
-            //cell.setMyNextState(State.EMPTY);
-            //((SharkCell) cell).setMyNextState(State.SHARK);
+        }
+        else if(cell.getMyCurrentState() == State.FISH){
+            System.out.println("Swim");
+            Cell moveTo = openCells.get(new Random().nextInt(openCells.size()));
+            FishCell fish = (FishCell) cell;
+            //shark.setMyGridCoordinate(moveTo.getMyGridCoordinate());
+            FishCell endCell = new FishCell(fish, moveTo.getMyGridCoordinate());
+            endCell.setMyCurrentState(State.EMPTY);
+            endCell.setMyNextState(State.FISH);
+            EmptyCell startCell = new EmptyCell(fish.getMyGridCoordinate());
+            startCell.setMyCurrentState(State.FISH);
+            startCell.setMyNextState(State.EMPTY);
+            //getGrid().getCellGrid().remove(fish);
+            //getGrid().getCellGrid().remove(moveTo);
+            getGrid().getCellGrid().put(endCell.getMyGridCoordinate(), endCell);
+            getGrid().getCellGrid().put(startCell.getMyGridCoordinate(), startCell);
         }
     }
 
