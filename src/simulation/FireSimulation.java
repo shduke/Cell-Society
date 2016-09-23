@@ -22,8 +22,9 @@ import javafx.util.Duration;
 public class FireSimulation extends Simulation {
     Map<Coordinate, Cell> temp = new HashMap<Coordinate, Cell>(); //temporary solution
     int counter = 0;
-    
+    private boolean diagonalNeighbors;
     public FireSimulation () {
+        diagonalNeighbors = true;
         ArrayList<Cell> input = new ArrayList<Cell>();
 
         input.add(new FireCell(State.BURNING,
@@ -58,7 +59,7 @@ public class FireSimulation extends Simulation {
 
     @Override
     public void createNeighbors (Cell cell) {
-        Neighbors neighbors = getGrid().getNeighbors(cell);
+        Neighbors neighbors = getGrid().getNeighbors(cell, diagonalNeighbors);
         Iterator<Coordinate> iterNewCell = neighbors.getUncreatedNeighborCoordinates();
         while (iterNewCell.hasNext()) {
             Coordinate coordinate = iterNewCell.next();
