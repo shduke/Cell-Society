@@ -19,41 +19,85 @@ public class RectangleGrid extends Grid {
     }
 
     // How to reduce if statements
-    // using enums with Square neighbor? TOP_LEFT... relating the Cell and (-1, 1). Want to put this in Neighbors
+    // using enums with Square neighbor? TOP_LEFT... relating the Cell and (-1, 1). Want to put this
+    // in Neighbors
+
+    /*
+     * @Override
+     * public Neighbors getNeighbors (Cell cell) {
+     * Neighbors neighbors = new Neighbors(getNumRows(), getNumColumns());
+     * for (int x = -1; x < 2; x++) {
+     * for (int y = -1; y < 2; y++) {
+     * if(x + cell.getMyGridCoordinate().getX() >= getNumColumns() || y +
+     * cell.getMyGridCoordinate().getY() >= getNumRows()){
+     * continue;
+     * }
+     * Coordinate coordinate = new Coordinate(x + cell.getMyGridCoordinate().getX(),
+     * y + cell.getMyGridCoordinate().getY());
+     * boolean istest = isCreated(coordinate);
+     * boolean zerotest = !(x == 0 && y == 0);
+     * Cell test = getImmutableCellGrid().get(coordinate);
+     * if (isCreated(coordinate) && !(x == 0 && y == 0)) {
+     * Cell cellNeighbor =
+     * getCell(new Coordinate(x + cell.getMyGridCoordinate().getX(),
+     * y + cell.getMyGridCoordinate().getY()));
+     * neighbors.addNeighbor(cellNeighbor);
+     * }
+     * else {
+     * if (isInGrid(coordinate) && !(x == 0 && y == 0)) {
+     * neighbors.addUncreatedNeighbor(coordinate);
+     * }
+     * }
+     * }
+     * }
+     * return neighbors;
+     * }
+     */
+
     @Override
-    public Neighbors getNeighbors (Cell cell) {
+    public Neighbors getNeighbors (Cell cell, boolean diagonal) {
+
         Neighbors neighbors = new Neighbors(getNumRows(), getNumColumns());
         for (int x = -1; x < 2; x++) {
             for (int y = -1; y < 2; y++) {
-                Coordinate coordinate = new Coordinate(x + cell.getMyGridCoordinate().getX(),
-                                                       y + cell.getMyGridCoordinate().getY());
-                boolean istest = isCreated(coordinate);
-                boolean zerotest = !(x == 0 && y == 0);
-                Cell test = getImmutableCellGrid().get(coordinate);
-                if (isCreated(coordinate) && !(x == 0 && y == 0)) {
-                    Cell cellNeighbor =
-                            getCell(new Coordinate(x + cell.getMyGridCoordinate().getX(),
-                                                   y + cell.getMyGridCoordinate().getY()));
-                    neighbors.addNeighbor(cellNeighbor);
-                }
-                else {
-                    if (isInGrid(coordinate) && !(x == 0 && y == 0)) {
-                        neighbors.addUncreatedNeighbor(coordinate);
+                if (diagonal) {
+                    if (!(x == 0 && y == 0)) {
+                        checkAdjacent(cell, neighbors, x, y);
                     }
                 }
+                else {
+                    if (x != y) {
+                        checkAdjacent(cell, neighbors, x, y);
+                    }
+                }
+
             }
         }
+        /*
+         * Iterator<Entry<Coordinate, Cell>> cells = getCellGridIterator();
+         * while (cells.hasNext()) {
+         * Entry<Coordinate, Cell> entry = cells.next();
+         * Coordinate coord = entry.getKey();
+         * if (coord.isAdjacent(cell.getMyGridCoordinate())) {
+         * neighbors.addNeighbor(entry.getValue());
+         * }
+         * 
+         * }
+         */
         return neighbors;
+
     }
 
-    /*@Override 
-    public void createNeighbors (Cell cell) {
-        Neighbors neighbors = getNeighbors(cell);
-        Iterator<Coordinate> iterNewCell = neighbors.getUncreatedNeighborCoordinates();
-        while (iterNewCell.hasNext()) {
-            Coordinate coordinate = iterNewCell.next();
-            addCell(cell);
-        }
-    }*/
+    /*
+     * @Override
+     * public void createNeighbors (Cell cell) {
+     * Neighbors neighbors = getNeighbors(cell);
+     * Iterator<Coordinate> iterNewCell = neighbors.getUncreatedNeighborCoordinates();
+     * while (iterNewCell.hasNext()) {
+     * Coordinate coordinate = iterNewCell.next();
+     * addCell(cell);
+     * }
+     * }
+     */
 
 }
