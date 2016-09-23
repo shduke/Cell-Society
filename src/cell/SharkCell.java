@@ -13,10 +13,22 @@ public class SharkCell extends Cell {
     private int myCurrentHealth;
     
 
-    public SharkCell (Coordinate coordinate, int breedTime) {
+    public SharkCell (Coordinate coordinate, int breedTime, int maxHealth) {
+        
         super(State.SHARK, coordinate);
         myMaxBreedTime = breedTime;
         myCurrentBreedTime = myMaxBreedTime;
+        myMaxHealth = maxHealth;
+        myCurrentHealth = myMaxHealth;
+    }
+    
+    public SharkCell (SharkCell shark,Coordinate coordinate){
+        super(State.SHARK,coordinate);
+        myMaxBreedTime = shark.myMaxBreedTime;
+        myCurrentBreedTime = shark.myCurrentBreedTime;
+        myMaxHealth = shark.myMaxHealth;
+        myCurrentHealth = shark.myCurrentHealth;
+        
     }
     
     public void eat(FishCell fish){
@@ -34,6 +46,13 @@ public class SharkCell extends Cell {
         }
     }
     
+    public void swim(Cell cell){
+        Coordinate currentCoord = this.getMyGridCoordinate();
+        Coordinate newCoord = cell.getMyGridCoordinate();
+        this.setMyGridCoordinate(newCoord);
+        cell.setMyGridCoordinate(currentCoord);
+        
+    }
     public boolean canBreed () {
         return myCurrentBreedTime == 0;
     }
