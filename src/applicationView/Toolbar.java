@@ -15,15 +15,11 @@ public class Toolbar {
     private final ResourceBundle GUIResources;
     Button pause;
     Button step;
-<<<<<<< Updated upstream
-    Button loadXML;
-    HBox myToolbar;
-=======
+    Button loadXMLbutton;
     
     public Toolbar() {
         GUIResources = ResourceBundle.getBundle("resources/English");
     }
->>>>>>> Stashed changes
     
     protected void initToolbar(int height, int width, Scene myScene, Group root) {
         myScene.setRoot(root);
@@ -35,19 +31,11 @@ public class Toolbar {
         ChoiceBox cb = new ChoiceBox(FXCollections.observableArrayList(
                                                                        "Fire", "Game of Life", "Predator-Prey", "Segregation")
                                                                    );
-<<<<<<< Updated upstream
-        //cb.set
-        loadXML = new Button("Load XML File");
-        myToolbar.getChildren().addAll(slider, pause, step, cb, loadXML);
-        addToRoot(root);
-    }
-    
-    private void addToRoot(Group root) {
-=======
-        myToolbar.getChildren().addAll(slider, pause, step, cb);
->>>>>>> Stashed changes
+        loadXMLbutton = new Button(GUIResources.getString("LoadXML"));
+        myToolbar.getChildren().addAll(slider, pause, step, cb, loadXMLbutton);
         root.getChildren().add(myToolbar);
     }
+    
     
     private void pauseSimulation() {
         
