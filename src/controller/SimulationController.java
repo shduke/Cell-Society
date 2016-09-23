@@ -8,21 +8,7 @@ import xml.XMLParser;
 
 
 public class SimulationController {
-<<<<<<< HEAD
-    private Simulation mySimulation;
-    private XMLParser myXMLParser;
-    
-    private void initializeSimulation () {
-        myXMLParser.buildSimulation();
-    }
-    
-    public void startSimulation() {
-        mySimulation.init();
-        play();
-    }
-    private void play() {
-        mySimulation.start();
-=======
+
     private Dimension2D simulationViewSize;
     private Simulation simulation;
     private XMLParser readerXML;
@@ -34,8 +20,7 @@ public class SimulationController {
         simulation.addGridViewSceneGraph(simulationRoot);
     }
     private void initializeSimulation () {
-        //readerXML.buildSimulation();
->>>>>>> master
+
     }
 
     //for testing
