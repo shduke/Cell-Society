@@ -8,7 +8,6 @@ import cell.Cell;
 
 
 public class Neighbors {
-
     private List<Cell> neighbors = new ArrayList<Cell>();
     private List<Coordinate> uncreatedNeighborCoordinates = new ArrayList<Coordinate>();
     private int widthBound;
@@ -35,7 +34,9 @@ public class Neighbors {
     public Iterator<Coordinate> getUncreatedNeighborCoordinates () {
         return Collections.unmodifiableList(uncreatedNeighborCoordinates).iterator();
     }
-
+    public List<Cell> getNeighbors(){
+        return neighbors;
+    }
     public void addUncreatedNeighbor (Coordinate uncreatedNeighbors) {
         uncreatedNeighborCoordinates.add(uncreatedNeighbors);
     }

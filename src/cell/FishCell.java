@@ -16,8 +16,17 @@ public class FishCell extends Cell {
         myCurrentBreedTime = myMaxBreedTime;
     }
 
+    public FishCell(FishCell fish, Coordinate coord){
+        super(State.FISH, coord);
+        myMaxBreedTime = fish.myMaxBreedTime;
+        myCurrentBreedTime = fish.myCurrentBreedTime;
+    }
     public void update () {
         myCurrentBreedTime = myCurrentBreedTime == 0 ? myMaxBreedTime : myCurrentBreedTime--;
+    }
+
+    public boolean canBreed () {
+        return myCurrentBreedTime == 0;
     }
 
 }

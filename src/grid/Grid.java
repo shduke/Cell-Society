@@ -53,8 +53,6 @@ public abstract class Grid implements Iterable<Cell> {
 
     public Boolean isCreated (Coordinate coordinate) {
         return cellGrid.containsKey(coordinate);
-        // return coordinate.hashCode() ==
-        // return cellGrid.get(coordinate) != null;
     }
 
     public Boolean isInGrid (Coordinate coordinate) {
@@ -89,7 +87,22 @@ public abstract class Grid implements Iterable<Cell> {
      * @param col
      * @return
      */
-    abstract public Neighbors getNeighbors (Cell cell);
+    public abstract Neighbors getNeighbors (Cell cell, boolean diagonal);
+
+    /**
+     * @param cell
+     * @param neighbors
+     * @param x
+     * @param y
+     */
+    protected void checkAdjacent (Cell cell, Neighbors neighbors, int x, int y) {
+        Coordinate coord =
+                new Coordinate(x + cell.getMyGridCoordinate().getX(),
+                               y + cell.getMyGridCoordinate().getY());
+        if (cellGrid.containsKey(coord)) {
+            neighbors.addNeighbor(cellGrid.get(coord));
+        }
+    }
 
     // abstract public void createNeighbors (Cell cell);
 
