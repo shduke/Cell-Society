@@ -30,6 +30,7 @@ public class FishCell extends Cell {
     }
 
     public boolean canBreed () {
+        System.out.println("My fish breed time is : " + myCurrentBreedTime);
         return myCurrentBreedTime == 0;
     }
 

@@ -54,14 +54,14 @@ public class PredatorPreySimulation extends Simulation {
 
     @Override
     public void step () {
-       
-            updateSharks();
-            updateFishes();
-            getGrid().updateGrid();
-            this.getGridView().updateView();
 
-            System.out.println(counter);
-        
+        updateSharks();
+        updateFishes();
+        getGrid().updateGrid();
+        this.getGridView().updateView();
+
+        System.out.println(counter);
+
         counter++;
         // TODO Auto-generated method stub
 
@@ -171,7 +171,7 @@ public class PredatorPreySimulation extends Simulation {
             System.out.println(c.getMyCurrentState());
             System.out.println(c.getMyNextState());
             if (c.getMyCurrentState() == State.EMPTY && (c.getMyNextState() == State.EMPTY ||
-                c.getMyNextState() == null)) {
+                                                         c.getMyNextState() == null)) {
                 openCells.add(c);
             }
         }
@@ -189,10 +189,10 @@ public class PredatorPreySimulation extends Simulation {
     }
 
     private void breed (Cell cell, List<Cell> openCells) {
-        
+
         if (openCells.size() == 0)
             return;
-        
+
         if (cell.getMyCurrentState() == State.SHARK) {
             if (((SharkCell) cell).canBreed()) {
                 System.out.println("BREED");
@@ -202,24 +202,28 @@ public class PredatorPreySimulation extends Simulation {
                                                          // Node(this.getMyShape()));
             }
         }
-        else if (cell.getMyCurrentState() == State.FISH){
-            if(((FishCell) cell).canBreed()) {
+        else if (cell.getMyCurrentState() == State.FISH) {
+            
+            if (((FishCell) cell).canBreed()) {
                 Cell newFish = openCells.get(new Random().nextInt(openCells.size()));
                 makeNewFish((FishCell) cell, newFish);
             }
         }
 
     }
-    private void makeNewFish (FishCell oldFish, Cell newFish){
+
+    private void makeNewFish (FishCell oldFish, Cell newFish) {
         FishCell babyFish =
                 new FishCell(newFish.getMyGridCoordinate(), myPreyBreedTime);
-                             
+
         babyFish.setMyCurrentState(State.EMPTY);
         babyFish.setMyNextState(State.FISH);
-        System.out.println("Breeding fish at " + babyFish.getMyGridCoordinate().getX() + ", " + babyFish.getMyGridCoordinate().getY());
+        System.out.println("Breeding fish at " + babyFish.getMyGridCoordinate().getX() + ", " +
+                           babyFish.getMyGridCoordinate().getY());
         // return babyShark;
         getGrid().getCellGrid().put(babyFish.getMyGridCoordinate(), babyFish);
     }
+
     private void makeNewShark (SharkCell oldShark, Cell newShark) {
 
         SharkCell babyShark =
@@ -228,7 +232,8 @@ public class PredatorPreySimulation extends Simulation {
 
         babyShark.setMyCurrentState(State.EMPTY);
         babyShark.setMyNextState(State.SHARK);
-        System.out.println("Breeding shark at " + babyShark.getMyGridCoordinate().getX() + ", " + babyShark.getMyGridCoordinate().getY());
+        System.out.println("Breeding shark at " + babyShark.getMyGridCoordinate().getX() + ", " +
+                           babyShark.getMyGridCoordinate().getY());
         // return babyShark;
         getGrid().getCellGrid().put(babyShark.getMyGridCoordinate(), babyShark);
     }

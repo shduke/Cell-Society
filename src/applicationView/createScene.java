@@ -6,6 +6,7 @@ import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import java.util.*;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -27,7 +28,7 @@ public class createScene extends Application {
     public void start(Stage s) {
         myToolbar = new Toolbar();
         Scene scene = new Scene(root);
-        myToolbar.initToolbar(SCREEN_SIZE, SCREEN_SIZE, scene, root);
+        //myToolbar.initToolbar(SCREEN_SIZE, SCREEN_SIZE, scene, root);
 
         s.setScene(scene);
         s.show();
