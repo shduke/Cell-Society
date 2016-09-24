@@ -4,10 +4,12 @@ import controller.ApplicationController;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
+import applicationView.Toolbar;
 
 /**
  * Main class for creating an animated scene.
@@ -22,7 +24,7 @@ public class Main extends Application {
 
 
     private ApplicationController applicationController;
-
+    private Toolbar myToolbar;
     /**
      * Sets the Game up at the beginning.
      * 
@@ -32,17 +34,28 @@ public class Main extends Application {
     public void start (Stage s) {
         applicationController = new ApplicationController();
         s.setTitle(applicationController.getTitle());
-
+        myToolbar = new Toolbar();
+       
         Scene scene = applicationController.init(SIZE, SIZE);
+        EventHandler<MouseEvent> event = new EventHandler<MouseEvent>(){
+            @Override
+            public void handle(MouseEvent m){
+                applicationController.play();
+            }
+        };
+        EventHandler<MouseEvent> eventTwo = new EventHandler<MouseEvent>(){
+            @Override
+            public void handle(MouseEvent m){
+                applicationController.step();
+            }
+        };
+        myToolbar.initToolbar(20,500,scene);
+        myToolbar.setPauseButton(event);
+        myToolbar.setStepButton(eventTwo);
         s.setScene(scene);
         s.show();
 
-        KeyFrame frame = new KeyFrame(Duration.millis(SECOND_DELAY),
-                                      e -> applicationController.getSimulationController().getSimulation().step());
-        Timeline animation = new Timeline();
-        animation.setCycleCount(Timeline.INDEFINITE);
-        animation.getKeyFrames().add(frame);
-        animation.play();
+  
     }
     public static void main (String[] args) {
         launch(args);
