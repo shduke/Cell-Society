@@ -8,7 +8,6 @@ public class RectangleGridView extends GridView {
 
     public RectangleGridView (Dimension2D gridSize, Grid grid) {
         super(gridSize, grid);
-        // TODO Auto-generated constructor stub
     }
 
     @Override
@@ -26,7 +25,6 @@ public class RectangleGridView extends GridView {
                 // cellWidth + " " + cellHeight);
                 configureShape(gridCellDisplay, new Coordinate(r, c));
                 addCellToRoot(gridCellDisplay);
-
             }
         }
     }

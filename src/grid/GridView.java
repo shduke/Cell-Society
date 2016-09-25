@@ -14,15 +14,22 @@ public abstract class GridView {
     Group root = new Group();
     Dimension2D gridSize;
     Grid grid;
-
+//change to take in Grid Config object
     public GridView (Dimension2D gridSize, Grid grid) {
         this.gridSize = gridSize;
         this.grid = grid;
+        displayGrid();
     }
     
     public abstract void displayGrid();
     
-    public void updateView() {
+    public void updateview(){
+        //root = new Group();
+        root.getChildren().clear();
+        displayGrid();  
+    }
+    
+    /*public void updateView() {
         double cellWidth = gridSize.getWidth() / grid.getNumRows();
         double cellHeight = gridSize.getHeight() / grid.getNumRows();
         for(Node node : root.getChildren()){
@@ -33,12 +40,12 @@ public abstract class GridView {
             
         }
        
-    }
+    }*/
     public Group getRoot() {
         return root;
     }
     
-    private void configureShape(Shape shape, Coordinate key) {
+    public void configureShape(Shape shape, Coordinate key) {
         shape.setStrokeWidth(2);
         shape.setStroke(Paint.valueOf("BLACK"));
         if(grid.getImmutableCellGrid().containsKey(key)) {
@@ -49,7 +56,7 @@ public abstract class GridView {
         }
     }
     
-    private void addCellToRoot(Shape shape) {
+    public void addCellToRoot(Shape shape) {
         root.getChildren().add(shape);
     }
 }
