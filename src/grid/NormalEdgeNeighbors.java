@@ -7,20 +7,19 @@ import cell.Cell;
 
 public class NormalEdgeNeighbors extends Neighbors {
 
-    NormalEdgeNeighbors (Grid grid) {
+    public NormalEdgeNeighbors (Grid grid) {
         super(grid);
     }
 
-    //super class call abstract method in sub class
+    // super class call abstract method in sub class
     @Override
     public List<Cell> getNeighbors (List<Coordinate> allowableNeighbors,
-                                    Coordinate coordinate,
-                                    Grid grid) {
+                                    Coordinate coordinate) {
         List<Cell> neighbors = new ArrayList<Cell>();
-        for(Coordinate neighborRelativeCoordinate : allowableNeighbors) {
+        for (Coordinate neighborRelativeCoordinate : allowableNeighbors) {
             Coordinate neighborCoordinate = coordinate.add(neighborRelativeCoordinate);
-            if(grid.isCreated(neighborCoordinate)){ ///change that method
-                neighbors.add(grid.getCell(neighborCoordinate));
+            if (getGrid().isCreated(neighborCoordinate)) { /// change that method
+                neighbors.add(getGrid().getCell(neighborCoordinate));
             }
         }
         return neighbors;

@@ -12,7 +12,7 @@ public abstract class Neighbors {
     private Grid grid;
 
     Neighbors (Grid grid) {
-        this.grid = grid;
+        this.setGrid(grid);
     }
 
    /* public void addNeighbor (Cell cell) {
@@ -33,7 +33,16 @@ public abstract class Neighbors {
         this.allowableNeighbors = allowableNeighbors;
     }*/
 
-    abstract public List<Cell> getNeighbors (List<Coordinate> allowableNeighbors, Coordinate coordinate, Grid grid);
+    abstract public List<Cell> getNeighbors (List<Coordinate> allowableNeighbors, Coordinate coordinate);
+
+    public Grid getGrid () {
+        return grid;
+    }
+
+    public void setGrid (Grid grid) {
+        this.grid = grid;
+    }
+    
     
     
     /*
