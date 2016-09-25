@@ -7,7 +7,7 @@ public enum State {
     SHARK(2, Color.RED),
     DEAD(3, Color.WHITE),
     FIRE(4, Color.RED),
-    BURNING(5, Color.ORANGE), 
+    BURNING(5, Color.ORANGE),
     TREE(6, Color.GREEN);
     
     

@@ -6,7 +6,7 @@ import javafx.geometry.Dimension2D;
 
 public class GameOfLifeSimulation extends Simulation {
 
-    GameOfLifeSimulation () {
+    public GameOfLifeSimulation () {
         // TODO Auto-generated constructor stub
     }
 

@@ -6,7 +6,7 @@ import javafx.geometry.Dimension2D;
 
 public class SegregationSimulation extends Simulation {
 
-    SegregationSimulation () {
+    public SegregationSimulation () {
         // TODO Auto-generated constructor stub
     }
 

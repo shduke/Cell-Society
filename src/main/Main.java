@@ -61,17 +61,4 @@ public class Main extends Application {
     public static void main (String[] args) {
         launch(args);
     }
-    
-/*    public class Main extends Application {
-        public static void main (String[] args) {
-            launch(args);
-
-    }
-        public void start (Stage s) {
-            ApplicationController applicationController = new ApplicationController();
-            Scene scene = applicationController.init(500, 500);
-            s.setScene(scene);
-            s.show();
-        }
-    }*/
 }
