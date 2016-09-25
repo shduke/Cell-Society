@@ -50,6 +50,10 @@ public class Toolbar {
         step.setOnMouseClicked(event);
     }
     
+    public void setXMLFileButton(EventHandler<MouseEvent> event) {
+        loadXMLbutton.setOnMouseClicked(event);
+    }
+    
    
     
 }
