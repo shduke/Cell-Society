@@ -4,7 +4,6 @@ package controller;
 import javafx.animation.Animation.Status;
 import javafx.event.EventHandler;
 import java.io.File;
-import java.util.EventListener;
 import java.util.ResourceBundle;
 import applicationView.Toolbar;
 import javafx.animation.KeyFrame;
@@ -18,7 +17,6 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import xml.XMLParser;
 import xml.XMLParserException;
-import javafx.event.*;
 
 public class ApplicationController {
     public static final String TITLE = "Cell Society";
@@ -99,7 +97,6 @@ public class ApplicationController {
         }
     }
     
-    //filler code
     public Scene init(int width, int height) {
         Group root = new Group();
         Scene myScene = new Scene(root, width, height, Color.WHITE);

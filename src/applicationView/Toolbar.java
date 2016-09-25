@@ -1,9 +1,6 @@
 package applicationView;
 
 import java.util.ResourceBundle;
-import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
-import javafx.event.*;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -14,7 +11,6 @@ import javafx.scene.input.*;
 
 public class Toolbar {
     
-    private int toolbarSize;
     private final ResourceBundle GUIResources;
     Slider slider;
     Button pause;
