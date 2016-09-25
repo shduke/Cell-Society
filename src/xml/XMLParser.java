@@ -1,24 +1,46 @@
 package xml;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import cell.Cell;
-import javafx.geometry.Dimension2D;
-import javafx.scene.Node;
-import simulation.FireSimulation;
-import simulation.Simulation;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.xml.sax.SAXException;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.File;
+import java.io.IOException;
 
 
-/// Responsible for building the simulation
+/**
+ * Handles parsing XML files by returning the root elements.
+ *
+ */
 public class XMLParser {
-
-    public Collection<Cell> getInitCells () {
-        // create cells of the specified cell type (cell type also read in from XML)
-        return new ArrayList<Cell>();
-    }
+    private static final DocumentBuilder DOCUMENT_BUILDER = getDocumentBuilder();
     
-    //filler code
-    public Simulation buildSimulation() {
-        return new FireSimulation();
+    /**
+     * Gets the root element in an XML file.
+     *
+     * @param xmlFilename the location of the xmlFile
+     * @return the root element in the xmlFile
+     */
+    public Element getRootElement (String xmlFilename) {
+        try {
+            DOCUMENT_BUILDER.reset();
+            Document xmlDocument = DOCUMENT_BUILDER.parse(xmlFilename);
+            return xmlDocument.getDocumentElement();
+        }
+        catch (SAXException | IOException e) {
+            throw new XMLParserException(e);
+        }
+    }
+
+    // Helper method to do the boilerplate code needed to make a documentBuilder.
+    private static DocumentBuilder getDocumentBuilder () {
+        try {
+            return DocumentBuilderFactory.newInstance().newDocumentBuilder();
+        }
+        catch (ParserConfigurationException e) {
+            throw new XMLParserException(e);
+        }
     }
 }
