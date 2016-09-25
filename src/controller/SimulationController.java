@@ -51,18 +51,7 @@ public class SimulationController {
         }
     }
 
-    // for testing
-
-    // public FireSimulation getSimulation () {
-    // return (FireSimulation) simulation;
-    // }
-
-    public SegregationSimulation getSimulation () {
-        return (SegregationSimulation) simulation;
+    public Simulation getSimulation () {
+        return simulation;
     }
-
-    // public PredatorPreySimulation getSimulation() {
-    // return (PredatorPreySimulation)simulation;
-    // }
-
 }

@@ -5,6 +5,7 @@ import javafx.animation.Animation.Status;
 import javafx.event.EventHandler;
 import java.io.File;
 import java.util.EventListener;
+import java.util.ResourceBundle;
 import applicationView.Toolbar;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -25,8 +26,10 @@ public class ApplicationController {
     private Toolbar myToolbar;
     Timeline myTimeline;
     XMLParser myParser = new XMLParser();
+    private final ResourceBundle GUIResources;
     
     public ApplicationController() {
+        GUIResources = ResourceBundle.getBundle("resources/English");
         myToolbar = new Toolbar();
         KeyFrame frame = new KeyFrame(Duration.millis(SECOND_DELAY),
                                       e -> update());
@@ -48,9 +51,12 @@ public class ApplicationController {
     public void play(){
         if(myTimeline.getStatus() == Status.RUNNING){
             myTimeline.pause();
+            //TODO: Change these to grab from resources file
+            myToolbar.getPause().setText(GUIResources.getString("PlayCommand"));
         }
         else{
             myTimeline.play();
+            myToolbar.getPause().setText(GUIResources.getString("PauseCommand"));
         }
         
     }
