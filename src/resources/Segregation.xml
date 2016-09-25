@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Title Name="Normal Segregation">
+	<author>Michael</author>
+	<SimulationType Simulation="Segregation">
+		<GridConfig>
+			<gridWidth>500</gridWidth>
+			<gridHeight>500</gridHeight>
+			<numberOfRows>5</numberOfRows>
+			<numberOfColumns>5</numberOfColumns>	
+		</GridConfig>
+		<SimulationDetails>
+			<agentSatisfaction>.5</agentSatisfaction>	
+		</SimulationDetails>
+		<Cells InitialSetup="Specific">
+			<cell>O_2_3</cell>
+			<cell>O_3_2</cell>
+			<cell>O_1_1</cell>
+			<cell>X_2_2</cell>
+			<cell>X_3_3</cell>
+			<cell>O_4_4</cell>
+			<cell>O_1_3</cell>
+			<cell>O_1_2</cell>
+			<cell>X_2_4</cell>
+			<cell>O_4_2</cell>
+			<cell>X_2_1</cell>
+		</Cells>
+	</SimulationType>
+</Title>

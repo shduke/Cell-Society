@@ -65,7 +65,7 @@ public abstract class Simulation {
     public void updateGrid () {
         myGrid.updateGrid();
         // addGridViewSceneGraph();
-        myGridView.updateview();
+        myGridView.updateView();
 
     }
 

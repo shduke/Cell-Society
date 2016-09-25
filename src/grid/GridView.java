@@ -23,7 +23,7 @@ public abstract class GridView {
     
     public abstract void displayGrid();
     
-    public void updateview(){
+    public void updateView(){
         //root = new Group();
         root.getChildren().clear();
         displayGrid();  
