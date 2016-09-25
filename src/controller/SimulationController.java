@@ -16,8 +16,8 @@ public class SimulationController {
 
     SimulationController(Group simulationRoot) {
         this.simulationRoot = simulationRoot;
-        //simulation = new FireSimulation();
-        simulation = new PredatorPreySimulation();
+        simulation = new FireSimulation();
+        //simulation = new PredatorPreySimulation();
         simulation.addGridViewSceneGraph(simulationRoot);
     }
     private void initializeSimulation () {
@@ -25,12 +25,12 @@ public class SimulationController {
     }
 
     //for testing
-    /*
+    
     public FireSimulation getSimulation() {
         return (FireSimulation)simulation;
-    }*/
-    
-    public PredatorPreySimulation getSimulation() {
-        return (PredatorPreySimulation)simulation;
     }
+    
+    /*public PredatorPreySimulation getSimulation() {
+        return (PredatorPreySimulation)simulation;
+    }*/
 }

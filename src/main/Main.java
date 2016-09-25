@@ -5,6 +5,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.event.EventHandler;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
@@ -30,7 +31,7 @@ public class Main extends Application {
      * 
      * @return nothing
      */
-    @Override
+    @Override///Almost all of this should go in ApplicationController
     public void start (Stage s) {
         applicationController = new ApplicationController();
         s.setTitle(applicationController.getTitle());
@@ -60,4 +61,17 @@ public class Main extends Application {
     public static void main (String[] args) {
         launch(args);
     }
+    
+/*    public class Main extends Application {
+        public static void main (String[] args) {
+            launch(args);
+
+    }
+        public void start (Stage s) {
+            ApplicationController applicationController = new ApplicationController();
+            Scene scene = applicationController.init(500, 500);
+            s.setScene(scene);
+            s.show();
+        }
+    }*/
 }

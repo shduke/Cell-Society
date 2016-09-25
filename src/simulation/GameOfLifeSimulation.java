@@ -20,11 +20,6 @@ public class GameOfLifeSimulation extends Simulation {
 
     public void start () {
     }
-    @Override
-    public void createNeighbors (Cell cell) {
-        // TODO Auto-generated method stub
-        
-    }
 
     @Override
 

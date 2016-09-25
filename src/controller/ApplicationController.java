@@ -11,9 +11,10 @@ import javafx.util.Duration;
 
 public class ApplicationController {
     public static final String TITLE = "Cell Society";
-    private static final double SECOND_DELAY = 100.0;
+    private static final double SECOND_DELAY = 1000.0;
     Timeline myTimeline;
     public ApplicationController() {
+        
         KeyFrame frame = new KeyFrame(Duration.millis(SECOND_DELAY),
                                       e -> getSimulationController().getSimulation().step());
         myTimeline = new Timeline();
