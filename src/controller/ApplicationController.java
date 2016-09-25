@@ -3,6 +3,7 @@ package controller;
 
 import javafx.animation.Animation.Status;
 import javafx.event.EventHandler;
+import java.io.File;
 import java.util.EventListener;
 import applicationView.Toolbar;
 import javafx.animation.KeyFrame;
@@ -11,7 +12,11 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import javafx.util.Duration;
+import xml.XMLParser;
+import xml.XMLParserException;
 import javafx.event.*;
 
 public class ApplicationController {
@@ -19,6 +24,8 @@ public class ApplicationController {
     private static final double SECOND_DELAY = 1000.0;
     private Toolbar myToolbar;
     Timeline myTimeline;
+    XMLParser myParser = new XMLParser();
+    
     public ApplicationController() {
         myToolbar = new Toolbar();
         KeyFrame frame = new KeyFrame(Duration.millis(SECOND_DELAY),
@@ -59,9 +66,33 @@ public class ApplicationController {
         
         myTimeline.setRate(myToolbar.getSpeed());
     }
+    
     public void pause(){
         myTimeline.pause();
     }
+    
+    public void loadFile() {
+        myTimeline.pause();
+    }
+    
+    public void openFile(File myFile) {
+        try {
+            String filePath = myFile.getAbsolutePath();
+            simulationController.initializeSimulation(filePath);
+        }
+        //TODO: create XML Exception
+        catch (XMLParserException xmlexcept){
+            
+        }
+    }
+    
+    private void openFileChooser(FileChooser chooseFile) {
+        File myFile = chooseFile.showOpenDialog(new Stage());
+        if (myFile != null) {
+            openFile(myFile);
+        }
+    }
+    
     //filler code
     public Scene init(int width, int height) {
         Group root = new Group();
@@ -78,12 +109,19 @@ public class ApplicationController {
                 step();
             }
         };
+        EventHandler<MouseEvent> eventThree = new EventHandler<MouseEvent>(){
+            @Override
+            public void handle(MouseEvent m){
+                openFileChooser(new FileChooser());
+            }
+        };
         
         
         simulationController = new SimulationController(root);
         myToolbar.initToolbar(20,width,myScene);
         myToolbar.setPauseButton(event);
         myToolbar.setStepButton(eventTwo);
+        myToolbar.setXMLFileButton(eventThree);
 
         return myScene;
     }

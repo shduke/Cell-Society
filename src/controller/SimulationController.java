@@ -32,7 +32,7 @@ public class SimulationController {
      * 
      * @param xmlFilename
      */
-    private void initializeSimulation (String xmlFilename) {
+    void initializeSimulation (String xmlFilename) {
         Element rootElement = parser.getRootElement(xmlFilename);
         String simulationType =
                 rootElement.getElementsByTagName("SimulationType").item(0).getAttributes()
