@@ -10,38 +10,26 @@ import javafx.scene.shape.Shape;
 import javafx.scene.*;
 import java.util.*;
 
-public class GridView {
+public abstract class GridView {
     Group root = new Group();
-    String gridCellShape;
     Dimension2D gridSize;
     Grid grid;
-
-    public GridView (Dimension2D gridSize, String gridCellShape, Grid grid) {
+//change to take in Grid Config object
+    public GridView (Dimension2D gridSize, Grid grid) {
         this.gridSize = gridSize;
-        this.gridCellShape = gridCellShape;
         this.grid = grid;
-        displaySquareGrid(gridSize, grid);
+        displayGrid();
     }
     
-    public void displaySquareGrid (Dimension2D gridSize, Grid grid) {
-        double cellWidth = gridSize.getWidth() / grid.getNumRows();
-        double cellHeight = gridSize.getHeight() / grid.getNumRows();
-        for (int r = 0; r <= grid.getNumRows(); r++) {
-            for (int c = 0; c <= grid.getNumColumns(); c++) {
-                Double xView = (r-1) * cellWidth;
-                Double yView = (c-1) * cellHeight;
-                Rectangle gridCellDisplay = new Rectangle(cellWidth, cellHeight);
-                gridCellDisplay.setX(xView);
-                gridCellDisplay.setY(yView);
-                //System.out.println(gridCellDisplay.getX() + " " + gridCellDisplay.getY() + " " + cellWidth + " " + cellHeight);
-                configureShape(gridCellDisplay, new Coordinate(r, c));
-                addCellToRoot(gridCellDisplay);
-
-            }
-        }
+    public abstract void displayGrid();
+    
+    public void updateview(){
+        //root = new Group();
+        root.getChildren().clear();
+        displayGrid();  
     }
     
-    public void updateView() {
+    /*public void updateView() {
         double cellWidth = gridSize.getWidth() / grid.getNumRows();
         double cellHeight = gridSize.getHeight() / grid.getNumRows();
         for(Node node : root.getChildren()){
@@ -52,12 +40,12 @@ public class GridView {
             
         }
        
-    }
+    }*/
     public Group getRoot() {
         return root;
     }
     
-    private void configureShape(Shape shape, Coordinate key) {
+    public void configureShape(Shape shape, Coordinate key) {
         shape.setStrokeWidth(2);
         shape.setStroke(Paint.valueOf("BLACK"));
         if(grid.getImmutableCellGrid().containsKey(key)) {
@@ -68,7 +56,7 @@ public class GridView {
         }
     }
     
-    private void addCellToRoot(Shape shape) {
+    public void addCellToRoot(Shape shape) {
         root.getChildren().add(shape);
     }
 }
