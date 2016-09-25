@@ -6,39 +6,40 @@ import java.util.Iterator;
 import java.util.List;
 import cell.Cell;
 
+//abstract class or interface
+public abstract class Neighbors {
+    //private List<Cell> neighbors = new ArrayList<Cell>();
+    private Grid grid;
 
-public class Neighbors {
-    private List<Cell> neighbors = new ArrayList<Cell>();
-    private List<Coordinate> uncreatedNeighborCoordinates = new ArrayList<Coordinate>();
-    private int widthBound;
-    private int heightBound;
-    private Boolean isSurrounded;
-
-    Neighbors (int widthBound, int heightBound) {
-        this.widthBound = widthBound;
-        this.heightBound = heightBound;
+    Neighbors (Grid grid) {
+        this.grid = grid;
     }
 
-    public void addNeighbor (Cell cell) {
+   /* public void addNeighbor (Cell cell) {
         neighbors.add(cell);
-    }
+    }*/
 
-    public Boolean getIsSurrounded () {
-        return isSurrounded;
-    }
+    /*
+     * public Iterator<Coordinate> getNeighborCoordinates () {
+     * return Collections.unmodifiableList(allowableNeighbors).iterator();
+     * }
+     */
 
-    public void setIsSurrounded (Boolean isSurrounded) {
-        this.isSurrounded = isSurrounded;
-    }
+    /*public List<Coordinate> getAllowableNeighbors () {
+        return allowableNeighbors;
+    }*/
 
-    public Iterator<Coordinate> getUncreatedNeighborCoordinates () {
-        return Collections.unmodifiableList(uncreatedNeighborCoordinates).iterator();
-    }
-    public List<Cell> getNeighbors(){
-        return neighbors;
-    }
-    public void addUncreatedNeighbor (Coordinate uncreatedNeighbors) {
-        uncreatedNeighborCoordinates.add(uncreatedNeighbors);
-    }
+   /* public void setAllowableNeighbors (List<Coordinate> allowableNeighbors) {
+        this.allowableNeighbors = allowableNeighbors;
+    }*/
+
+    abstract public List<Cell> getNeighbors (List<Coordinate> allowableNeighbors, Coordinate coordinate, Grid grid);
+    
+    
+    /*
+     * public void addUncreatedNeighbor (Coordinate uncreatedNeighbors) {
+     * uncreatedNeighborCoordinates.add(uncreatedNeighbors);
+     * }
+     */
 
 }
