@@ -9,8 +9,8 @@ import cell.EmptyCell;
 import cell.State;
 import grid.Coordinate;
 import grid.GridView;
+import grid.Neighbor;
 import grid.Neighbors;
-import grid.RectangleGrid;
 import javafx.geometry.Dimension2D;
 import java.util.*;
 
@@ -39,8 +39,7 @@ public class SegregationSimulation extends Simulation {
                 input.add(new EmptyCell(new Coordinate(i, j)));
             }
         }
-        setGrid(new RectangleGrid(5,5,input));
-        setGridView(new GridView(new Dimension2D(500, 500), "Rectangle", getGrid()));
+        
         // TODO Auto-generated constructor stub
     }
 
@@ -54,10 +53,10 @@ public class SegregationSimulation extends Simulation {
     }
 
     private void updateAgents () {
-        Iterator<Map.Entry<Coordinate, Cell>> cells = getGrid().getCellGridIterator();
+        Iterator<Cell> cells = getGrid().iterator();
         while (cells.hasNext()) {
-            Entry<Coordinate, Cell> entry = cells.next();
-            Cell cell = entry.getValue();
+            
+            Cell cell = cells.next();
             if (cell.getMyCurrentState() == State.EMPTY && cell.getMyNextState() == null) {
                 cell.setMyNextState(State.EMPTY);
             }
@@ -75,11 +74,11 @@ public class SegregationSimulation extends Simulation {
     }
 
     private boolean isUnsatisfied (AgentCell cell) {
-        Neighbors neighbors = getGrid().getNeighbors(cell, true);
-        List<Cell> neighborCells = neighbors.getNeighbors();
+        List<Cell> neighbors = getNeighbors().getNeighbors(Neighbor.SQUARE.getNeighbors(),cell.getMyGridCoordinate());
+       
         int totalNeighbors = 0;
         int friendlyNeighbors = 0;
-        for (Cell c : neighborCells) {
+        for (Cell c : neighbors) {
             if (c.getMyCurrentState() == cell.getMyCurrentState()) {
                 friendlyNeighbors++;
             }

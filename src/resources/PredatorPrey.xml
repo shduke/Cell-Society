@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Title Name="Normal PredatorPrey">
+	<author>Michael</author>
+	<SimulationType Simulation="PredatorPrey">
+		<GridConfig>
+			<gridWidth>500</gridWidth>
+			<gridHeight>500</gridHeight>
+			<numberOfRows>10</numberOfRows>
+			<numberOfColumns>10</numberOfColumns>	
+		</GridConfig>
+		<SimulationDetails>
+			<preyBreedTime>5</preyBreedTime>
+			<predatorBreedTime>16</predatorBreedTime>
+			<sharkMaxHealth>15</sharkMaxHealth>	
+		</SimulationDetails>
+		<Cells InitialSetup="Specific">
+			<cell>Shark_2_2</cell>
+			<cell>Fish_3_3</cell>
+			<cell>Fish_4_5</cell>
+			<cell>Fish_1_3</cell>
+			<cell>Shark_6_7</cell>
+		</Cells>
+	</SimulationType>
+</Title>

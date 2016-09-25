@@ -4,6 +4,8 @@ import grid.*;
 import javafx.geometry.Dimension2D;
 import java.util.*;
 import java.util.Map.Entry;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 import cell.*;
 import javafx.scene.shape.*;
 
@@ -48,10 +50,66 @@ public class PredatorPreySimulation extends Simulation {
             }
         }
 
-        setGrid(new RectangleGrid(10, 10, input));
-        setGridView(new GridView(new Dimension2D(500, 500), "Rectangle", getGrid()));
+       
     }
 
+    private void initializeSimulation (Element rootElement) {
+        this.myPreyBreedTime = Integer.parseInt(getStringValue(rootElement, "preyBreedTime"));
+        this.myPredatorBreedTime = Integer.parseInt(getStringValue(rootElement, "predatorBreedTiem"));
+        this.mySharkMaxHealth = Integer.parseInt(getStringValue(rootElement, "sharkMaxHealth"));
+        Map<Coordinate, Cell> cellGrid = new HashMap<Coordinate, Cell>();
+        NodeList cells = rootElement.getElementsByTagName("cell");
+        for(int i = 0; i < cells.getLength(); i++){
+            Cell cell = parseCells(cells.item(i).getFirstChild().getNodeValue());
+            cellGrid.put(cell.getMyGridCoordinate(), cell);
+        }
+        int numRows = Integer.parseInt(getStringValue(rootElement, "numberOfRows"));
+        int numCols = Integer.parseInt(getStringValue(rootElement, "numberOfColumns"));
+        generateMap(numRows, numCols, cellGrid);
+        setGrid(new Grid(numRows, numCols, cellGrid));
+        double gridWidth = Double.parseDouble(getStringValue(rootElement, "gridWidth"));
+        double gridHeight = Double.parseDouble(getStringValue(rootElement, "gridHeight"));
+        // TODO-grid dimensions should come from SimulationController, type of grid will be
+        // determined by input as well as edge type
+        setGridView(new RectangleGridView(new Dimension2D(gridWidth, gridHeight), getGrid()));
+        setNeighbors(new NormalEdgeNeighbors(getGrid()));
+    }
+    
+    public void generateMap (int numberOfRows,
+                             int numberOfColumns,
+                             Map<Coordinate, Cell> cellGrid) {
+        for (int r = 0; r < numberOfRows; r++) {
+            for (int c = 0; c < numberOfColumns; c++) {
+                Coordinate coordinate = new Coordinate(r, c);
+                if (!cellGrid.containsKey(coordinate)) {
+                    EmptyCell cell = new EmptyCell(coordinate);
+                    
+                    cellGrid.put(coordinate, cell);
+                }
+
+            }
+        }
+    }
+    private String getStringValue (Element rootElement, String name) {
+        return rootElement.getElementsByTagName(name).item(0).getFirstChild().getNodeValue();
+    }
+    
+    private Cell parseCells (String cellString) {
+        String[] cellData = cellString.split("_");
+        State st = State.valueOf(cellData[0].toUpperCase());
+        Double x = Double.parseDouble(cellData[1]);
+        Double y = Double.parseDouble(cellData[2]);
+        Coordinate coord = new Coordinate(x, y);
+        if(st == State.EMPTY){
+            return new EmptyCell(coord);
+        }
+        else if(st == State.FISH){
+            return new FishCell(coord, myPreyBreedTime);
+        }
+        else{
+            return new SharkCell(coord, myPredatorBreedTime, mySharkMaxHealth);
+        }
+    }
     @Override
     public void step () {
 
@@ -68,11 +126,10 @@ public class PredatorPreySimulation extends Simulation {
     }
 
     private void updateSharks () {
-        Iterator<Map.Entry<Coordinate, Cell>> cells = getGrid().getMutableCellGridIterator();
+        Iterator<Cell> cells = getGrid().iterator();
 
         while (cells.hasNext()) {
-            Entry<Coordinate, Cell> e = cells.next();
-            Cell cell = e.getValue();
+            Cell cell = cells.next();
 
             if (cell.getMyCurrentState() == State.EMPTY && cell.getMyNextState() == null) {
                 cell.setMyNextState(State.EMPTY);
@@ -91,10 +148,10 @@ public class PredatorPreySimulation extends Simulation {
 
     private void updateFishes () {
 
-        Iterator<Map.Entry<Coordinate, Cell>> cells = getGrid().getMutableCellGridIterator();
+        Iterator<Cell> cells = getGrid().iterator();
         while (cells.hasNext()) {
-            Entry<Coordinate, Cell> e = cells.next();
-            Cell cell = e.getValue();
+
+            Cell cell = cells.next();
             if (cell.getMyCurrentState() == State.FISH) {
                 if (cell.getMyNextState() == State.DEAD) {
                     kill((FishCell) cell);
@@ -126,12 +183,14 @@ public class PredatorPreySimulation extends Simulation {
     }
 
     private void updateShark (SharkCell shark) {
-        Neighbors neighbors = getGrid().getNeighbors(shark, diagonalNeighbors);
-        System.out.println("there are " + neighbors.getNeighbors().size() + " neighbors");
-        List<Cell> canMoveOrBreed = getOpenCells(neighbors.getNeighbors());
+        List<Cell> neighbors =
+                getNeighbors().getNeighbors(Neighbor.SQUARE.getNeighbors(),
+                                            shark.getMyGridCoordinate());
+        System.out.println("there are " + neighbors.size() + " neighbors");
+        List<Cell> canMoveOrBreed = getOpenCells(neighbors);
         System.out.println("there are " + canMoveOrBreed.size() + " open cells");
         System.out.println("Shark can " + (shark.canBreed() ? "" : "not ") + "breed");
-        List<Cell> foodCells = getEdibleCells(neighbors.getNeighbors());
+        List<Cell> foodCells = getEdibleCells(neighbors);
         shark.update();
         if (shark.getMyNextState() == State.DEAD) {
             kill(shark);
@@ -156,8 +215,10 @@ public class PredatorPreySimulation extends Simulation {
 
     private void updateFish (FishCell fish) {
         fish.update();
-        Neighbors neighbors = getGrid().getNeighbors(fish, diagonalNeighbors);
-        List<Cell> canMoveOrBreed = getOpenCells(neighbors.getNeighbors());
+        List<Cell> neighbors =
+                getNeighbors().getNeighbors(Neighbor.SQUARE.getNeighbors(),
+                                            fish.getMyGridCoordinate());
+        List<Cell> canMoveOrBreed = getOpenCells(neighbors);
         breed(fish, canMoveOrBreed);
         move(fish, canMoveOrBreed);
         if (fish.getMyNextState() == null) {
@@ -203,7 +264,7 @@ public class PredatorPreySimulation extends Simulation {
             }
         }
         else if (cell.getMyCurrentState() == State.FISH) {
-            
+
             if (((FishCell) cell).canBreed()) {
                 Cell newFish = openCells.get(new Random().nextInt(openCells.size()));
                 makeNewFish((FishCell) cell, newFish);
@@ -296,9 +357,4 @@ public class PredatorPreySimulation extends Simulation {
 
     }
 
-    @Override
-    public void createNeighbors (Cell cell) {
-        // TODO Auto-generated method stub
-
-    }
 }
