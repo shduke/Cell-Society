@@ -1,9 +1,6 @@
 package applicationView;
 
 import java.util.ResourceBundle;
-import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
-import javafx.event.*;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -14,10 +11,13 @@ import javafx.scene.input.*;
 
 public class Toolbar {
     
-    private int toolbarSize;
     private final ResourceBundle GUIResources;
     Slider slider;
     Button pause;
+    public Button getPause () {
+        return pause;
+    }
+
     Button step;
     Button loadXMLbutton;
     
@@ -31,7 +31,7 @@ public class Toolbar {
         myScene.setRoot(root);
         HBox myToolbar = new HBox(30.0);
         slider = new Slider(0.5, 2, 1);
-        pause = new Button(GUIResources.getString("PauseCommand"));
+        pause = new Button(GUIResources.getString("PlayCommand"));
         step = new Button(GUIResources.getString("StepCommand"));
         loadXMLbutton = new Button(GUIResources.getString("LoadXML"));
         myToolbar.getChildren().addAll(slider, pause, step, loadXMLbutton);
