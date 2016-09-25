@@ -44,7 +44,7 @@ public class SimulationController {
             simulation = new GameOfLifeSimulation();
         }
         else if (simulationType.equals("PredatorPrey")) {
-            simulation = new PredatorPreySimulation();
+            simulation = new PredatorPreySimulation(rootElement);
         }
         else {
             simulation = new SegregationSimulation();

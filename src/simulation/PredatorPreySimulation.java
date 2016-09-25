@@ -28,7 +28,8 @@ public class PredatorPreySimulation extends Simulation {
     private int myFishEnergy;
     private int counter = 1;
 
-    public PredatorPreySimulation () {
+    public PredatorPreySimulation (Element rootElement) {
+        /*
         diagonalNeighbors = false;
         myPreyBreedTime = 5;
         myPredatorBreedTime = 15;
@@ -48,14 +49,15 @@ public class PredatorPreySimulation extends Simulation {
 
                 }
             }
-        }
+        }*/
+        initializeSimulation(rootElement);
 
        
     }
 
     private void initializeSimulation (Element rootElement) {
         this.myPreyBreedTime = Integer.parseInt(getStringValue(rootElement, "preyBreedTime"));
-        this.myPredatorBreedTime = Integer.parseInt(getStringValue(rootElement, "predatorBreedTiem"));
+        this.myPredatorBreedTime = Integer.parseInt(getStringValue(rootElement, "predatorBreedTime"));
         this.mySharkMaxHealth = Integer.parseInt(getStringValue(rootElement, "sharkMaxHealth"));
         Map<Coordinate, Cell> cellGrid = new HashMap<Coordinate, Cell>();
         NodeList cells = rootElement.getElementsByTagName("cell");
