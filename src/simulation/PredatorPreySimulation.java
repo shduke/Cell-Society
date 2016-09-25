@@ -186,7 +186,7 @@ public class PredatorPreySimulation extends Simulation {
 
     private void updateShark (SharkCell shark) {
         List<Cell> neighbors =
-                getNeighbors().getNeighbors(Neighbor.SQUARE.getNeighbors(),
+                getNeighbors().getNeighbors(Neighbor.ORTHOGONAL.getNeighbors(),
                                             shark.getMyGridCoordinate());
         System.out.println("there are " + neighbors.size() + " neighbors");
         List<Cell> canMoveOrBreed = getOpenCells(neighbors);
@@ -218,7 +218,7 @@ public class PredatorPreySimulation extends Simulation {
     private void updateFish (FishCell fish) {
         fish.update();
         List<Cell> neighbors =
-                getNeighbors().getNeighbors(Neighbor.SQUARE.getNeighbors(),
+                getNeighbors().getNeighbors(Neighbor.ORTHOGONAL.getNeighbors(),
                                             fish.getMyGridCoordinate());
         List<Cell> canMoveOrBreed = getOpenCells(neighbors);
         breed(fish, canMoveOrBreed);
