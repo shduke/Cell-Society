@@ -8,7 +8,9 @@ public enum State {
     DEAD(3, Color.WHITE),
     FIRE(4, Color.RED),
     BURNING(5, Color.ORANGE), 
-    TREE(6, Color.GREEN);
+    TREE(6, Color.GREEN),
+    X(7, Color.RED),
+    O(8, Color.BLUE);
     
     
     private final int myValue;
