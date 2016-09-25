@@ -152,7 +152,7 @@ public class SegregationSimulation extends Simulation {
         if(totalNeighbors == 0){
             return false;
         }
-        System.out.println("Num neighbors of " + cell.getMyGridCoordinate() + " is " + totalNeighbors);
+        
         return !cell.isSatisfied((double) (friendlyNeighbors / totalNeighbors));
 
     }
@@ -173,8 +173,7 @@ public class SegregationSimulation extends Simulation {
         EmptyCell startCell = new EmptyCell(cell.getMyGridCoordinate());
         startCell.setMyCurrentState(cell.getMyCurrentState());
         startCell.setMyNextState(State.EMPTY);
-        System.out.println(cell.getMyGridCoordinate() + " is " + cell.getMyCurrentState());
-        System.out.println(cell.getMyGridCoordinate() + " will be " + cell.getMyNextState());
+        
         getGrid().getCellGrid().put(endCell.getMyGridCoordinate(), endCell);
         getGrid().getCellGrid().put(startCell.getMyGridCoordinate(), startCell);
     }

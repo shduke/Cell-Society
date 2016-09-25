@@ -17,6 +17,7 @@ public class Toolbar {
     
     private int toolbarSize;
     private final ResourceBundle GUIResources;
+    Slider slider;
     Button pause;
     Button step;
     Button loadXMLbutton;
@@ -30,7 +31,7 @@ public class Toolbar {
         
         myScene.setRoot(root);
         HBox myToolbar = new HBox(20.0);
-        Slider slider = new Slider(0, 1, 0.5);
+        slider = new Slider(0.5, 2, 1);
         pause = new Button(GUIResources.getString("PauseCommand"));
         
         step = new Button(GUIResources.getString("StepCommand"));
@@ -43,6 +44,9 @@ public class Toolbar {
         root.getChildren().add(myToolbar);
     }
     
+    public double getSpeed(){
+        return slider.getValue();
+    }
     public void setPauseButton(EventHandler<MouseEvent> event){
         pause.setOnMouseClicked(event);
       
@@ -51,5 +55,7 @@ public class Toolbar {
     public void setStepButton(EventHandler<MouseEvent> event) {
         step.setOnMouseClicked(event);
     }
+    
+   
     
 }
