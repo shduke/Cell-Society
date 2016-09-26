@@ -87,7 +87,7 @@ public class ApplicationController {
             
             String filePath = myFile.getAbsolutePath();
             simulationController.initializeSimulation(filePath);
-            myToolbar.initToolbar(20, 500, myScene);
+            myToolbar.initToolbar(30, 500, myScene);
             handleEvents(500, root);
         }
         // TODO: create XML Exception
@@ -107,7 +107,7 @@ public class ApplicationController {
         root = new Group();
         myScene = new Scene(root, width, height, Color.WHITE);
         simulationController = new SimulationController(root);
-        myToolbar.initToolbar(20, width, myScene);
+        myToolbar.initToolbar(30, width, myScene);
         handleEvents(width, root);
         return myScene;
     }

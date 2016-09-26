@@ -14,12 +14,12 @@ public class Toolbar {
     private final ResourceBundle GUIResources;
     Slider slider;
     Button pause;
+    Button step;
+    Button loadXMLbutton;
+    
     public Button getPause () {
         return pause;
     }
-
-    Button step;
-    Button loadXMLbutton;
     
     public Toolbar() {
         GUIResources = ResourceBundle.getBundle("resources/English");
@@ -27,9 +27,8 @@ public class Toolbar {
     
     public void initToolbar(int height, int width, Scene myScene) {
         Group root = (Group)myScene.getRoot();
-        
         myScene.setRoot(root);
-        HBox myToolbar = new HBox(30.0);
+        HBox myToolbar = new HBox(height);
         slider = new Slider(0.5, 2, 1);
         pause = new Button(GUIResources.getString("PlayCommand"));
         step = new Button(GUIResources.getString("StepCommand"));
