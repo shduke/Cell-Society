@@ -10,7 +10,8 @@ public enum State {
     BURNING(5, Color.ORANGE), 
     TREE(6, Color.GREEN),
     X(7, Color.RED),
-    O(8, Color.GREEN);
+    O(8, Color.GREEN),
+    LIVING(9, Color.DARKGREEN);
 
     
     

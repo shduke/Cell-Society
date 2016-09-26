@@ -57,8 +57,8 @@ public abstract class Simulation {
 
 
     public void initializeSimulation(Map<String, Map<String, String>> simulationConfig) {
-        initializeGrid(simulationConfig);
         initializeSimulationDetails(simulationConfig.get("SimulationDetails"));
+        initializeGrid(simulationConfig);
         generateMap(getGrid().getNumRows(), getGrid().getNumColumns(), getGrid());
         setGridView(new RectangleGridView(new Dimension2D(Double.parseDouble(simulationConfig.get("GridConfig").get("gridWidth")), Double.parseDouble(simulationConfig.get("GridConfig").get("gridHeight"))), getGrid()));
         setNeighbors(new NormalEdgeNeighbors(getGrid()));

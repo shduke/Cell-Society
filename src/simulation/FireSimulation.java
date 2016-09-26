@@ -33,26 +33,11 @@ public class FireSimulation extends Simulation {
 
     public FireSimulation (Map<String, Map<String, String>> simulationConfig) {
         super(simulationConfig);
-        generateMap(getGrid().getNumRows(), getGrid().getNumColumns(), getGrid());
-    }
-
-    private Cell parseCells (String cellString) {
-        String[] cellData = cellString.split("_");
-        FireCell cell = new FireCell(State.valueOf(cellData[0].toUpperCase()),
-                                     new Coordinate(Double.parseDouble(cellData[1]),
-                                                    Double.parseDouble(cellData[2])));
-        if (cell.getMyCurrentState().equals(State.BURNING)) {
-            cell.setBurnTimer(burnTime);
-        }
-        return cell;
-
     }
 
     private String getStringValue (Element rootElement, String name) {
         return rootElement.getElementsByTagName(name).item(0).getFirstChild().getNodeValue();
     }
-
-
 
     // Allows them to specify what coordinates they went, the rest are set to default by a function,
     // gets bounds and starter map from config
@@ -78,14 +63,8 @@ public class FireSimulation extends Simulation {
     // very temporary code, just here to make it work
     @Override
     public void step () {
-        getGrid().applyFuncToCell(p -> setNextState(p)); // HOW DO I DO THIS? why not Cell:
-        /*
-         * for (Cell cell : getGrid().getImmutableCellGrid().values()) {
-         * setNextState(cell);
-         * }
-         */
+        getGrid().applyFuncToCell(p -> setNextState(p));
         updateGrid();
-
     }
 
     public boolean hasBurningNeighbor (Cell cell) {
@@ -132,9 +111,11 @@ public class FireSimulation extends Simulation {
     @Override
     public Cell createCell (String stringCoordinate, String currentState) {
         String[] coordinateData = stringCoordinate.split("_");
-        return new FireCell(State.valueOf(currentState.toUpperCase()),
-                            new Coordinate(Double.parseDouble(coordinateData[0]),
-                                           Double.parseDouble(coordinateData[1])));
+        FireCell cell = new FireCell(State.valueOf(currentState.toUpperCase()),
+                     new Coordinate(Double.parseDouble(coordinateData[0]),
+                                    Double.parseDouble(coordinateData[1])));
+        cell.setBurnTimer(burnTime);
+        return cell;
     }
 
 }
