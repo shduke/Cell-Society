@@ -21,6 +21,7 @@ public class PredatorPreySimulation extends Simulation {
      * // TODO Auto-generated constructor stub
      * }
      */
+    private Neighbor myNeighborType;
     private boolean diagonalNeighbors;
     private int myPreyBreedTime;
     private int myPredatorBreedTime;
@@ -56,6 +57,7 @@ public class PredatorPreySimulation extends Simulation {
     }
 
     private void initializeSimulation (Element rootElement) {
+        this.myNeighborType = Neighbor.SQUARE;
         this.myPreyBreedTime = Integer.parseInt(getStringValue(rootElement, "preyBreedTime"));
         this.myPredatorBreedTime = Integer.parseInt(getStringValue(rootElement, "predatorBreedTime"));
         this.mySharkMaxHealth = Integer.parseInt(getStringValue(rootElement, "sharkMaxHealth"));
@@ -186,7 +188,7 @@ public class PredatorPreySimulation extends Simulation {
 
     private void updateShark (SharkCell shark) {
         List<Cell> neighbors =
-                getNeighbors().getNeighbors(Neighbor.ORTHOGONAL.getNeighbors(),
+                getNeighbors().getNeighbors(myNeighborType.getNeighbors(),
                                             shark.getMyGridCoordinate());
         System.out.println("there are " + neighbors.size() + " neighbors");
         List<Cell> canMoveOrBreed = getOpenCells(neighbors);
@@ -218,7 +220,7 @@ public class PredatorPreySimulation extends Simulation {
     private void updateFish (FishCell fish) {
         fish.update();
         List<Cell> neighbors =
-                getNeighbors().getNeighbors(Neighbor.ORTHOGONAL.getNeighbors(),
+                getNeighbors().getNeighbors(myNeighborType.getNeighbors(),
                                             fish.getMyGridCoordinate());
         List<Cell> canMoveOrBreed = getOpenCells(neighbors);
         breed(fish, canMoveOrBreed);

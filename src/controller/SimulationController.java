@@ -19,11 +19,11 @@ public class SimulationController {
 
     SimulationController (Group simulationRoot) {
         // File simulationConfig = new File("src/resources/FireSettings.xml");
-        File simulationConfig = new File("src/resources/Segregation.xml");
-        initializeSimulation(simulationConfig.getAbsolutePath());
+        //File simulationConfig = new File("src/resources/Segregation.xml");
+        //initializeSimulation(simulationConfig.getAbsolutePath());
         this.simulationRoot = simulationRoot;
         // simulation = new PredatorPreySimulation();
-        simulation.addGridViewSceneGraph(simulationRoot);
+        
     }
 
     /**
@@ -49,6 +49,7 @@ public class SimulationController {
         else {
             simulation = new SegregationSimulation(rootElement);
         }
+        simulation.addGridViewSceneGraph(simulationRoot);
     }
 
     // for testing
@@ -57,8 +58,8 @@ public class SimulationController {
     // return (FireSimulation) simulation;
     // }
 
-    public SegregationSimulation getSimulation () {
-        return (SegregationSimulation) simulation;
+    public Simulation getSimulation () {
+        return simulation;
     }
 
     // public PredatorPreySimulation getSimulation() {
