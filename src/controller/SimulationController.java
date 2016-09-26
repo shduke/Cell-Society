@@ -52,18 +52,7 @@ public class SimulationController {
         simulation.addGridViewSceneGraph(simulationRoot);
     }
 
-    // for testing
-
-    // public FireSimulation getSimulation () {
-    // return (FireSimulation) simulation;
-    // }
-
     public Simulation getSimulation () {
         return simulation;
     }
-
-    // public PredatorPreySimulation getSimulation() {
-    // return (PredatorPreySimulation)simulation;
-    // }
-
 }
