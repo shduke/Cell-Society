@@ -32,23 +32,13 @@ public class SimulationController {
      * 
      * @param xmlFilename
      */
-    private void initializeSimulation (String xmlFilename) {
+    void initializeSimulation (String xmlFilename) {
         Element rootElement = parser.getRootElement(xmlFilename);
         this.simulation = parser.createSimulation(rootElement);
     }
 
-    // for testing
-
-    // public FireSimulation getSimulation () {
-    // return (FireSimulation) simulation;
-    // }
 
     public Simulation getSimulation () {
         return simulation;
     }
-
-    // public PredatorPreySimulation getSimulation() {
-    // return (PredatorPreySimulation)simulation;
-    // }
-
 }
