@@ -25,7 +25,10 @@ public class SegregationSimulation extends Simulation {
 
     private double myAgentSatisfiedRatio;
 
-    public SegregationSimulation (Element rootElement) {
+    public SegregationSimulation (Map<String, Map<String, String>> simulationConfig) {
+        super(simulationConfig);
+    }
+        
         /*
         myAgentSatisfiedRatio = 0.5;
         ArrayList<Cell> input = new ArrayList<Cell>();
@@ -46,10 +49,10 @@ public class SegregationSimulation extends Simulation {
                 input.add(new EmptyCell(new Coordinate(i, j)));
             }
         }
-        */
+        
         initializeSimulation(rootElement);
         // TODO Auto-generated constructor stub
-    }
+    }*/
     
     private void initializeSimulation (Element rootElement){
         this.myAgentSatisfiedRatio = Double.parseDouble(getStringValue(rootElement, "agentSatisfaction"));
@@ -201,6 +204,24 @@ public class SegregationSimulation extends Simulation {
 
         // TODO Auto-generated method stub
 
+    }
+
+    @Override
+    public void initializeSimulationDetails (Map<String, String> simulationConfig) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public Cell createCell (String stringCoordinate, String currentState) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public void generateMap (int numberOfRows, int numberOfColumns, Grid cellGrid) {
+        // TODO Auto-generated method stub
+        
     }
 
 }
