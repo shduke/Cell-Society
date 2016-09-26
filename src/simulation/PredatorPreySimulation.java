@@ -29,7 +29,10 @@ public class PredatorPreySimulation extends Simulation {
     private int myFishEnergy;
     private int counter = 1;
 
-    public PredatorPreySimulation (Element rootElement) {
+    public PredatorPreySimulation (Map<String, Map<String, String>> simulationConfig) {
+        super(simulationConfig);
+    }
+  
         /*
         diagonalNeighbors = false;
         myPreyBreedTime = 5;
@@ -50,11 +53,11 @@ public class PredatorPreySimulation extends Simulation {
 
                 }
             }
-        }*/
+        }
         initializeSimulation(rootElement);
 
        
-    }
+    }*/
 
     private void initializeSimulation (Element rootElement) {
         this.myNeighborType = Neighbor.SQUARE;
@@ -359,6 +362,24 @@ public class PredatorPreySimulation extends Simulation {
     public void setNextState (Cell cell) {
         // TODO Auto-generated method stub
 
+    }
+
+    @Override
+    public void initializeSimulationDetails (Map<String, String> simulationConfig) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public Cell createCell (String stringCoordinate, String currentState) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public void generateMap (int numberOfRows, int numberOfColumns, Grid cellGrid) {
+        // TODO Auto-generated method stub
+        
     }
 
 }

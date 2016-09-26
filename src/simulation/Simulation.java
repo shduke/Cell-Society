@@ -1,9 +1,15 @@
 package simulation;
 
+import java.util.HashMap;
+import java.util.Map;
 import cell.Cell;
+import grid.Coordinate;
 import grid.Grid;
 import grid.GridView;
 import grid.Neighbors;
+import grid.NormalEdgeNeighbors;
+import grid.RectangleGridView;
+import javafx.geometry.Dimension2D;
 import javafx.scene.Group;
 import javafx.scene.shape.Shape;
 import xml.XMLParser;
@@ -12,6 +18,9 @@ import xml.XMLParser;
 public abstract class Simulation {
     /// SimulationConfig
     /// GridViewConfig
+    
+
+    //private Map<String, Map<String, String>> simulationConfig;
     private Shape myCellShape;
 
     /// these 3 fields could be put in a gridViewController
@@ -19,6 +28,11 @@ public abstract class Simulation {
     private GridView myGridView;
     private Neighbors neighbors;
 
+    Simulation(Map<String, Map<String, String>> simulationConfig) {
+        //this.simulationConfig = simulationConfig;
+        initializeSimulation(simulationConfig);
+    }
+    
     public Grid getGrid () {
         return myGrid;
     }
@@ -43,6 +57,29 @@ public abstract class Simulation {
 
     public abstract void init ();
 
+    public void initializeSimulation(Map<String, Map<String, String>> simulationConfig) {
+        initializeGrid(simulationConfig);
+        initializeSimulationDetails(simulationConfig.get("SimulationDetails"));
+        generateMap(getGrid().getNumRows(), getGrid().getNumColumns(), getGrid());
+        setGridView(new RectangleGridView(new Dimension2D(Double.parseDouble(simulationConfig.get("GridConfig").get("gridWidth")), Double.parseDouble(simulationConfig.get("GridConfig").get("gridHeight"))), getGrid()));
+        setNeighbors(new NormalEdgeNeighbors(getGrid()));
+    }
+    
+    public abstract void initializeSimulationDetails(Map<String, String> simulationConfig);
+    
+    public void initializeGrid(Map<String, Map<String, String>> simulationConfig) {
+        Map<Coordinate, Cell> cellGrid = new HashMap<Coordinate, Cell>();
+        for(Map.Entry<String,String> entry : simulationConfig.get("Cells").entrySet()) {
+            Cell cell = createCell(entry.getKey(), entry.getValue());
+            cellGrid.put(cell.getMyGridCoordinate(), cell);
+        }
+        setGrid(new Grid(Integer.parseInt(simulationConfig.get("GridConfig").get("numberOfRows")), Integer.parseInt(simulationConfig.get("GridConfig").get("numberOfRows")), cellGrid));
+    }
+    
+    public abstract Cell createCell(String stringCoordinate, String currentState);
+    public abstract void generateMap(int numberOfRows,
+                                     int numberOfColumns,
+                                     Grid cellGrid);
     // public abstract void initializeCells();
 
     public GridView getGridView () {
