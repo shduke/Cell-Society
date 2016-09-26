@@ -1,14 +1,10 @@
 package grid;
 
-import cell.Cell;
 import cell.State;
 import javafx.geometry.Dimension2D;
 import javafx.scene.Group;
 import javafx.scene.paint.Paint;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
-import javafx.scene.*;
-import java.util.*;
 
 public abstract class GridView {
     Group root = new Group();

@@ -13,7 +13,6 @@ import grid.Neighbor;
 import javafx.geometry.Dimension2D;
 import grid.Neighbor;
 
-
 public class GameOfLifeSimulation extends Simulation {
 
     public GameOfLifeSimulation (Map<String, Map<String, String>> simulationConfig) {
