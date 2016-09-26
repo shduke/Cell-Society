@@ -25,6 +25,8 @@ public class ApplicationController {
     Timeline myTimeline;
     XMLParser myParser = new XMLParser();
     private final ResourceBundle GUIResources;
+    private Scene myScene;
+    private Group root;
 
     public ApplicationController () {
         GUIResources = ResourceBundle.getBundle("resources/English");
@@ -52,7 +54,6 @@ public class ApplicationController {
     public void play () {
         if (myTimeline.getStatus() == Status.RUNNING) {
             myTimeline.pause();
-            // TODO: Change these to grab from resources file
             myToolbar.getPause().setText(GUIResources.getString("PlayCommand"));
         }
         else {
@@ -65,13 +66,11 @@ public class ApplicationController {
     public void step () {
         if (myTimeline.getStatus() == Status.RUNNING) {
             myTimeline.stop();
-
         }
         simulationController.getSimulation().step();
     }
 
     public void setSpeed () {
-
         myTimeline.setRate(myToolbar.getSpeed());
     }
 
@@ -85,8 +84,11 @@ public class ApplicationController {
 
     public void openFile (File myFile) {
         try {
+            
             String filePath = myFile.getAbsolutePath();
             simulationController.initializeSimulation(filePath);
+            myToolbar.initToolbar(30, 500, myScene);
+            handleEvents(500, root);
         }
         // TODO: create XML Exception
         catch (XMLParserException xmlexcept) {
@@ -102,8 +104,15 @@ public class ApplicationController {
     }
 
     public Scene init (int width, int height) {
-        Group root = new Group();
-        Scene myScene = new Scene(root, width, height, Color.WHITE);
+        root = new Group();
+        myScene = new Scene(root, width, height, Color.WHITE);
+        simulationController = new SimulationController(root);
+        myToolbar.initToolbar(30, width, myScene);
+        handleEvents(width, root);
+        return myScene;
+    }
+
+    private void handleEvents (int width, Group root) {
         EventHandler<MouseEvent> event = new EventHandler<MouseEvent>() {
             @Override
             public void handle (MouseEvent m) {
@@ -119,17 +128,13 @@ public class ApplicationController {
         EventHandler<MouseEvent> eventThree = new EventHandler<MouseEvent>() {
             @Override
             public void handle (MouseEvent m) {
+                loadFile();
                 openFileChooser(new FileChooser());
             }
         };
-
-        simulationController = new SimulationController(root);
-        myToolbar.initToolbar(20, width, myScene);
         myToolbar.setPauseButton(event);
         myToolbar.setStepButton(eventTwo);
         myToolbar.setXMLFileButton(eventThree);
-
-        return myScene;
     }
 
     public SimulationController getSimulationController () {

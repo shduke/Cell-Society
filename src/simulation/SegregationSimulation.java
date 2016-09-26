@@ -4,17 +4,10 @@ import java.util.stream.Collectors;
 import cell.AgentCell;
 import cell.Cell;
 import cell.EmptyCell;
-import cell.FishCell;
-import cell.SharkCell;
 import cell.State;
 import grid.Coordinate;
 import grid.Grid;
-import grid.GridView;
 import grid.Neighbor;
-import grid.Neighbors;
-import grid.NormalEdgeNeighbors;
-import grid.RectangleGridView;
-import javafx.geometry.Dimension2D;
 import java.util.*;
 
 

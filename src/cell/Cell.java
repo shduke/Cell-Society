@@ -1,8 +1,6 @@
 package cell;
 
 import grid.Coordinate;
-import javafx.geometry.Point2D;
-import javafx.scene.Node;
 
 
 public abstract class Cell {

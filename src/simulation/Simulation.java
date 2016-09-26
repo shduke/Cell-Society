@@ -12,15 +12,9 @@ import grid.RectangleGridView;
 import javafx.geometry.Dimension2D;
 import javafx.scene.Group;
 import javafx.scene.shape.Shape;
-import xml.XMLParser;
 
 
 public abstract class Simulation {
-    /// SimulationConfig
-    /// GridViewConfig
-    
-
-    //private Map<String, Map<String, String>> simulationConfig;
     private Shape myCellShape;
 
     /// these 3 fields could be put in a gridViewController
@@ -29,7 +23,6 @@ public abstract class Simulation {
     private Neighbors neighbors;
 
     Simulation(Map<String, Map<String, String>> simulationConfig) {
-        //this.simulationConfig = simulationConfig;
         initializeSimulation(simulationConfig);
     }
     
@@ -79,7 +72,6 @@ public abstract class Simulation {
     public abstract void generateMap(int numberOfRows,
                                      int numberOfColumns,
                                      Grid cellGrid);
-    // public abstract void initializeCells();
 
     public GridView getGridView () {
         return myGridView;
@@ -100,7 +92,6 @@ public abstract class Simulation {
     /// if laggy change order
     public void updateGrid () {
         myGrid.updateGrid();
-        // addGridViewSceneGraph();
         myGridView.updateView();
 
     }

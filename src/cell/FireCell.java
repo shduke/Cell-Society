@@ -1,7 +1,6 @@
 package cell;
 
 import grid.Coordinate;
-import javafx.scene.Node;
 
 
 public class FireCell extends Cell {
