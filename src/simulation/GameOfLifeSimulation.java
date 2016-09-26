@@ -4,7 +4,6 @@ package simulation;
 import java.util.Map;
 import cell.Cell;
 import grid.Grid;
-import javafx.geometry.Dimension2D;
 
 public class GameOfLifeSimulation extends Simulation {
 

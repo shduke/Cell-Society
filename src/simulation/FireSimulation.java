@@ -1,11 +1,6 @@
 package simulation;
 
 import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import cell.Cell;
@@ -13,18 +8,7 @@ import cell.FireCell;
 import cell.State;
 import grid.Coordinate;
 import grid.Grid;
-import grid.GridView;
 import grid.Neighbor;
-import grid.Neighbors;
-import grid.NormalEdgeNeighbors;
-import grid.RectangleGridView;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.geometry.Dimension2D;
-import javafx.scene.Group;
-import javafx.scene.Node;
-import javafx.scene.media.MediaPlayer;
-import javafx.util.Duration;
 
 
 public class FireSimulation extends Simulation {

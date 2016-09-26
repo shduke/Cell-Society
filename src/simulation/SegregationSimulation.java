@@ -1,20 +1,15 @@
 package simulation;
 
-import java.util.Map.Entry;
 import java.util.stream.Collectors;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import cell.AgentCell;
 import cell.Cell;
 import cell.EmptyCell;
-import cell.FishCell;
-import cell.SharkCell;
 import cell.State;
 import grid.Coordinate;
 import grid.Grid;
-import grid.GridView;
 import grid.Neighbor;
-import grid.Neighbors;
 import grid.NormalEdgeNeighbors;
 import grid.RectangleGridView;
 import javafx.geometry.Dimension2D;

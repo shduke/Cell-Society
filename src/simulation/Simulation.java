@@ -12,7 +12,6 @@ import grid.RectangleGridView;
 import javafx.geometry.Dimension2D;
 import javafx.scene.Group;
 import javafx.scene.shape.Shape;
-import xml.XMLParser;
 
 
 public abstract class Simulation {
@@ -101,7 +100,6 @@ public abstract class Simulation {
     /// if laggy change order
     public void updateGrid () {
         myGrid.updateGrid();
-        // addGridViewSceneGraph();
         myGridView.updateView();
 
     }

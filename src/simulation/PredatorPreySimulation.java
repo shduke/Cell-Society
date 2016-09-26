@@ -3,11 +3,9 @@ package simulation;
 import grid.*;
 import javafx.geometry.Dimension2D;
 import java.util.*;
-import java.util.Map.Entry;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import cell.*;
-import javafx.scene.shape.*;
 
 
 /**
@@ -21,11 +19,9 @@ public class PredatorPreySimulation extends Simulation {
      * // TODO Auto-generated constructor stub
      * }
      */
-    private boolean diagonalNeighbors;
     private int myPreyBreedTime;
     private int myPredatorBreedTime;
     private int mySharkMaxHealth;
-    private int myFishEnergy;
     private int counter = 1;
 
     public PredatorPreySimulation (Map<String, Map<String, String>> simulationConfig) {
