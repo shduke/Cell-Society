@@ -8,9 +8,6 @@ import cell.State;
 import grid.Coordinate;
 import grid.Grid;
 import grid.Neighbor;
-import grid.NormalEdgeNeighbors;
-import grid.RectangleGridView;
-import javafx.geometry.Dimension2D;
 import java.util.*;
 
 

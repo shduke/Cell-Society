@@ -4,13 +4,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import cell.Cell;
-import cell.FireCell;
 import cell.GameOfLifeCell;
 import cell.State;
 import grid.Coordinate;
 import grid.Grid;
-import grid.Neighbor;
-import javafx.geometry.Dimension2D;
 import grid.Neighbor;
 
 public class GameOfLifeSimulation extends Simulation {

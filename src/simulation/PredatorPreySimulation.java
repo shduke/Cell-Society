@@ -1,10 +1,7 @@
 package simulation;
 
 import grid.*;
-import javafx.geometry.Dimension2D;
 import java.util.*;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
 import cell.*;
 
 
@@ -20,7 +17,6 @@ public class PredatorPreySimulation extends Simulation {
      * }
      */
     private Neighbor myNeighborType;
-    private boolean diagonalNeighbors;
     private int myPreyBreedTime;
     private int myPredatorBreedTime;
     private int mySharkMaxHealth;

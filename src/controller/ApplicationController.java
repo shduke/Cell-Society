@@ -54,7 +54,6 @@ public class ApplicationController {
     public void play () {
         if (myTimeline.getStatus() == Status.RUNNING) {
             myTimeline.pause();
-            // TODO: Change these to grab from resources file
             myToolbar.getPause().setText(GUIResources.getString("PlayCommand"));
         }
         else {
@@ -67,13 +66,11 @@ public class ApplicationController {
     public void step () {
         if (myTimeline.getStatus() == Status.RUNNING) {
             myTimeline.stop();
-
         }
         simulationController.getSimulation().step();
     }
 
     public void setSpeed () {
-
         myTimeline.setRate(myToolbar.getSpeed());
     }
 
@@ -87,10 +84,10 @@ public class ApplicationController {
 
     public void openFile (File myFile) {
         try {
-            root.getChildren().clear();
+            
             String filePath = myFile.getAbsolutePath();
             simulationController.initializeSimulation(filePath);
-            
+            myToolbar.initToolbar(20, 500, myScene);
             handleEvents(500, root);
         }
         // TODO: create XML Exception
@@ -109,6 +106,8 @@ public class ApplicationController {
     public Scene init (int width, int height) {
         root = new Group();
         myScene = new Scene(root, width, height, Color.WHITE);
+        simulationController = new SimulationController(root);
+        myToolbar.initToolbar(20, width, myScene);
         handleEvents(width, root);
         return myScene;
     }
@@ -133,9 +132,6 @@ public class ApplicationController {
                 openFileChooser(new FileChooser());
             }
         };
-
-        simulationController = new SimulationController(root);
-        myToolbar.initToolbar(20, width, myScene);
         myToolbar.setPauseButton(event);
         myToolbar.setStepButton(eventTwo);
         myToolbar.setXMLFileButton(eventThree);

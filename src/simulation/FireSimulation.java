@@ -1,6 +1,5 @@
 package simulation;
 
-import org.w3c.dom.Element;
 import java.util.Map;
 import java.util.Random;
 import cell.Cell;
@@ -17,10 +16,6 @@ public class FireSimulation extends Simulation {
 
     public FireSimulation (Map<String, Map<String, String>> simulationConfig) {
         super(simulationConfig);
-    }
-
-    private String getStringValue (Element rootElement, String name) {
-        return rootElement.getElementsByTagName(name).item(0).getFirstChild().getNodeValue();
     }
 
     // Allows them to specify what coordinates they went, the rest are set to default by a function,
