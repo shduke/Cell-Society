@@ -1,4 +1,4 @@
-package applicationView;
+/*package applicationView;
 import controller.ApplicationController;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -36,7 +36,6 @@ public class createScene extends Application {
     
    /* public static void main (String[] args) {
         launch(args);
-    }*/
+    }
 
-    
-}
+}*/
