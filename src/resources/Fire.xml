@@ -11,16 +11,11 @@
 		<SimulationDetails>
 			<burnTime>3</burnTime>
     		<probCatch>50</probCatch>
-    		<Graphics>
-    			<emptyGraphic>Yellow</emptyGraphic>
-    			<treeGraphic>Green</treeGraphic>
-    			<burningGraphic>Red</burningGraphic>
-    		</Graphics>
 		</SimulationDetails>
 		<Cells InitialSetup="Specific">
-			<cell>Burning_2_2</cell>
+			<cell>Burning_5_5</cell>
 			<cell>Burning_3_4</cell>
-			<cell>Empty_1_3</cell>
+			<cell>Empty_5_3</cell>
 		</Cells>
 	</SimulationType>
 </Title>
