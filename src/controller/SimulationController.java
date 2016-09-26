@@ -19,7 +19,7 @@ public class SimulationController {
 
     SimulationController (Group simulationRoot) {
         // File simulationConfig = new File("src/resources/FireSettings.xml");
-        File simulationConfig = new File("src/resources/Segregation.xml");
+        File simulationConfig = new File("src/resources/Fire.xml");
         initializeSimulation(simulationConfig.getAbsolutePath());
         this.simulationRoot = simulationRoot;
         // simulation = new PredatorPreySimulation();
@@ -34,21 +34,7 @@ public class SimulationController {
      */
     private void initializeSimulation (String xmlFilename) {
         Element rootElement = parser.getRootElement(xmlFilename);
-        String simulationType =
-                rootElement.getElementsByTagName("SimulationType").item(0).getAttributes()
-                        .getNamedItem("Simulation").getNodeValue();
-        if (simulationType.equals("Fire")) {
-            simulation = new FireSimulation(rootElement);
-        }
-        else if (simulationType.equals("GameOfLife")) {
-            simulation = new GameOfLifeSimulation();
-        }
-        else if (simulationType.equals("PredatorPrey")) {
-            simulation = new PredatorPreySimulation(rootElement);
-        }
-        else {
-            simulation = new SegregationSimulation(rootElement);
-        }
+        this.simulation = parser.createSimulation(rootElement);
     }
 
     // for testing
@@ -57,8 +43,8 @@ public class SimulationController {
     // return (FireSimulation) simulation;
     // }
 
-    public SegregationSimulation getSimulation () {
-        return (SegregationSimulation) simulation;
+    public Simulation getSimulation () {
+        return simulation;
     }
 
     // public PredatorPreySimulation getSimulation() {
