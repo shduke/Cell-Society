@@ -33,46 +33,11 @@ public class FireSimulation extends Simulation {
 
     public FireSimulation (Map<String, Map<String, String>> simulationConfig) {
         super(simulationConfig);
-        generateMap(getGrid().getNumRows(), getGrid().getNumColumns(), getGrid());
-    }
-
-    private Cell parseCells (String cellString) {
-        String[] cellData = cellString.split("_");
-        FireCell cell = new FireCell(State.valueOf(cellData[0].toUpperCase()),
-                                     new Coordinate(Double.parseDouble(cellData[1]),
-                                                    Double.parseDouble(cellData[2])));
-        if (cell.getMyCurrentState().equals(State.BURNING)) {
-            cell.setBurnTimer(burnTime);
-        }
-        return cell;
-
     }
 
     private String getStringValue (Element rootElement, String name) {
         return rootElement.getElementsByTagName(name).item(0).getFirstChild().getNodeValue();
     }
-
-    // TODO-put config factory stuff in another class
-    // private void initializeSimulation (Element rootElement) {
-    // this.probCatch = Double.parseDouble(getStringValue(rootElement, "probCatch"));
-    // this.burnTime = Integer.parseInt(getStringValue(rootElement, "burnTime"));
-    // Map<Coordinate, Cell> cellGrid = new HashMap<Coordinate, Cell>();
-    // NodeList cells = rootElement.getElementsByTagName("cell");
-    // for (int i = 0; i < cells.getLength(); i++) {
-    // Cell cell = parseCells(cells.item(i).getFirstChild().getNodeValue());
-    // cellGrid.put(cell.getMyGridCoordinate(), cell);
-    // }
-    // int numRows = Integer.parseInt(getStringValue(rootElement, "numberOfRows"));
-    // int numCols = Integer.parseInt(getStringValue(rootElement, "numberOfColumns"));
-    // generateMap(numRows, numCols, cellGrid);
-    // setGrid(new Grid(numRows, numCols, cellGrid));
-    // double gridWidth = Double.parseDouble(getStringValue(rootElement, "gridWidth"));
-    // double gridHeight = Double.parseDouble(getStringValue(rootElement, "gridHeight"));
-    // // TODO-grid dimensions should come from SimulationController, type of grid will be
-    // // determined by input as well as edge type
-    // setGridView(new RectangleGridView(new Dimension2D(gridWidth, gridHeight), getGrid()));
-    // setNeighbors(new NormalEdgeNeighbors(getGrid()));
-    // }
 
     // Allows them to specify what coordinates they went, the rest are set to default by a function,
     // gets bounds and starter map from config
@@ -98,14 +63,8 @@ public class FireSimulation extends Simulation {
     // very temporary code, just here to make it work
     @Override
     public void step () {
-        getGrid().applyFuncToCell(p -> setNextState(p)); // HOW DO I DO THIS? why not Cell:
-        /*
-         * for (Cell cell : getGrid().getImmutableCellGrid().values()) {
-         * setNextState(cell);
-         * }
-         */
+        getGrid().applyFuncToCell(p -> setNextState(p));
         updateGrid();
-
     }
 
     public boolean hasBurningNeighbor (Cell cell) {
@@ -163,9 +122,11 @@ public class FireSimulation extends Simulation {
     @Override
     public Cell createCell (String stringCoordinate, String currentState) {
         String[] coordinateData = stringCoordinate.split("_");
-        return new FireCell(State.valueOf(currentState.toUpperCase()),
-                            new Coordinate(Double.parseDouble(coordinateData[0]),
-                                           Double.parseDouble(coordinateData[1])));
+        FireCell cell = new FireCell(State.valueOf(currentState.toUpperCase()),
+                     new Coordinate(Double.parseDouble(coordinateData[0]),
+                                    Double.parseDouble(coordinateData[1])));
+        cell.setBurnTimer(burnTime);
+        return cell;
     }
 
 }
