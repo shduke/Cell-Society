@@ -25,6 +25,8 @@ public class ApplicationController {
     Timeline myTimeline;
     XMLParser myParser = new XMLParser();
     private final ResourceBundle GUIResources;
+    private Scene myScene;
+    private Group root;
 
     public ApplicationController () {
         GUIResources = ResourceBundle.getBundle("resources/English");
@@ -85,8 +87,11 @@ public class ApplicationController {
 
     public void openFile (File myFile) {
         try {
+            root.getChildren().clear();
             String filePath = myFile.getAbsolutePath();
             simulationController.initializeSimulation(filePath);
+            
+            handleEvents(500, root);
         }
         // TODO: create XML Exception
         catch (XMLParserException xmlexcept) {
@@ -102,8 +107,13 @@ public class ApplicationController {
     }
 
     public Scene init (int width, int height) {
-        Group root = new Group();
-        Scene myScene = new Scene(root, width, height, Color.WHITE);
+        root = new Group();
+        myScene = new Scene(root, width, height, Color.WHITE);
+        handleEvents(width, root);
+        return myScene;
+    }
+
+    private void handleEvents (int width, Group root) {
         EventHandler<MouseEvent> event = new EventHandler<MouseEvent>() {
             @Override
             public void handle (MouseEvent m) {
@@ -119,6 +129,7 @@ public class ApplicationController {
         EventHandler<MouseEvent> eventThree = new EventHandler<MouseEvent>() {
             @Override
             public void handle (MouseEvent m) {
+                loadFile();
                 openFileChooser(new FileChooser());
             }
         };
@@ -128,8 +139,6 @@ public class ApplicationController {
         myToolbar.setPauseButton(event);
         myToolbar.setStepButton(eventTwo);
         myToolbar.setXMLFileButton(eventThree);
-
-        return myScene;
     }
 
     public SimulationController getSimulationController () {

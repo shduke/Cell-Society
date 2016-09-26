@@ -2,7 +2,9 @@ package controller;
 
 import java.io.File;
 import org.w3c.dom.Element;
+import applicationView.Toolbar;
 import javafx.scene.Group;
+import javafx.scene.Scene;
 import simulation.Simulation;
 import xml.XMLParser;
 
