@@ -293,7 +293,7 @@ public class PredatorPreySimulation extends Simulation {
 
     @Override
     public Cell createCell (String stringCoordinate, String currentState) {
-        State st = State.valueOf(currentState);
+        State st = State.valueOf(currentState.toUpperCase());
         String[] coordinateData = stringCoordinate.split("_");
         Coordinate coord =
                 new Coordinate(Double.parseDouble(coordinateData[0]),

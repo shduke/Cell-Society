@@ -26,7 +26,7 @@ public class SegregationSimulation extends Simulation {
         super(simulationConfig);
         generateMap(getGrid().getNumRows(), getGrid().getNumColumns(), getGrid());
     }
-    
+
     @Override
     public void generateMap (int numberOfRows,
                              int numberOfColumns,
@@ -122,13 +122,11 @@ public class SegregationSimulation extends Simulation {
         getGrid().getCellGrid().put(startCell.getMyGridCoordinate(), startCell);
     }
 
-
     public void createNeighbors (Cell cell) {
 
         // TODO Auto-generated method stub
 
     }
-
 
     public void setNextState (Cell cell) {
 
@@ -147,7 +145,7 @@ public class SegregationSimulation extends Simulation {
     public Cell createCell (String stringCoordinate, String currentState) {
         // TODO Auto-generated method stub
 
-        State st = State.valueOf(currentState);
+        State st = State.valueOf(currentState.toUpperCase());
         String[] coordinateData = stringCoordinate.split("_");
         Coordinate coord =
                 new Coordinate(Double.parseDouble(coordinateData[0]),
@@ -160,6 +158,5 @@ public class SegregationSimulation extends Simulation {
         }
 
     }
-
 
 }
