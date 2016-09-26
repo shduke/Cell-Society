@@ -9,7 +9,7 @@
 			<numberOfColumns>5</numberOfColumns>	
 		</GridConfig>
 		<SimulationDetails>
-			<agentSatisfaction>.5</agentSatisfaction>	
+			<myAgentSatisfiedRatio>.5</myAgentSatisfiedRatio>	
 		</SimulationDetails>
 		<Cells InitialSetup="Specific">
 			<cell>O_2_3</cell>

@@ -27,15 +27,7 @@ public class GameOfLifeSimulation extends Simulation {
         updateGrid();
     }
 
-    @Override
 
-    public void start () {
-    }
-
-    @Override
-
-    public void init () {
-    }
 
     private int livingNeighbors (List<Cell> neighbors) {
         int count = 0;

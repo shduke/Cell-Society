@@ -21,6 +21,7 @@ public class PredatorPreySimulation extends Simulation {
      * // TODO Auto-generated constructor stub
      * }
      */
+    private Neighbor myNeighborType;
     private boolean diagonalNeighbors;
     private int myPreyBreedTime;
     private int myPredatorBreedTime;
@@ -31,90 +32,24 @@ public class PredatorPreySimulation extends Simulation {
     public PredatorPreySimulation (Map<String, Map<String, String>> simulationConfig) {
         super(simulationConfig);
     }
-  
-        /*
-        diagonalNeighbors = false;
-        myPreyBreedTime = 5;
-        myPredatorBreedTime = 15;
-        mySharkMaxHealth = 20;
-        ArrayList<Cell> input = new ArrayList<Cell>();
 
-        input.add(new SharkCell(
-                                new Coordinate(2, 2), myPredatorBreedTime, mySharkMaxHealth));
-        input.add(new SharkCell(new Coordinate(3, 3), myPredatorBreedTime, mySharkMaxHealth));
-        input.add(new FishCell(4, 4, myPreyBreedTime));
-        for (int i = 0; i < 10; i++) {
-            for (int j = 0; j < 10; j++) {
-                if (!(i == 2 && j == 2) && !(i == 3 && j == 3) && !(i == 4 && j == 4)) {
-                    EmptyCell cell = new EmptyCell(new Coordinate(i, j));
-
-                    input.add(cell);
-
-                }
-            }
-        }
-        initializeSimulation(rootElement);
-
-       
-    }*/
-
-    private void initializeSimulation (Element rootElement) {
-        this.myPreyBreedTime = Integer.parseInt(getStringValue(rootElement, "preyBreedTime"));
-        this.myPredatorBreedTime = Integer.parseInt(getStringValue(rootElement, "predatorBreedTime"));
-        this.mySharkMaxHealth = Integer.parseInt(getStringValue(rootElement, "sharkMaxHealth"));
-        Map<Coordinate, Cell> cellGrid = new HashMap<Coordinate, Cell>();
-        NodeList cells = rootElement.getElementsByTagName("cell");
-        for(int i = 0; i < cells.getLength(); i++){
-            Cell cell = parseCells(cells.item(i).getFirstChild().getNodeValue());
-            cellGrid.put(cell.getMyGridCoordinate(), cell);
-        }
-        int numRows = Integer.parseInt(getStringValue(rootElement, "numberOfRows"));
-        int numCols = Integer.parseInt(getStringValue(rootElement, "numberOfColumns"));
-        generateMap(numRows, numCols, cellGrid);
-        setGrid(new Grid(numRows, numCols, cellGrid));
-        double gridWidth = Double.parseDouble(getStringValue(rootElement, "gridWidth"));
-        double gridHeight = Double.parseDouble(getStringValue(rootElement, "gridHeight"));
-        // TODO-grid dimensions should come from SimulationController, type of grid will be
-        // determined by input as well as edge type
-        setGridView(new RectangleGridView(new Dimension2D(gridWidth, gridHeight), getGrid()));
-        setNeighbors(new NormalEdgeNeighbors(getGrid()));
-    }
-    
+    @Override
     public void generateMap (int numberOfRows,
                              int numberOfColumns,
-                             Map<Coordinate, Cell> cellGrid) {
+                             Grid cellGrid) {
         for (int r = 0; r < numberOfRows; r++) {
             for (int c = 0; c < numberOfColumns; c++) {
                 Coordinate coordinate = new Coordinate(r, c);
-                if (!cellGrid.containsKey(coordinate)) {
+                if (!cellGrid.isCreated(coordinate)) {
                     EmptyCell cell = new EmptyCell(coordinate);
-                    
-                    cellGrid.put(coordinate, cell);
+
+                    cellGrid.addCell(cell);
                 }
 
             }
         }
     }
-    private String getStringValue (Element rootElement, String name) {
-        return rootElement.getElementsByTagName(name).item(0).getFirstChild().getNodeValue();
-    }
-    
-    private Cell parseCells (String cellString) {
-        String[] cellData = cellString.split("_");
-        State st = State.valueOf(cellData[0].toUpperCase());
-        Double x = Double.parseDouble(cellData[1]);
-        Double y = Double.parseDouble(cellData[2]);
-        Coordinate coord = new Coordinate(x, y);
-        if(st == State.EMPTY){
-            return new EmptyCell(coord);
-        }
-        else if(st == State.FISH){
-            return new FishCell(coord, myPreyBreedTime);
-        }
-        else{
-            return new SharkCell(coord, myPredatorBreedTime, mySharkMaxHealth);
-        }
-    }
+
     @Override
     public void step () {
 
@@ -189,7 +124,7 @@ public class PredatorPreySimulation extends Simulation {
 
     private void updateShark (SharkCell shark) {
         List<Cell> neighbors =
-                getNeighbors().getNeighbors(Neighbor.ORTHOGONAL.getNeighbors(),
+                getNeighbors().getNeighbors(myNeighborType.getNeighbors(),
                                             shark.getMyGridCoordinate());
         System.out.println("there are " + neighbors.size() + " neighbors");
         List<Cell> canMoveOrBreed = getOpenCells(neighbors);
@@ -221,7 +156,7 @@ public class PredatorPreySimulation extends Simulation {
     private void updateFish (FishCell fish) {
         fish.update();
         List<Cell> neighbors =
-                getNeighbors().getNeighbors(Neighbor.ORTHOGONAL.getNeighbors(),
+                getNeighbors().getNeighbors(myNeighborType.getNeighbors(),
                                             fish.getMyGridCoordinate());
         List<Cell> canMoveOrBreed = getOpenCells(neighbors);
         breed(fish, canMoveOrBreed);
@@ -330,30 +265,15 @@ public class PredatorPreySimulation extends Simulation {
             System.out.println("Swim");
             Cell moveTo = openCells.get(new Random().nextInt(openCells.size()));
             FishCell fish = (FishCell) cell;
-            // shark.setMyGridCoordinate(moveTo.getMyGridCoordinate());
             FishCell endCell = new FishCell(fish, moveTo.getMyGridCoordinate());
             endCell.setMyCurrentState(State.EMPTY);
             endCell.setMyNextState(State.FISH);
             EmptyCell startCell = new EmptyCell(fish.getMyGridCoordinate());
             startCell.setMyCurrentState(State.FISH);
             startCell.setMyNextState(State.EMPTY);
-            // getGrid().getCellGrid().remove(fish);
-            // getGrid().getCellGrid().remove(moveTo);
             getGrid().getCellGrid().put(endCell.getMyGridCoordinate(), endCell);
             getGrid().getCellGrid().put(startCell.getMyGridCoordinate(), startCell);
         }
-    }
-
-    @Override
-    public void start () {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void init () {
-        // TODO Auto-generated method stub
-
     }
 
     @Override
@@ -364,20 +284,29 @@ public class PredatorPreySimulation extends Simulation {
 
     @Override
     public void initializeSimulationDetails (Map<String, String> simulationConfig) {
-        // TODO Auto-generated method stub
-        
+        this.myNeighborType = Neighbor.SQUARE;
+        this.myPreyBreedTime = Integer.parseInt(simulationConfig.get("preyBreedTime"));
+        this.myPredatorBreedTime = Integer.parseInt(simulationConfig.get("predatorBreedTime"));
+        this.mySharkMaxHealth = Integer.parseInt(simulationConfig.get("sharkMaxHealth"));
+
     }
 
     @Override
     public Cell createCell (String stringCoordinate, String currentState) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public void generateMap (int numberOfRows, int numberOfColumns, Grid cellGrid) {
-        // TODO Auto-generated method stub
-        
+        State st = State.valueOf(currentState.toUpperCase());
+        String[] coordinateData = stringCoordinate.split("_");
+        Coordinate coord =
+                new Coordinate(Double.parseDouble(coordinateData[0]),
+                               Double.parseDouble(coordinateData[1]));
+        if (st == State.EMPTY) {
+            return new EmptyCell(coord);
+        }
+        else if (st == State.FISH) {
+            return new FishCell(coord, myPreyBreedTime);
+        }
+        else {
+            return new SharkCell(coord, myPredatorBreedTime, mySharkMaxHealth);
+        }
     }
 
 }

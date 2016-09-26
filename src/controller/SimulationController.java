@@ -19,6 +19,7 @@ public class SimulationController {
 
     SimulationController (Group simulationRoot) {
         // File simulationConfig = new File("src/resources/FireSettings.xml");
+
         this.simulationRoot = simulationRoot;
         File simulationConfig = new File("src/resources/GameOfLife.xml");
         initializeSimulation(simulationConfig.getAbsolutePath());
@@ -37,7 +38,6 @@ public class SimulationController {
         simulation.removeGridViewSceneGraph(simulation.getGridView().getRoot());
         simulation.addGridViewSceneGraph(simulationRoot);
     }
-
 
     public Simulation getSimulation () {
         return simulation;
