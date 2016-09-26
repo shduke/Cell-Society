@@ -1,10 +1,18 @@
 package simulation;
 
-
+import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import cell.Cell;
+import cell.FireCell;
+import cell.GameOfLifeCell;
+import cell.State;
+import grid.Coordinate;
 import grid.Grid;
+import grid.Neighbor;
 import javafx.geometry.Dimension2D;
+import grid.Neighbor;
+
 
 public class GameOfLifeSimulation extends Simulation {
 
@@ -15,8 +23,8 @@ public class GameOfLifeSimulation extends Simulation {
 
     @Override
     public void step () {
-        // TODO Auto-generated method stub
-
+        getGrid().applyFuncToCell(p -> setNextState(p));
+        updateGrid();
     }
 
     @Override
@@ -27,30 +35,64 @@ public class GameOfLifeSimulation extends Simulation {
     @Override
 
     public void init () {
-}
+    }
+
+    private int livingNeighbors (List<Cell> neighbors) {
+        int count = 0;
+        for (Cell cell : neighbors) {
+            if (cell.getMyCurrentState().equals(State.LIVING)) {
+                count++;
+            }
+        }
+        return count;
+    }
+
     @Override
     public void setNextState (Cell cell) {
-
-        // TODO Auto-generated method stub
-        
+        int numberOfLivingNeighbors =
+                livingNeighbors(getNeighbors().getNeighbors(Neighbor.SQUARE.getNeighbors(),
+                                                            cell.getMyGridCoordinate()));
+        if (numberOfLivingNeighbors == 3) {
+            cell.setMyNextState(State.LIVING);
+        }
+        else if (numberOfLivingNeighbors < 2 || numberOfLivingNeighbors > 3) {
+            cell.setMyNextState(State.EMPTY);
+        }
+        else {
+            cell.setMyNextState(cell.getMyCurrentState());
+        }
     }
 
     @Override
     public void initializeSimulationDetails (Map<String, String> simulationConfig) {
         // TODO Auto-generated method stub
-        
     }
 
     @Override
     public Cell createCell (String stringCoordinate, String currentState) {
-        // TODO Auto-generated method stub
-        return null;
+        String[] coordinateData = stringCoordinate.split("_");
+        return new GameOfLifeCell(State.valueOf(currentState.toUpperCase()),
+                                  new Coordinate(Double.parseDouble(coordinateData[0]),
+                                                 Double.parseDouble(coordinateData[1])));
     }
 
     @Override
     public void generateMap (int numberOfRows, int numberOfColumns, Grid cellGrid) {
-        // TODO Auto-generated method stub
-        
+        Random rn = new Random();
+        for (int r = 0; r < numberOfRows; r++) {
+            for (int c = 0; c < numberOfColumns; c++) {
+                Coordinate coordinate = new Coordinate(r, c);
+                if (!cellGrid.isCreated(coordinate)) {
+                    GameOfLifeCell cell = new GameOfLifeCell(State.EMPTY, coordinate);
+                    if (rn.nextInt(2) == 1) {
+                        cell.setMyCurrentState(State.LIVING);
+                    }
+                    cellGrid.addCell(cell);
+                }
+
+            }
+        }
+
     }
 
 }

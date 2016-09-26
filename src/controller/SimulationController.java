@@ -19,11 +19,10 @@ public class SimulationController {
 
     SimulationController (Group simulationRoot) {
         // File simulationConfig = new File("src/resources/FireSettings.xml");
-        File simulationConfig = new File("src/resources/Fire.xml");
-        initializeSimulation(simulationConfig.getAbsolutePath());
         this.simulationRoot = simulationRoot;
+        File simulationConfig = new File("src/resources/GameOfLife.xml");
+        initializeSimulation(simulationConfig.getAbsolutePath());
         // simulation = new PredatorPreySimulation();
-        simulation.addGridViewSceneGraph(simulationRoot);
     }
 
     /**
@@ -35,6 +34,8 @@ public class SimulationController {
     void initializeSimulation (String xmlFilename) {
         Element rootElement = parser.getRootElement(xmlFilename);
         this.simulation = parser.createSimulation(rootElement);
+        simulation.removeGridViewSceneGraph(simulation.getGridView().getRoot());
+        simulation.addGridViewSceneGraph(simulationRoot);
     }
 
 
