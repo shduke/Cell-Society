@@ -53,9 +53,8 @@ public abstract class Simulation {
 
     public abstract void step ();
 
-    public abstract void start ();
 
-    public abstract void init ();
+
 
     public void initializeSimulation(Map<String, Map<String, String>> simulationConfig) {
         initializeGrid(simulationConfig);

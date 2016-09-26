@@ -52,27 +52,7 @@ public class FireSimulation extends Simulation {
         return rootElement.getElementsByTagName(name).item(0).getFirstChild().getNodeValue();
     }
 
-    // TODO-put config factory stuff in another class
-    // private void initializeSimulation (Element rootElement) {
-    // this.probCatch = Double.parseDouble(getStringValue(rootElement, "probCatch"));
-    // this.burnTime = Integer.parseInt(getStringValue(rootElement, "burnTime"));
-    // Map<Coordinate, Cell> cellGrid = new HashMap<Coordinate, Cell>();
-    // NodeList cells = rootElement.getElementsByTagName("cell");
-    // for (int i = 0; i < cells.getLength(); i++) {
-    // Cell cell = parseCells(cells.item(i).getFirstChild().getNodeValue());
-    // cellGrid.put(cell.getMyGridCoordinate(), cell);
-    // }
-    // int numRows = Integer.parseInt(getStringValue(rootElement, "numberOfRows"));
-    // int numCols = Integer.parseInt(getStringValue(rootElement, "numberOfColumns"));
-    // generateMap(numRows, numCols, cellGrid);
-    // setGrid(new Grid(numRows, numCols, cellGrid));
-    // double gridWidth = Double.parseDouble(getStringValue(rootElement, "gridWidth"));
-    // double gridHeight = Double.parseDouble(getStringValue(rootElement, "gridHeight"));
-    // // TODO-grid dimensions should come from SimulationController, type of grid will be
-    // // determined by input as well as edge type
-    // setGridView(new RectangleGridView(new Dimension2D(gridWidth, gridHeight), getGrid()));
-    // setNeighbors(new NormalEdgeNeighbors(getGrid()));
-    // }
+
 
     // Allows them to specify what coordinates they went, the rest are set to default by a function,
     // gets bounds and starter map from config
@@ -142,17 +122,6 @@ public class FireSimulation extends Simulation {
         }
     }
 
-    @Override
-    public void start () {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void init () {
-        // TODO Auto-generated method stub
-
-    }
 
     @Override
     public void initializeSimulationDetails (Map<String, String> simulationConfig) {

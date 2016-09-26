@@ -20,15 +20,6 @@ public class GameOfLifeSimulation extends Simulation {
     }
 
     @Override
-
-    public void start () {
-    }
-
-    @Override
-
-    public void init () {
-}
-    @Override
     public void setNextState (Cell cell) {
 
         // TODO Auto-generated method stub
