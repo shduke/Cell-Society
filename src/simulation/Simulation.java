@@ -22,10 +22,10 @@ public abstract class Simulation {
     private GridView myGridView;
     private Neighbors neighbors;
 
-    Simulation(Map<String, Map<String, String>> simulationConfig) {
+    Simulation (Map<String, Map<String, String>> simulationConfig) {
         initializeSimulation(simulationConfig);
     }
-    
+
     public Grid getGrid () {
         return myGrid;
     }
@@ -46,32 +46,40 @@ public abstract class Simulation {
 
     public abstract void step ();
 
-
-
-
-    public void initializeSimulation(Map<String, Map<String, String>> simulationConfig) {
-        initializeSimulationDetails(simulationConfig.get("SimulationDetails"));
+    public void initializeSimulation (Map<String, Map<String, String>> simulationConfig) {
+        initializeSimulationDetails(simulationConfig.get("SimulationConfig"));
         initializeGrid(simulationConfig);
         generateMap(getGrid().getNumRows(), getGrid().getNumColumns(), getGrid());
-        setGridView(new RectangleGridView(new Dimension2D(Double.parseDouble(simulationConfig.get("GridConfig").get("gridWidth")), Double.parseDouble(simulationConfig.get("GridConfig").get("gridHeight"))), getGrid()));
+        setGridView(new RectangleGridView(new Dimension2D(Double
+                .parseDouble(simulationConfig.get("GeneralConfig").get("gridWidth")), Double
+                        .parseDouble(simulationConfig.get("GeneralConfig").get("gridHeight"))),
+                                          getGrid()));
         setNeighbors(new NormalEdgeNeighbors(getGrid()));
     }
-    
-    public abstract void initializeSimulationDetails(Map<String, String> simulationConfig);
-    
-    public void initializeGrid(Map<String, Map<String, String>> simulationConfig) {
+
+    public void initializeGrid (Map<String, Map<String, String>> simulationConfig) {
         Map<Coordinate, Cell> cellGrid = new HashMap<Coordinate, Cell>();
-        for(Map.Entry<String,String> entry : simulationConfig.get("Cells").entrySet()) {
-            Cell cell = createCell(entry.getKey(), entry.getValue());
+        for (Map.Entry<String, String> entry : simulationConfig.get("Cells").entrySet()) {
+            String[] coordinateStrings = entry.getKey().split("_");
+            Cell cell =
+                    createCell(new Coordinate(Integer.parseInt(coordinateStrings[1]),
+                                              Integer.parseInt(coordinateStrings[2])),
+                               entry.getValue());
             cellGrid.put(cell.getMyGridCoordinate(), cell);
         }
-        setGrid(new Grid(Integer.parseInt(simulationConfig.get("GridConfig").get("numberOfRows")), Integer.parseInt(simulationConfig.get("GridConfig").get("numberOfRows")), cellGrid));
+        setGrid(new Grid(Integer
+                .parseInt(simulationConfig.get("GeneralConfig").get("numberOfRows")), Integer
+                        .parseInt(simulationConfig.get("GeneralConfig").get("numberOfRows")),
+                         cellGrid));
     }
-    
-    public abstract Cell createCell(String stringCoordinate, String currentState);
-    public abstract void generateMap(int numberOfRows,
-                                     int numberOfColumns,
-                                     Grid cellGrid);
+
+    public abstract void initializeSimulationDetails (Map<String, String> simulationConfig);
+
+    public abstract Cell createCell (Coordinate coordinate, String currentState);
+
+    public abstract void generateMap (int numberOfRows,
+                                      int numberOfColumns,
+                                      Grid cellGrid);
 
     public GridView getGridView () {
         return myGridView;

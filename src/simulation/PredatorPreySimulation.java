@@ -285,20 +285,16 @@ public class PredatorPreySimulation extends Simulation {
     }
 
     @Override
-    public Cell createCell (String stringCoordinate, String currentState) {
+    public Cell createCell (Coordinate coordinate, String currentState) {
         State st = State.valueOf(currentState.toUpperCase());
-        String[] coordinateData = stringCoordinate.split("_");
-        Coordinate coord =
-                new Coordinate(Double.parseDouble(coordinateData[0]),
-                               Double.parseDouble(coordinateData[1]));
         if (st == State.EMPTY) {
-            return new EmptyCell(coord);
+            return new EmptyCell(coordinate);
         }
         else if (st == State.FISH) {
-            return new FishCell(coord, myPreyBreedTime);
+            return new FishCell(coordinate, myPreyBreedTime);
         }
         else {
-            return new SharkCell(coord, myPredatorBreedTime, mySharkMaxHealth);
+            return new SharkCell(coordinate, myPredatorBreedTime, mySharkMaxHealth);
         }
     }
 

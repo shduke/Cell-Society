@@ -22,13 +22,13 @@ import java.util.Map;
  *
  */
 public class XMLParser {
-    private static final DocumentBuilder DOCUMENT_BUILDER = getDocumentBuilder();    
-    
-    public Simulation createSimulation(Element rootElement) {
+    private static final DocumentBuilder DOCUMENT_BUILDER = getDocumentBuilder();
+
+    public Simulation createSimulation (Element rootElement) {
         String simulationType = getSimulationType(rootElement);
         Simulation simulation;
         if (simulationType.equals("Fire")) {
-            simulation = new FireSimulation(generateSimulationConfig(rootElement));  
+            simulation = new FireSimulation(generateSimulationConfig(rootElement));
         }
         else if (simulationType.equals("GameOfLife")) {
             simulation = new GameOfLifeSimulation(generateSimulationConfig(rootElement));
@@ -41,82 +41,66 @@ public class XMLParser {
         }
         return simulation;
     }
-    
+
     public void printMap (Map<String, String> input) {
         for (Map.Entry<String, String> cell : input.entrySet()) {
             System.out.println(cell.getKey() + " " + cell.getValue());
         }
     }
-    
-    public Map<String, Map<String, String>> generateSimulationConfig(Element rootElement) {
-        Map<String, Map<String, String>> SimulationConfig = new HashMap<String, Map<String, String>>();
-        SimulationConfig.put("Cells", generateInitCellsConfig(rootElement));
-        SimulationConfig.put("SimulationDetails", generateSimulationDetailsConfig(rootElement));
-        SimulationConfig.put("GridConfig", generateCellGridConfig(rootElement));
-        return SimulationConfig;
-    }
-    
-    //TODO-refactor either into Reflection or to make more concise or change to be uniform like make cell xml tags comply
-    public Map<String, String> generateInitCellsConfig(Element rootElement) {
-        Map<String, String> initCells = new HashMap<String, String>();
-        NodeList cells = rootElement.getElementsByTagName("cell");
-        for (int i = 0; i < cells.getLength(); i++) {
-            String[] cellData = cells.item(i).getFirstChild().getNodeValue().split("_");
-            initCells.put(cellData[1] + "_" + cellData[2], cellData[0]);
+
+    private Map<String, Map<String, String>> generateSimulationConfig (Element rootElement) {
+        Map<String, Map<String, String>> simulationConfig =
+                new HashMap<String, Map<String, String>>();
+        NodeList sections = getChildNodesOfTag("Simulation", rootElement);
+        for (int i = 0; i < sections.getLength(); i++) {
+            if (sections.item(i).getFirstChild() != null) {
+                simulationConfig
+                        .put(sections.item(i).getNodeName(),
+                             generateSectionConfig(rootElement, sections.item(i).getNodeName()));
+            }
         }
-        printMap(initCells);
+        return simulationConfig;
+
+    }
+
+    private Map<String, String> generateSectionConfig (Element rootElement, String section) {
+        Map<String, String> initCells = new HashMap<String, String>();
+        NodeList cells = getChildNodesOfTag(section, rootElement);
+        for (int i = 0; i < cells.getLength(); i++) {
+            if (cells.item(i).getFirstChild() != null) {
+                String keyTag = cells.item(i).getNodeName();
+                String valSimData = cells.item(i).getFirstChild().getNodeValue();
+                initCells.put(keyTag, valSimData);
+            }
+        }
+        // printMap(initCells);
         return initCells;
     }
-    
-    public Map<String, String> generateSimulationDetailsConfig(Element rootElement) {
-        Map<String, String> SimulationDetailsConfig = new HashMap<String, String>();
-        NodeList cells = rootElement.getElementsByTagName("SimulationDetails").item(0).getChildNodes();
-        for (int i = 0; i < cells.getLength(); i++) {
-            if(cells.item(i).getFirstChild() != null) {
-                String val = cells.item(i).getFirstChild().getNodeValue();
-                String tag = cells.item(i).getNodeName(); //.getFirstChild()
-                SimulationDetailsConfig.put(tag, val);
-            }
-        }
-        printMap(SimulationDetailsConfig);
-        return SimulationDetailsConfig;
+
+    private String getSimulationType (Element rootElement) {
+        return rootElement.getElementsByTagName("Simulation").item(0).getAttributes()
+                .getNamedItem("SimulationType").getNodeValue();
+    }
+
+    public NodeList getChildNodesOfTag (String tagName, Element rootElement) {
+        return rootElement.getElementsByTagName(tagName).item(0).getChildNodes();
     }
     
-    public Map<String, String> generateCellGridConfig(Element rootElement) {
-        Map<String, String> cellGridConfig = new HashMap<String, String>();
-        NodeList cells = rootElement.getElementsByTagName("GridConfig").item(0).getChildNodes();
-        for (int i = 0; i < cells.getLength(); i++) {
-            if(cells.item(i).getFirstChild() != null) {
-                String val = cells.item(i).getFirstChild().getNodeValue();
-                String tag = cells.item(i).getNodeName();
-                cellGridConfig.put(tag, val);
-            }
-        }
-        printMap(cellGridConfig);
-        return cellGridConfig;
-    }
-    
-    public String getSimulationType(Element rootElement) {
-        return rootElement.getElementsByTagName("SimulationType").item(0).getAttributes().getNamedItem("Simulation").getNodeValue();
-    }
-    
-    public NodeList getTagValues(String tagName, Element rootElement) {
-        return rootElement.getElementsByTagName(tagName);
-    }
-    
-    public String getTagValue(String tagName, Element rootElement) {
-        return rootElement.getAttribute(tagName);
-        //return rootElement.getElementsByTagName(tagName).item(0).getFirstChild().getNodeValue();
-    }
-    
-    public Double getDoubleValue(String tagName, Element rootElement) {
-        return Double.parseDouble(getTagValue(tagName, rootElement));
-    }
-    
-    public int getIntValue(String tagName, Element rootElement) {
-        return Integer.parseInt(getTagValue(tagName, rootElement));
-    }
-    
+    /*
+     * public String getTagValue (String tagName, Element rootElement) {
+     * return rootElement.getAttribute(tagName);
+     * // return rootElement.getElementsByTagName(tagName).item(0).getFirstChild().getNodeValue();
+     * }
+     * 
+     * public Double getDoubleValue (String tagName, Element rootElement) {
+     * return Double.parseDouble(getTagValue(tagName, rootElement));
+     * }
+     * 
+     * public int getIntValue (String tagName, Element rootElement) {
+     * return Integer.parseInt(getTagValue(tagName, rootElement));
+     * }
+     */
+
     /**
      * Gets the root element in an XML file.
      *

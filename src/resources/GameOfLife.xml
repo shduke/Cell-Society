@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Title Name="Normal GameOfLife">
 	<author>Sean</author>
-	<SimulationType Simulation="GameOfLife">
-		<GridConfig>
+	<Simulation SimulationType="GameOfLife">
+		<GeneralConfig>
 			<gridWidth>500</gridWidth>
 			<gridHeight>500</gridHeight>
 			<numberOfRows>10</numberOfRows>
 			<numberOfColumns>10</numberOfColumns>
-		</GridConfig>
-		<SimulationDetails>
-		</SimulationDetails>
+		</GeneralConfig>
+		<SimulationConfig>
+		</SimulationConfig>
 		<Cells InitialSetup="Specific">
-			<cell>Living_5_5</cell>
-			<cell>Living_3_4</cell>
-			<cell>Empty_5_3</cell>
+			<cell_5_5>Living</cell_5_5>
+			<cell_3_4>Living</cell_3_4>
+			<cell_5_3>Empty</cell_5_3>
 		</Cells>
-	</SimulationType>
+	</Simulation>
 </Title>

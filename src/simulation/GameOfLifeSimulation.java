@@ -10,6 +10,7 @@ import grid.Coordinate;
 import grid.Grid;
 import grid.Neighbor;
 
+
 public class GameOfLifeSimulation extends Simulation {
 
     public GameOfLifeSimulation (Map<String, Map<String, String>> simulationConfig) {
@@ -22,8 +23,6 @@ public class GameOfLifeSimulation extends Simulation {
         getGrid().applyFuncToCell(p -> setNextState(p));
         updateGrid();
     }
-
-
 
     private int livingNeighbors (List<Cell> neighbors) {
         int count = 0;
@@ -57,11 +56,8 @@ public class GameOfLifeSimulation extends Simulation {
     }
 
     @Override
-    public Cell createCell (String stringCoordinate, String currentState) {
-        String[] coordinateData = stringCoordinate.split("_");
-        return new GameOfLifeCell(State.valueOf(currentState.toUpperCase()),
-                                  new Coordinate(Double.parseDouble(coordinateData[0]),
-                                                 Double.parseDouble(coordinateData[1])));
+    public Cell createCell (Coordinate coordinate, String currentState) {
+        return new GameOfLifeCell(State.valueOf(currentState.toUpperCase()), coordinate);
     }
 
     @Override
