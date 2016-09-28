@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Title Name="Normal Segregation">
 	<author>Michael</author>
-	<SimulationType Simulation="Segregation">
-		<GridConfig>
+		<Simulation SimulationType="Segregation">
+		<GeneralConfig>
 			<gridWidth>500</gridWidth>
 			<gridHeight>500</gridHeight>
 			<numberOfRows>5</numberOfRows>
-			<numberOfColumns>5</numberOfColumns>	
-		</GridConfig>
-		<SimulationDetails>
+			<numberOfColumns>5</numberOfColumns>
+		</GeneralConfig>
+		<SimulationConfig>
 			<myAgentSatisfiedRatio>.5</myAgentSatisfiedRatio>	
-		</SimulationDetails>
+		</SimulationConfig>
 		<Cells InitialSetup="Specific">
-			<cell>O_2_3</cell>
-			<cell>O_3_2</cell>
-			<cell>O_1_1</cell>
-			<cell>X_2_2</cell>
-			<cell>X_3_3</cell>
-			<cell>O_4_4</cell>
-			<cell>O_1_3</cell>
-			<cell>O_1_2</cell>
-			<cell>X_2_4</cell>
-			<cell>O_4_2</cell>
-			<cell>X_2_1</cell>
+			<cell_2_3>O</cell_2_3>
+			<cell_3_2>O</cell_3_2>
+			<cell_1_1>O</cell_1_1>
+			<cell_2_2>X</cell_2_2>
+			<cell_3_3>X</cell_3_3>
+			<cell_4_4>O</cell_4_4>
+			<cell_1_3>O</cell_1_3>
+			<cell_1_2>O</cell_1_2>
+			<cell_2_4>X</cell_2_4>
+			<cell_4_2>O</cell_4_2>
+			<cell_2_1>X</cell_2_1>
 		</Cells>
-	</SimulationType>
+	</Simulation>
 </Title>

@@ -1,83 +1,82 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Title Name="Pulsar GameOfLife">
 	<author>Sean</author>
-	<SimulationType Simulation="GameOfLife">
-		<GridConfig>
+	<Simulation SimulationType="GameOfLife">
+		<GeneralConfig>
 			<gridWidth>500</gridWidth>
 			<gridHeight>500</gridHeight>
 			<numberOfRows>20</numberOfRows>
 			<numberOfColumns>20</numberOfColumns>
-		</GridConfig>
-		<SimulationDetails>
-		</SimulationDetails>
+		</GeneralConfig>
+		<SimulationConfig>
+		</SimulationConfig>
 		<Cells InitialSetup="Specific">
-			<cell>Living_4_6</cell>
-			<cell>Living_4_7</cell>
-			<cell>Living_4_8</cell>
+			<cell_4_6>Living</cell_4_6>
+			<cell_4_7>Living</cell_4_7>
+			<cell_4_8>Living</cell_4_8>
 			
-			<cell>Living_6_4</cell>
-			<cell>Living_7_4</cell>
-			<cell>Living_8_4</cell>
+			<cell_6_4>Living</cell_6_4>
+			<cell_7_4>Living</cell_7_4>
+			<cell_8_4>Living</cell_8_4>
 			
-			<cell>Living_9_6</cell>
-			<cell>Living_9_7</cell>
-			<cell>Living_9_8</cell>
+			<cell_9_6>Living</cell_9_6>
+			<cell_9_7>Living</cell_9_7>
+			<cell_9_8>Living</cell_9_8>
 			
-			<cell>Living_6_9</cell>
-			<cell>Living_7_9</cell>
-			<cell>Living_8_9</cell>
-			
-			
-			<cell>Living_11_6</cell>
-			<cell>Living_11_7</cell>
-			<cell>Living_11_8</cell>
-			
-			<cell>Living_12_4</cell>
-			<cell>Living_13_4</cell>
-			<cell>Living_14_4</cell>
-			
-			<cell>Living_16_6</cell>
-			<cell>Living_16_7</cell>
-			<cell>Living_16_8</cell>
-			
-			<cell>Living_12_9</cell>
-			<cell>Living_13_9</cell>
-			<cell>Living_14_9</cell>
+			<cell_6_9>Living</cell_6_9>
+			<cell_7_9>Living</cell_7_9>
+			<cell_8_9>Living</cell_8_9>
 			
 			
-			<cell>Living_11_12</cell>
-			<cell>Living_11_13</cell>
-			<cell>Living_11_14</cell>
+			<cell_11_6>Living</cell_11_6>
+			<cell_11_7>Living</cell_11_7>
+			<cell_11_8>Living</cell_11_8>
 			
-			<cell>Living_12_11</cell>
-			<cell>Living_13_11</cell>
-			<cell>Living_14_11</cell>
+			<cell_12_4>Living</cell_12_4>
+			<cell_13_4>Living</cell_13_4>
+			<cell_14_4>Living</cell_14_4>
 			
-			<cell>Living_16_12</cell>
-			<cell>Living_16_13</cell>
-			<cell>Living_16_14</cell>
+			<cell_16_6>Living</cell_16_6>
+			<cell_16_7>Living</cell_16_7>
+			<cell_16_8>Living</cell_16_8>
 			
-			<cell>Living_12_16</cell>
-			<cell>Living_13_16</cell>
-			<cell>Living_14_16</cell>
+			<cell_12_9>Living</cell_12_9>
+			<cell_13_9>Living</cell_13_9>
+			<cell_14_9>Living</cell_14_9>
+			
+		
+			<cell_11_12>Living</cell_11_12>
+			<cell_11_13>Living</cell_11_13>
+			<cell_11_14>Living</cell_11_14>
+			
+			<cell_12_11>Living</cell_12_11>
+			<cell_13_11>Living</cell_13_11>
+			<cell_14_11>Living</cell_14_11>
+			
+			<cell_16_12>Living</cell_16_12>
+			<cell_16_13>Living</cell_16_13>
+			<cell_16_14>Living</cell_16_14>
+			
+			<cell_12_16>Living</cell_12_16>
+			<cell_13_16>Living</cell_13_16>
+			<cell_14_16>Living</cell_14_16>
 			
 			
-			<cell>Living_4_12</cell>
-			<cell>Living_4_13</cell>
-			<cell>Living_4_14</cell>
+			<cell_4_12>Living</cell_4_12>
+			<cell_4_13>Living</cell_4_13>
+			<cell_4_14>Living</cell_4_14>
 			
-			<cell>Living_6_11</cell>
-			<cell>Living_7_11</cell>
-			<cell>Living_8_11</cell>
+			<cell_6_11>Living</cell_6_11>
+			<cell_7_11>Living</cell_7_11>
+			<cell_8_11>Living</cell_8_11>
 			
-			<cell>Living_9_12</cell>
-			<cell>Living_9_13</cell>
-			<cell>Living_9_14</cell>
+			<cell_9_12>Living</cell_9_12>
+			<cell_9_13>Living</cell_9_13>
+			<cell_9_14>Living</cell_9_14>
 			
-			<cell>Living_6_16</cell>
-			<cell>Living_7_16</cell>
-			<cell>Living_8_16</cell>
-			
+			<cell_6_16>Living</cell_6_16>
+			<cell_7_16>Living</cell_7_16>
+			<cell_8_16>Living</cell_8_16>
 		</Cells>
-	</SimulationType>
+	</Simulation>
 </Title>
