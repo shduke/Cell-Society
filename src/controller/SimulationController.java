@@ -15,7 +15,7 @@ public class SimulationController {
 
     SimulationController (Group simulationRoot) {
         this.simulationRoot = simulationRoot;
-        File simulationConfig = new File("src/resources/GameOfLife.xml");
+        File simulationConfig = new File("src/resources/GameOfLifePulsar.xml");
         initializeSimulation(simulationConfig.getAbsolutePath());
     }
 

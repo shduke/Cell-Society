@@ -80,7 +80,6 @@ public class FireSimulation extends Simulation {
         }
     }
 
-
     @Override
     public void initializeSimulationDetails (Map<String, String> simulationConfig) {
         this.probCatch = Double.parseDouble(simulationConfig.get("probCatch"));
@@ -88,11 +87,8 @@ public class FireSimulation extends Simulation {
     }
 
     @Override
-    public Cell createCell (String stringCoordinate, String currentState) {
-        String[] coordinateData = stringCoordinate.split("_");
-        FireCell cell = new FireCell(State.valueOf(currentState.toUpperCase()),
-                     new Coordinate(Double.parseDouble(coordinateData[0]),
-                                    Double.parseDouble(coordinateData[1])));
+    public Cell createCell (Coordinate coordinate, String currentState) {
+        FireCell cell = new FireCell(State.valueOf(currentState.toUpperCase()), coordinate);
         cell.setBurnTimer(burnTime);
         return cell;
     }

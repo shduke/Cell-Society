@@ -135,19 +135,15 @@ public class SegregationSimulation extends Simulation {
     }
 
     @Override
-    public Cell createCell (String stringCoordinate, String currentState) {
+    public Cell createCell (Coordinate coordinate, String currentState) {
         // TODO Auto-generated method stub
 
         State st = State.valueOf(currentState.toUpperCase());
-        String[] coordinateData = stringCoordinate.split("_");
-        Coordinate coord =
-                new Coordinate(Double.parseDouble(coordinateData[0]),
-                               Double.parseDouble(coordinateData[1]));
         if (st == State.EMPTY) {
-            return new EmptyCell(coord);
+            return new EmptyCell(coordinate);
         }
         else {
-            return new AgentCell(st, coord, myAgentSatisfiedRatio);
+            return new AgentCell(st, coordinate, myAgentSatisfiedRatio);
         }
 
     }
