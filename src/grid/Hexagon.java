@@ -12,27 +12,26 @@ public class Hexagon extends Polygon {
     private double widthStrechFactor;
     private double widthStretch;
     
-    Hexagon(double height, double gridWidth, int numberOfRows) {
+    Hexagon(double height, double gridWidth, int numberOfColumns) {
         super();
         this.height = height;
         this.radius = calcRadius();
         this.width = radius * 2;
         this.effectiveWidth = calcEffectiveWidth();
-        this.widthStrechFactor = calcWidthStretchFactor(gridWidth, numberOfRows);
-        this.widthStretch = calcWidthStretch(gridWidth, numberOfRows);
+        this.widthStretch = calcWidthStretch(gridWidth, numberOfColumns);
         this.getPoints().addAll(calcCoordinates());
     }
     
     private List<Double> calcCoordinates() {
         List<Double> hexagonCoordinates= new ArrayList<Double>();
         for(int n = 0; n < 6; n++) {
-            hexagonCoordinates.add(radius * Math.cos(2 * Math.PI * n / 6 ) + getWidthOffset(n));
+            hexagonCoordinates.add(radius * Math.cos(2 * Math.PI * n / 6 ) + getWidthOffSet(n));
             hexagonCoordinates.add(radius * Math.sin(2 * Math.PI * n / 6 ) + height / 2);
         }
         return hexagonCoordinates;
     }
     
-    private double getWidthOffset(int n) {
+    private double getWidthOffSet(int n) {
         if(n == 0 || n == 1 || n == 5) {
             return widthStretch;
         }
@@ -43,13 +42,8 @@ public class Hexagon extends Polygon {
         return width - ((height / 2) / Math.tan(Math.PI / 3) );
     }
     
-    private double calcWidthStretch(double gridWidth, int numberOfRows) {
-        return (gridWidth - (effectiveWidth * numberOfRows + (width - effectiveWidth))) / (numberOfRows*2);
-    }
-    
-    private double calcWidthStretchFactor(double gridWidth, int numberOfRows) {
-        System.out.println(gridWidth - (effectiveWidth * numberOfRows + (width - effectiveWidth)));
-        return ((gridWidth - (effectiveWidth * numberOfRows + (width - effectiveWidth))) / numberOfRows + width) / width;
+    private double calcWidthStretch(double gridWidth, int numberOfColumns) {
+        return (gridWidth - (effectiveWidth * numberOfColumns + (width - effectiveWidth))) / (numberOfColumns*2);
     }
     
     private double calcRadius() {

@@ -10,6 +10,7 @@ import grid.HexagonGridView;
 import grid.Neighbors;
 import grid.NormalEdgeNeighbors;
 import grid.RectangleGridView;
+import grid.TriangleGridView;
 import javafx.geometry.Dimension2D;
 import javafx.scene.Group;
 import javafx.scene.shape.Shape;
@@ -55,7 +56,7 @@ public abstract class Simulation {
                 .parseDouble(simulationConfig.get("GeneralConfig").get("gridWidth")), Double
                         .parseDouble(simulationConfig.get("GeneralConfig").get("gridHeight"))),
                                           getGrid()));*/
-        setGridView(new HexagonGridView(new Dimension2D(Double
+        setGridView(new TriangleGridView(new Dimension2D(Double
         .parseDouble(simulationConfig.get("GeneralConfig").get("gridWidth")), Double
                 .parseDouble(simulationConfig.get("GeneralConfig").get("gridHeight"))),
                                   getGrid()));
