@@ -6,9 +6,11 @@ import cell.Cell;
 import grid.Coordinate;
 import grid.Grid;
 import grid.GridView;
+import grid.HexagonGridView;
 import grid.Neighbors;
 import grid.NormalEdgeNeighbors;
 import grid.RectangleGridView;
+import grid.TriangleGridView;
 import javafx.geometry.Dimension2D;
 import javafx.scene.Group;
 import javafx.scene.shape.Shape;
@@ -50,10 +52,14 @@ public abstract class Simulation {
         initializeSimulationDetails(simulationConfig.get("SimulationConfig"));
         initializeGrid(simulationConfig);
         generateMap(getGrid().getNumRows(), getGrid().getNumColumns(), getGrid());
-        setGridView(new RectangleGridView(new Dimension2D(Double
+        /*setGridView(new RectangleGridView(new Dimension2D(Double
                 .parseDouble(simulationConfig.get("GeneralConfig").get("gridWidth")), Double
                         .parseDouble(simulationConfig.get("GeneralConfig").get("gridHeight"))),
-                                          getGrid()));
+                                          getGrid()));*/
+        setGridView(new TriangleGridView(new Dimension2D(Double
+        .parseDouble(simulationConfig.get("GeneralConfig").get("gridWidth")), Double
+                .parseDouble(simulationConfig.get("GeneralConfig").get("gridHeight"))),
+                                  getGrid()));
         setNeighbors(new NormalEdgeNeighbors(getGrid()));
     }
 
