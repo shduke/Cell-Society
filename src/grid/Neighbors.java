@@ -4,13 +4,7 @@ import java.util.List;
 import cell.Cell;
 
 //abstract class or interface
-public abstract class Neighbors {
-    //private List<Cell> neighbors = new ArrayList<Cell>();
-    private Grid grid;
-
-    Neighbors (Grid grid) {
-        this.setGrid(grid);
-    }
+public interface Neighbors {
 
    /* public void addNeighbor (Cell cell) {
         neighbors.add(cell);
@@ -30,15 +24,7 @@ public abstract class Neighbors {
         this.allowableNeighbors = allowableNeighbors;
     }*/
 
-    abstract public List<Cell> getNeighbors (List<Coordinate> allowableNeighbors, Coordinate coordinate);
-
-    public Grid getGrid () {
-        return grid;
-    }
-
-    public void setGrid (Grid grid) {
-        this.grid = grid;
-    }
+    abstract public List<Cell> getNeighbors (List<Coordinate> allowableNeighbors, Coordinate coordinate, Grid grid);
     
     
     
