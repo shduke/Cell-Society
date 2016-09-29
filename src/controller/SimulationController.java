@@ -15,7 +15,7 @@ public class SimulationController {
 
     SimulationController (Group simulationRoot) {
         this.simulationRoot = simulationRoot;
-        File simulationConfig = new File("src/resources/GameOfLifePulsar.xml");
+        File simulationConfig = new File("src/resources/Segregation.xml");
         initializeSimulation(simulationConfig.getAbsolutePath());
     }
 
@@ -26,7 +26,7 @@ public class SimulationController {
     void initializeSimulation (String xmlFilename) {
         Element rootElement = parser.getRootElement(xmlFilename);
         this.simulation = parser.createSimulation(rootElement);
-        simulation.removeGridViewSceneGraph(simulation.getGridView().getRoot());
+        simulation.removeGridViewSceneGraph(simulationRoot);
         simulation.addGridViewSceneGraph(simulationRoot);
     }
 
