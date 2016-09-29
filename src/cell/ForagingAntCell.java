@@ -32,6 +32,7 @@ public class ForagingAntCell extends Cell {
     private void updateAnts () {
         removeDeadAnts();
         addNextAnts();
+        //moveAnts();
     }
 
     private void addNextAnts () {
@@ -49,7 +50,7 @@ public class ForagingAntCell extends Cell {
             }
         }
     }
-
+ 
     public boolean fullOfAnts() {
         return myAnts.size() > myMaxAnts;
     }
@@ -79,6 +80,9 @@ public class ForagingAntCell extends Cell {
         return food ? myFoodPheromones : myHomePheromones;
     }
     
+    public List<Ant> getAnts() {
+        return myAnts;
+    }
     public double getProb() {
         return Math.pow(myFoodPheromones + k, n);
     }
