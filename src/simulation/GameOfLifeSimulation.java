@@ -34,11 +34,11 @@ public class GameOfLifeSimulation extends Simulation {
         return count;
     }
 
-    @Override
+    
     public void setNextState (Cell cell) {
         int numberOfLivingNeighbors =
                 livingNeighbors(getNeighbors().getNeighbors(Neighbor.SQUARE.getNeighbors(),
-                                                            cell.getMyGridCoordinate()));
+                                                            cell.getMyGridCoordinate(), getGrid()));
         if (numberOfLivingNeighbors == 3) {
             cell.setMyNextState(State.LIVING);
         }
