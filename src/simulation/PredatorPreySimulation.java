@@ -118,7 +118,7 @@ public class PredatorPreySimulation extends Simulation {
     private void updateShark (SharkCell shark) {
         List<Cell> neighbors =
                 getNeighbors().getNeighbors(myNeighborType.getNeighbors(),
-                                            shark.getMyGridCoordinate());
+                                            shark.getMyGridCoordinate(), getGrid());
         System.out.println("there are " + neighbors.size() + " neighbors");
         List<Cell> canMoveOrBreed = getOpenCells(neighbors);
         System.out.println("there are " + canMoveOrBreed.size() + " open cells");
@@ -150,7 +150,7 @@ public class PredatorPreySimulation extends Simulation {
         fish.update();
         List<Cell> neighbors =
                 getNeighbors().getNeighbors(myNeighborType.getNeighbors(),
-                                            fish.getMyGridCoordinate());
+                                            fish.getMyGridCoordinate(), getGrid());
         List<Cell> canMoveOrBreed = getOpenCells(neighbors);
         breed(fish, canMoveOrBreed);
         move(fish, canMoveOrBreed);
@@ -269,11 +269,6 @@ public class PredatorPreySimulation extends Simulation {
         }
     }
 
-    @Override
-    public void setNextState (Cell cell) {
-        // TODO Auto-generated method stub
-
-    }
 
     @Override
     public void initializeSimulationDetails (Map<String, String> simulationConfig) {

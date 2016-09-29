@@ -48,7 +48,7 @@ public class FireSimulation extends Simulation {
 
     public boolean hasBurningNeighbor (Cell cell) {
         for (Cell neighborCell : getNeighbors().getNeighbors(Neighbor.SQUARE.getNeighbors(),
-                                                             cell.getMyGridCoordinate())) {
+                                                             cell.getMyGridCoordinate(), getGrid())) {
             if (neighborCell.getMyCurrentState().equals(State.BURNING)) {
                 return true;
             }
@@ -57,7 +57,6 @@ public class FireSimulation extends Simulation {
     }
 
     // is switching on cell state bad?
-    @Override
     public void setNextState (Cell cell) {
         // System.out.println(cell.getMyCurrentState());
         if (cell.getMyCurrentState().equals(State.TREE)) {
