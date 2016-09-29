@@ -2,6 +2,7 @@ package applicationView;
 
 import java.util.ResourceBundle;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -42,7 +43,6 @@ public class Toolbar {
     }
     public void setPauseButton(EventHandler<MouseEvent> event){
         pause.setOnMouseClicked(event);
-      
     }
     
     public void setStepButton(EventHandler<MouseEvent> event) {
@@ -52,7 +52,4 @@ public class Toolbar {
     public void setXMLFileButton(EventHandler<MouseEvent> event) {
         loadXMLbutton.setOnMouseClicked(event);
     }
-    
-   
-    
 }

@@ -87,6 +87,10 @@ public abstract class Simulation {
                                       int numberOfColumns,
                                       Grid cellGrid);
 
+    /** Return the grid view
+     * 
+     * @return
+     */
     public GridView getGridView () {
         return myGridView;
     }

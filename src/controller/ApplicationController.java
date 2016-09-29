@@ -92,7 +92,7 @@ public class ApplicationController {
         }
         // TODO: create XML Exception
         catch (XMLParserException xmlexcept) {
-
+            throw new XMLParserException("Could not parse file. Check .xml extension");
         }
     }
 
