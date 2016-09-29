@@ -11,8 +11,9 @@ public enum State {
     TREE(6, Color.GREEN),
     X(7, Color.RED),
     O(8, Color.GREEN),
-    LIVING(9, Color.DARKGREEN);
-
+    LIVING(9, Color.DARKGREEN),
+    FOODSEARCH(10, Color.BLACK),
+    HOMESEARCH(11, Color.BLACK);
     
     
     private final int myValue;
