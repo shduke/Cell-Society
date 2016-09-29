@@ -16,14 +16,16 @@ public class SimulationToolbar {
     
     public void initSimToolbar(int height, int width, Scene myScene) {
         VBox mySimToolbar = new VBox();
+        createGraph();
     }
     
     private void createGraph() {
         final NumberAxis x_axis = new NumberAxis();
         final NumberAxis y_axis = new NumberAxis();
         x_axis.setLabel(GUIResources.getString("XAxis"));
-        final LineChart<Number,Number> lineChart = 
+        final LineChart<Number,Number> myLineChart = 
                 new LineChart<Number,Number>(x_axis,y_axis);
+        myLineChart.setTitle(GUIResources.getString("ChartTitle"));
     }
     
 }
