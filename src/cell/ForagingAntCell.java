@@ -15,6 +15,7 @@ public class ForagingAntCell extends Cell {
     private int myMaxAnts;
     private double k;
     private double n;
+
     public ForagingAntCell (State myState, Coordinate myCoordinate) {
         super(myState, myCoordinate);
     }
@@ -32,7 +33,7 @@ public class ForagingAntCell extends Cell {
     private void updateAnts () {
         removeDeadAnts();
         addNextAnts();
-        //moveAnts();
+        // moveAnts();
     }
 
     private void addNextAnts () {
@@ -41,7 +42,7 @@ public class ForagingAntCell extends Cell {
         }
         myNextAnts.clear();
     }
-    
+
     private void removeDeadAnts () {
         Iterator<Ant> iter = myAnts.iterator();
         while (iter.hasNext()) {
@@ -50,10 +51,11 @@ public class ForagingAntCell extends Cell {
             }
         }
     }
- 
-    public boolean fullOfAnts() {
+
+    public boolean fullOfAnts () {
         return myAnts.size() > myMaxAnts;
     }
+
     public boolean foodFull () {
         return myFoodPheromones == maxPheromones;
     }
@@ -62,9 +64,10 @@ public class ForagingAntCell extends Cell {
         return myHomePheromones == maxPheromones;
     }
 
-    public void addPheromones (List<ForagingAntCell> neighbors, boolean food) {
+    public void addPheromones (List<Cell> neighbors, boolean food) {
         double valueToAdd = 0;
-        for (ForagingAntCell cell : neighbors) {
+        for (Cell c : neighbors) {
+            ForagingAntCell cell = (ForagingAntCell) c;
             valueToAdd = Math.max(valueToAdd, cell.getPheromones(food));
         }
         double desired = valueToAdd - 2;
@@ -73,19 +76,26 @@ public class ForagingAntCell extends Cell {
     }
 
     public void setPheromones (double value, boolean food) {
-
+        if (food) {
+            myFoodPheromones = value;
+        }
+        else {
+            myHomePheromones = value;
+        }
     }
 
     public double getPheromones (boolean food) {
         return food ? myFoodPheromones : myHomePheromones;
     }
-    
-    public List<Ant> getAnts() {
+
+    public List<Ant> getAnts () {
         return myAnts;
     }
-    public double getProb() {
+
+    public double getProb () {
         return Math.pow(myFoodPheromones + k, n);
     }
+
     public void setMaxPheromones (boolean food) {
         if (food) {
             myFoodPheromones = maxPheromones;

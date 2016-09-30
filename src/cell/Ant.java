@@ -6,86 +6,111 @@ import java.util.List;
 import java.util.Random;
 import grid.Coordinate;
 import grid.Neighbor;
+
+
 public class Ant extends Cell {
 
     private int myLifetime;
-    private boolean isMoving;
+    private boolean myMovingStatus;
     private String myOrientation;
-    public Ant (Coordinate coordinate, int lifetime){
-        
+
+    public Ant (Coordinate coordinate, int lifetime) {
+
         super(State.FOODSEARCH, coordinate);
         myLifetime = lifetime;
     }
-    
-    
-    public void update(){
-        isMoving = false;
+
+    public void update () {
+        myMovingStatus = false;
         myLifetime--;
-        if(myLifetime==0){
-           setMyNextState(State.DEAD);
+        if (myLifetime == 0) {
+            setMyNextState(State.DEAD);
         }
     }
-    
-    private void willMove() {
-        isMoving = true;
+
+    private void willMove () {
+        myMovingStatus = true;
     }
-    public boolean isDeadOrMoving(){
-        return getMyNextState() == State.DEAD || isMoving;
+
+    public boolean isDeadOrMoving () {
+        return getMyNextState() == State.DEAD || myMovingStatus;
     }
-    
-    public ForagingAntCell forage(List<ForagingAntCell> neighbors){
-        Iterator<ForagingAntCell> iter = neighbors.iterator();
-        while(iter.hasNext()){
-            if(iter.next().fullOfAnts()){
-                iter.remove();
+
+    public ForagingAntCell forage (List<Cell> neighbors) {
+        if (tryToMove(neighbors)) {
+            
+            double total = getProbSum(neighbors);
+            double random = new Random().nextDouble() * total;
+            double counter = 0;
+            for (Cell c : neighbors) {
+                ForagingAntCell cell = (ForagingAntCell) c;
+                counter += cell.getProb();
+                if (random < counter) {
+                    
+                    this.setOrientation(cell);
+                    return cell;
+                }
             }
+            this.setOrientation(neighbors.get(0));
+            return (ForagingAntCell)neighbors.get(0);
         }
-        if(neighbors.size()==0){
-            return null;
-        }
-        this.willMove();
-        double total = getProbSum(neighbors);
-        double random = new Random().nextDouble()*total;
-        double counter = 0;
-        for(ForagingAntCell cell : neighbors) {
-            counter+=cell.getProb();
-            if(random < counter){
-                this.setOrientation(cell);
-                return cell;
-            }
-        } 
-        this.setOrientation(neighbors.get(0));
-        return neighbors.get(0);
+        return null;
+
     }
-    
-    public ForagingAntCell goHome(List<ForagingAntCell> neighbors) {
-        Iterator<ForagingAntCell> iter = neighbors.iterator();
-        while(iter.hasNext()){
-            if(iter.next().fullOfAnts()){
-                iter.remove();
-            }
+
+    public ForagingAntCell goHome (List<Cell> neighbors) {
+        if (tryToMove(neighbors)) {
+            
         }
-        
         return null;
     }
-    private double getProbSum(List<ForagingAntCell> neighbors){
+
+    /**
+     * @param neighbors
+     */
+    private boolean tryToMove (List<Cell> neighbors) {
+        removeFullCells(neighbors);
+        if (neighbors.size() == 0) {
+            this.wontMove();
+        }
+        this.willMove();
+        return this.myMovingStatus;
+    }
+
+    private void wontMove () {
+        this.myMovingStatus = false;
+    }
+
+    /**
+     * @param neighbors
+     */
+    private void removeFullCells (List<Cell> neighbors) {
+        Iterator<Cell> iter = neighbors.iterator();
+        while (iter.hasNext()) {
+            if (((ForagingAntCell)iter.next()).fullOfAnts()) {
+                iter.remove();
+            }
+        }
+    }
+
+    private double getProbSum (List<Cell> neighbors) {
         double sum = 0;
-        for(ForagingAntCell cell : neighbors){
-            sum+=cell.getProb();
+        for (Cell cell : neighbors) {
+            sum += ((ForagingAntCell)cell).getProb();
         }
         return sum;
     }
-    
-    public void setOrientation(Cell otherCell){
+
+    public void setOrientation (Cell otherCell) {
         Coordinate otherCoord = otherCell.getMyGridCoordinate();
         Coordinate thisCoord = this.getMyGridCoordinate();
-        
+
         int x = (int) (otherCoord.getX() - thisCoord.getX());
-        int y = (int)(otherCoord.getY() - thisCoord.getY());
-        
+        int y = (int) (otherCoord.getY() - thisCoord.getY());
+
         String first = "";
         String second = "";
-        switch(x) {
+        switch (x) {
             case -1:
                 first = "TOP";
                 break;
@@ -96,7 +121,7 @@ public class Ant extends Cell {
                 first = "BOTTOM";
                 break;
         }
-        switch(y){
+        switch (y) {
             case -1:
                 second = "LEFT";
                 break;
@@ -107,13 +132,13 @@ public class Ant extends Cell {
                 second = "RIGHT";
                 break;
         }
-      
+
         StringBuilder orientation = new StringBuilder();
-        
+
         orientation.append(first);
         orientation.append(second);
         this.myOrientation = orientation.toString();
-        
+
     }
-    
+
 }

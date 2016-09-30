@@ -7,10 +7,11 @@ import cell.Cell;
 
 public class NormalEdgeNeighbors implements Neighbors {
     // super class call abstract method in sub class
-    
+
     @Override
     public List<Cell> getNeighbors (List<Coordinate> allowableNeighbors,
-                                    Coordinate coordinate, Grid grid) {
+                                    Coordinate coordinate,
+                                    Grid grid) {
         List<Cell> neighbors = new ArrayList<Cell>();
         for (Coordinate neighborRelativeCoordinate : allowableNeighbors) {
             Coordinate neighborCoordinate = coordinate.add(neighborRelativeCoordinate);

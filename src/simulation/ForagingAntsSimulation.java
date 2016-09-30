@@ -16,15 +16,10 @@ public class ForagingAntsSimulation extends Simulation {
 
     private ForagingAntCell myNest;
     private List<Coordinate> foodCells;
+    private double myMaxPheromones;
 
     public ForagingAntsSimulation (Map<String, Map<String, String>> simulationConfig) {
         super(simulationConfig);
-    }
-
-    @Override
-    public void setNextState (Cell cell) {
-        // TODO Auto-generated method stub
-
     }
 
     @Override
@@ -48,32 +43,72 @@ public class ForagingAntsSimulation extends Simulation {
     public void updateAnt (Ant ant) {
         if (isAtFoodSource(ant)) {
             ant.setMyNextState(State.HOMESEARCH);
-            ForagingAntCell bestFood = getBestFood(ant);
-            ant.setOrientation(bestFood);
-            
-            // get Neighbors based on ant.getOrientation
-            // pass list to ant.forage
-            
-            //List<ForagingAntCell> forwardNeighbors = getNeighbors().getNeighbors(allowableNeighbors, coordinate)
-            //ant.forage(neighbors)
+            ForagingAntCell bestHome = getBestDirection(ant, false);
+            ant.setOrientation(bestHome);
+            // get neighbors based on orientation
+            // pass list to ant.goHome
         }
         else if (isAtNest(ant)) {
-
+            ant.setMyNextState(State.FOODSEARCH);
+            ForagingAntCell bestFood = getBestDirection(ant, true);
+            ant.setOrientation(bestFood);
+            forage(ant);
+            // get Neighbors based on ant.getOrientation
+            // pass list to ant.forage
+        }
+        else {
+            if (ant.getMyCurrentState() == State.FOODSEARCH) {
+                forage(ant);
+            }
         }
 
         // List<Cell> neighbors = getNeighbors().getNeighbors(, coordinate)
     }
 
-    private ForagingAntCell getBestFood (Ant ant) {
-        List<Cell> neighbors =
-                getNeighbors().getNeighbors(Neighbor.SQUARE.getNeighbors(),
-                                            ant.getMyGridCoordinate());
+    /**
+     * @param ant
+     */
+    private void forage (Ant ant) {
+        List<Cell> neighbors = null;
+        ForagingAntCell nextCell = ant.forage(neighbors);
+        if (nextCell == null) {
+            nextCell = ant.forage(getSquareNeighbors(ant));
+        }
+        if (nextCell != null) {
+            dropPheromones(ant, true);
+        }
+    }
+
+    private void dropPheromones (Ant ant, boolean food) {
+        ForagingAntCell cell =
+                (ForagingAntCell) getGrid().getCellGrid().get(ant.getMyGridCoordinate());
+        if (food) {
+            if (isAtNest(ant)) {
+                cell.setPheromones(myMaxPheromones, true);
+            }
+            else {
+                cell.addPheromones(getSquareNeighbors(cell), food);
+            }
+        }
+    }
+
+    /**
+     * @param cell
+     * @return
+     */
+    private List<Cell> getSquareNeighbors (Cell cell) {
+        return getNeighbors().getNeighbors(Neighbor.SQUARE.getNeighbors(),
+                                           cell.getMyGridCoordinate(), getGrid());
+    }
+
+    private ForagingAntCell getBestDirection (Ant ant, boolean food) {
+        List<Cell> neighbors = getSquareNeighbors(ant);
         ForagingAntCell bestCell = null;
         double mostPheromones = 0;
         for (Cell c : neighbors) {
             ForagingAntCell cell = (ForagingAntCell) c;
-            if (cell.getPheromones(true) >= mostPheromones) {
-                mostPheromones = cell.getPheromones(true);
+            if (cell.getPheromones(food) >= mostPheromones) {
+                mostPheromones = cell.getPheromones(food);
                 bestCell = cell;
             }
         }
