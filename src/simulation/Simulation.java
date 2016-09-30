@@ -36,8 +36,6 @@ public abstract class Simulation {
         this.myGrid = grid;
     }
 
-    public abstract void setNextState (Cell cell);
-
     public Shape getMyCellShape () {
         return myCellShape;
     }
@@ -60,7 +58,7 @@ public abstract class Simulation {
         .parseDouble(simulationConfig.get("GeneralConfig").get("gridWidth")), Double
                 .parseDouble(simulationConfig.get("GeneralConfig").get("gridHeight"))),
                                   getGrid()));
-        setNeighbors(new NormalEdgeNeighbors(getGrid()));
+        setNeighbors(new NormalEdgeNeighbors());
     }
 
     public void initializeGrid (Map<String, Map<String, String>> simulationConfig) {

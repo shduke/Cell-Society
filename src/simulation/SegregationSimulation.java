@@ -73,7 +73,7 @@ public class SegregationSimulation extends Simulation {
     private boolean isUnsatisfied (AgentCell cell) {
         List<Cell> neighbors =
                 getNeighbors().getNeighbors(Neighbor.SQUARE.getNeighbors(),
-                                            cell.getMyGridCoordinate());
+                                            cell.getMyGridCoordinate(), getGrid());
 
         int totalNeighbors = 0;
         int friendlyNeighbors = 0;
@@ -116,12 +116,6 @@ public class SegregationSimulation extends Simulation {
     }
 
     public void createNeighbors (Cell cell) {
-
-        // TODO Auto-generated method stub
-
-    }
-
-    public void setNextState (Cell cell) {
 
         // TODO Auto-generated method stub
 

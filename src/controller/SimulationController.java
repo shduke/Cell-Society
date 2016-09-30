@@ -33,4 +33,8 @@ public class SimulationController {
     public Simulation getSimulation () {
         return simulation;
     }
+    
+    public void updateSimulations() {
+        simulation.step();
+    }
 }
