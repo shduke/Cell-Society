@@ -38,7 +38,7 @@ public class Ant extends Cell {
 
     public ForagingAntCell forage (List<Cell> neighbors) {
         if (tryToMove(neighbors)) {
-            
+
             double total = getProbSum(neighbors);
             double random = new Random().nextDouble() * total;
             double counter = 0;
@@ -46,13 +46,13 @@ public class Ant extends Cell {
                 ForagingAntCell cell = (ForagingAntCell) c;
                 counter += cell.getProb();
                 if (random < counter) {
-                    
+
                     this.setOrientation(cell);
                     return cell;
                 }
             }
             this.setOrientation(neighbors.get(0));
-            return (ForagingAntCell)neighbors.get(0);
+            return (ForagingAntCell) neighbors.get(0);
         }
         return null;
 
@@ -60,9 +60,24 @@ public class Ant extends Cell {
 
     public ForagingAntCell goHome (List<Cell> neighbors) {
         if (tryToMove(neighbors)) {
-            
+            ForagingAntCell bestNeighbor = getBestNeighbor(neighbors, false);
+            setOrientation(bestNeighbor);
+            return bestNeighbor;
         }
         return null;
+    }
+
+    public ForagingAntCell getBestNeighbor (List<Cell> neighbors, boolean food) {
+        ForagingAntCell bestCell = null;
+        double mostPheromones = 0;
+        for (Cell c : neighbors) {
+            ForagingAntCell cell = (ForagingAntCell) c;
+            if (cell.getPheromones(food) >= mostPheromones) {
+                mostPheromones = cell.getPheromones(food);
+                bestCell = cell;
+            }
+        }
+        return bestCell;
     }
 
     /**
@@ -87,7 +102,7 @@ public class Ant extends Cell {
     private void removeFullCells (List<Cell> neighbors) {
         Iterator<Cell> iter = neighbors.iterator();
         while (iter.hasNext()) {
-            if (((ForagingAntCell)iter.next()).fullOfAnts()) {
+            if (((ForagingAntCell) iter.next()).fullOfAnts()) {
                 iter.remove();
             }
         }
@@ -96,7 +111,7 @@ public class Ant extends Cell {
     private double getProbSum (List<Cell> neighbors) {
         double sum = 0;
         for (Cell cell : neighbors) {
-            sum += ((ForagingAntCell)cell).getProb();
+            sum += ((ForagingAntCell) cell).getProb();
         }
         return sum;
     }
