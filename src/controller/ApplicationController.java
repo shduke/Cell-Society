@@ -4,6 +4,7 @@ import javafx.animation.Animation.Status;
 import javafx.event.EventHandler;
 import java.io.File;
 import java.util.ResourceBundle;
+import applicationView.SimulationToolbar;
 import applicationView.Toolbar;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -42,6 +43,17 @@ public class ApplicationController {
     public String getTitle () {
         return TITLE;
     }
+    
+    public Scene init (int width, int height) {
+        root = new Group();
+        myScene = new Scene(root, width, height, Color.WHITE);
+        simulationController = new SimulationController(root);
+        myToolbar.initToolbar(30, width, myScene);
+        SimulationToolbar mySimToolbar = new SimulationToolbar();
+        mySimToolbar.initSimToolbar(height, 50, myScene);
+        handleEvents(width, root);
+        return myScene;
+    }
 
     private void update () {
         setSpeed();
@@ -78,38 +90,24 @@ public class ApplicationController {
         myTimeline.pause();
     }
 
-    public void loadFile () {
-        myTimeline.pause();
-    }
-
-    public void openFile (File myFile) {
-        try {
-            
-            String filePath = myFile.getAbsolutePath();
-            simulationController.initializeSimulation(filePath);
-            myToolbar.initToolbar(30, 500, myScene);
-            handleEvents(500, root);
-        }
-        // TODO: create XML Exception
-        catch (XMLParserException xmlexcept) {
-            throw new XMLParserException("Could not parse file. Check .xml extension");
-        }
-    }
-
     private void openFileChooser (FileChooser chooseFile) {
         File myFile = chooseFile.showOpenDialog(new Stage());
         if (myFile != null) {
             openFile(myFile);
         }
     }
-
-    public Scene init (int width, int height) {
-        root = new Group();
-        myScene = new Scene(root, width, height, Color.WHITE);
-        simulationController = new SimulationController(root);
-        myToolbar.initToolbar(30, width, myScene);
-        handleEvents(width, root);
-        return myScene;
+    
+    public void openFile (File myFile) {
+        try {
+            String filePath = myFile.getAbsolutePath();
+            simulationController.initializeSimulation(filePath);
+            myToolbar.initToolbar(30, 500, myScene);
+            handleEvents(500, root);
+            System.out.println(filePath);
+        }
+        catch (XMLParserException xmlexcept) {
+            throw new XMLParserException("Could not parse file. Check .xml extension");
+        }
     }
 
     private void handleEvents (int width, Group root) {
@@ -128,7 +126,7 @@ public class ApplicationController {
         EventHandler<MouseEvent> eventThree = new EventHandler<MouseEvent>() {
             @Override
             public void handle (MouseEvent m) {
-                loadFile();
+                pause();
                 openFileChooser(new FileChooser());
             }
         };

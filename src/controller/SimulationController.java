@@ -28,6 +28,7 @@ public class SimulationController {
         this.simulation = parser.createSimulation(rootElement);
         simulation.removeGridViewSceneGraph(simulationRoot);
         simulation.addGridViewSceneGraph(simulationRoot);
+        
     }
 
     public Simulation getSimulation () {
