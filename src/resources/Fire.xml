@@ -15,7 +15,7 @@
 		</SimulationConfig>
 		<Cells InitialSetup="Specific">
 			<cell_5_5>Burning</cell_5_5>
-			<cell_3_4>Burning</cell_3_4>
+			<cell_0_0>Burning</cell_0_0>
 			<cell_5_3>Empty</cell_5_3>
 		</Cells>
 	</Simulation>
