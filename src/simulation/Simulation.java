@@ -22,6 +22,7 @@ public abstract class Simulation {
     private Shape myCellShape;
 
     /// these 3 fields could be put in a gridViewController
+    private Group myRoot;
     private Grid myGrid;
     private GridView myGridView;
     private Neighbors neighbors;
@@ -59,7 +60,7 @@ public abstract class Simulation {
          * .parseDouble(simulationConfig.get("GeneralConfig").get("gridHeight"))),
          * getGrid()));
          */
-        setGridView(new TriangleGridView(new Dimension2D(Double
+        setGridView(new RectangleGridView(new Dimension2D(Double
                 .parseDouble(simulationConfig.get("GeneralConfig").get("gridWidth")), Double
                         .parseDouble(simulationConfig.get("GeneralConfig").get("gridHeight"))),
                                          getGrid()));
@@ -102,12 +103,18 @@ public abstract class Simulation {
      * 
      * @return
      */
+    public Group getSimulationView() {
+        return this.myRoot;
+    }
+    
     public GridView getGridView () {
         return myGridView;
     }
 
     public void setGridView (GridView gridView) {
+        myRoot = new Group();
         this.myGridView = gridView;
+        this.myRoot.getChildren().add(myGridView.getRoot());
     }
 
     public void addGridViewSceneGraph (Group root) {

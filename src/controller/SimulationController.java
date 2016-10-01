@@ -1,6 +1,8 @@
 package controller;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import org.w3c.dom.Element;
 import javafx.scene.Group;
 import simulation.Simulation;
@@ -9,11 +11,12 @@ import xml.XMLParser;
 
 public class SimulationController {
 
-    private Simulation simulation;
+    private List<Simulation> mySimulations;
     private XMLParser parser = new XMLParser();
     private Group simulationRoot;
 
     SimulationController (Group simulationRoot) {
+        this.mySimulations = new ArrayList<Simulation>();
         this.simulationRoot = simulationRoot;
         File simulationConfig = new File("src/resources/Segregation.xml");
         initializeSimulation(simulationConfig.getAbsolutePath());
@@ -25,17 +28,22 @@ public class SimulationController {
      */
     void initializeSimulation (String xmlFilename) {
         Element rootElement = parser.getRootElement(xmlFilename);
-        this.simulation = parser.createSimulation(rootElement);
-        simulation.removeGridViewSceneGraph(simulationRoot);
-        simulation.addGridViewSceneGraph(simulationRoot);
-        
+        if(mySimulations.size() > 0){
+            mySimulations.get(mySimulations.size()-1).getSimulationView().getChildren().clear();
+            mySimulations.remove(mySimulations.size()-1);
+        }
+        this.mySimulations.add(0, parser.createSimulation(rootElement));
+        simulationRoot.getChildren().add(mySimulations.get(0).getSimulationView());
+
     }
 
     public Simulation getSimulation () {
-        return simulation;
+        return mySimulations.get(0);
     }
-    
-    public void updateSimulations() {
-        simulation.step();
+
+    public void updateSimulations () {
+        for (Simulation s : mySimulations) {
+            s.step();
+        }
     }
 }

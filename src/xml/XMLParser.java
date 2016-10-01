@@ -5,6 +5,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import simulation.FireSimulation;
+import simulation.ForagingAntsSimulation;
 import simulation.GameOfLifeSimulation;
 import simulation.PredatorPreySimulation;
 import simulation.SegregationSimulation;
@@ -36,8 +37,11 @@ public class XMLParser {
         else if (simulationType.equals("PredatorPrey")) {
             simulation = new PredatorPreySimulation(generateSimulationConfig(rootElement));
         }
-        else {
+        else if(simulationType.equals("Segregation")){
             simulation = new SegregationSimulation(generateSimulationConfig(rootElement));
+        }
+        else{
+            simulation = new ForagingAntsSimulation(generateSimulationConfig(rootElement));
         }
         return simulation;
     }
