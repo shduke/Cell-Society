@@ -3,6 +3,7 @@ package grid;
 import cell.State;
 import javafx.geometry.Dimension2D;
 import javafx.scene.Group;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Shape;
 

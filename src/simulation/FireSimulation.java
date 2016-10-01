@@ -26,9 +26,8 @@ public class FireSimulation extends Simulation {
     }
 
     public boolean hasBurningNeighbor (Cell cell) {
-        for (Cell neighborCell : getNeighbors().getNeighbors(Neighbor.SQUARE.getNeighbors(),
-                                                             cell.getMyGridCoordinate(),
-                                                             getGrid())) {
+        for (Cell neighborCell : getNeighbors()
+                .getSurroundingNeighbors(cell.getMyGridCoordinate())) {
             if (neighborCell.getMyCurrentState().equals(State.BURNING)) {
                 return true;
             }
