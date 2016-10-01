@@ -1,6 +1,8 @@
 package applicationView;
 
+import java.io.File;
 import java.util.ResourceBundle;
+import controller.ApplicationController;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
@@ -12,6 +14,7 @@ import javafx.scene.control.Button;
 public class SimulationToolbar {
 
     private final ResourceBundle GUIResources;
+    ApplicationController myAppController = new ApplicationController();
     
     public SimulationToolbar() {
         GUIResources = ResourceBundle.getBundle("resources/English");
@@ -21,6 +24,7 @@ public class SimulationToolbar {
         Group root = (Group)myScene.getRoot();
         VBox mySimToolbar = new VBox();
         mySimToolbar.getChildren().addAll(createGraph(myScene));
+        checkRunningSim();
         //root.getChildren().add(mySimToolbar);
     }
     
@@ -38,7 +42,13 @@ public class SimulationToolbar {
     }
     
     private void checkRunningSim() {
-        
+        File myFile = myAppController.getMyFile();
+        if (myFile != null) {
+        System.out.println(myFile.getPath());
+        if (myFile.getPath().contains("Fire")) {
+            System.out.println("Cats");
+        }
+        }
     }
     
 }

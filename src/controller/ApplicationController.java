@@ -4,6 +4,7 @@ import javafx.animation.Animation.Status;
 import javafx.event.EventHandler;
 import java.io.File;
 import java.util.ResourceBundle;
+import Exceptions.XMLException;
 import applicationView.SimulationToolbar;
 import applicationView.Toolbar;
 import javafx.animation.KeyFrame;
@@ -28,6 +29,7 @@ public class ApplicationController {
     private final ResourceBundle GUIResources;
     private Scene myScene;
     private Group root;
+    private File myFile;
 
     public ApplicationController () {
         GUIResources = ResourceBundle.getBundle("resources/English");
@@ -91,22 +93,25 @@ public class ApplicationController {
     }
 
     private void openFileChooser (FileChooser chooseFile) {
-        File myFile = chooseFile.showOpenDialog(new Stage());
+        myFile = chooseFile.showOpenDialog(new Stage());
         if (myFile != null) {
             openFile(myFile);
         }
     }
     
-    public void openFile (File myFile) {
+    public File getMyFile () {
+        return myFile;
+    }
+
+    public void openFile (File myFile) throws XMLException{
         try {
             String filePath = myFile.getAbsolutePath();
             simulationController.initializeSimulation(filePath);
             myToolbar.initToolbar(30, 500, myScene);
             handleEvents(500, root);
-            System.out.println(filePath);
         }
-        catch (XMLParserException xmlexcept) {
-            throw new XMLParserException("Could not parse file. Check .xml extension");
+        catch (XMLException xmlexcept) {
+            throw new XMLException(xmlexcept, GUIResources.getString("XMLException"));
         }
     }
 

@@ -2,7 +2,6 @@ package applicationView;
 
 import java.util.ResourceBundle;
 import javafx.event.EventHandler;
-import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -23,11 +22,13 @@ public class Toolbar {
     }
     
     public Toolbar() {
-        GUIResources = ResourceBundle.getBundle("resources/English");
+        String initFile = "resources";
+        String fileName = "/English";
+        GUIResources = ResourceBundle.getBundle(initFile + fileName);
     }
     
     public void initToolbar(int height, int width, Scene myScene) {
-        Group root = (Group)myScene.getRoot();
+        Group root = (Group) myScene.getRoot();
         myScene.setRoot(root);
         HBox myToolbar = new HBox(height);
         slider = new Slider(0.5, 2, 1);
