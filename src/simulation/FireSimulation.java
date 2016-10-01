@@ -26,7 +26,7 @@ public class FireSimulation extends Simulation {
 
     public boolean hasBurningNeighbor (Cell cell) {
         for (Cell neighborCell : getNeighbors()
-                .getSurroundingNeighbors(cell.getMyGridCoordinate())) {
+                .getOrthogonalNeighbors(cell.getMyGridCoordinate())) {
             if (neighborCell.getMyCurrentState().equals(State.BURNING)) {
                 return true;
             }
@@ -91,10 +91,10 @@ public class FireSimulation extends Simulation {
         FireCell cell = new FireCell(State.valueOf(currentState.toUpperCase()), coordinate);
         int r = (int) coordinate.getX();
         int c = (int) coordinate.getY();
-        if (r == 0 || c == 0 || r == (getGrid().getNumRows() - 1) ||
+        /*if (r == 0 || c == 0 || r == (getGrid().getNumRows() - 1) ||
             c == (getGrid().getNumColumns() - 1)) {
             cell.setMyCurrentState(State.EMPTY);
-        }
+        }*/
         cell.setBurnTimer(burnTime);
         return cell;
     }
