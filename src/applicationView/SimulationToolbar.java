@@ -5,6 +5,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 
 public class SimulationToolbar {
 
@@ -26,6 +27,7 @@ public class SimulationToolbar {
         final LineChart<Number,Number> myLineChart = 
                 new LineChart<Number,Number>(x_axis,y_axis);
         myLineChart.setTitle(GUIResources.getString("ChartTitle"));
+        XYChart.Series firstSeries = new XYChart.Series();
     }
     
 }
