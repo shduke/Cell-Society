@@ -26,7 +26,7 @@ public class SimulationToolbar {
         VBox mySimToolbar = new VBox();
         mySimToolbar.getChildren().addAll(createGraph(myScene));
         checkRunningSim();
-        root.getChildren().add(mySimToolbar);
+        //root.getChildren().add(mySimToolbar);
     }
     
     private LineChart<Number, Number> createGraph(Scene myScene) {

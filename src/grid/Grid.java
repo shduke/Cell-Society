@@ -44,10 +44,25 @@ public class Grid implements Iterable<Cell> {
 
     //update (put in cell class)
     public void updateGrid () {
+        /*int burningCount = 0;
+        int treeCount = 0;
+        int emptyCount = 0;*/
         for (Cell cell : getImmutableCellGrid().values()) {
+            /*if(cell.getMyNextState().equals(State.BURNING)) {
+                burningCount++;
+            }
+            if(cell.getMyNextState().equals(State.TREE)) {
+                treeCount++;
+            }
+            if(cell.getMyNextState().equals(State.EMPTY)) {
+                emptyCount++;
+            }*/
             cell.setMyCurrentState(cell.getMyNextState());
             cell.setMyNextState(null);
         }
+        //System.out.println("Burning:" + burningCount);
+        //System.out.println("Tree: " + treeCount);
+        //System.out.println("Empty: " + emptyCount);
     }
 
     public Boolean isCreated (Coordinate coordinate) {

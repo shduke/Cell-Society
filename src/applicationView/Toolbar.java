@@ -18,10 +18,6 @@ public class Toolbar {
     Button step;
     Button loadXMLbutton;
 
-    public Toolbar () {
-        GUIResources = ResourceBundle.getBundle("resources/English");
-    }
-
     public Button getPause () {
         return pause;
     }
