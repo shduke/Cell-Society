@@ -6,7 +6,6 @@ import cell.Cell;
 import cell.FireCell;
 import cell.State;
 import grid.Coordinate;
-import grid.Grid;
 import grid.Neighbor;
 
 
@@ -21,9 +20,12 @@ public class FireSimulation extends Simulation {
     // very temporary code, just here to make it work
     @Override
     public void step () {
-        countCellsinGrid();
+        stepNum = getStepNum();
+        stepNum++;
+        System.out.println("Num of steps: " + stepNum);
         getGrid().applyFuncToCell(p -> setNextState(p));
         updateGrid();
+        countCellsinGrid();
     }
 
     public boolean hasBurningNeighbor (Cell cell) {
@@ -37,18 +39,19 @@ public class FireSimulation extends Simulation {
         return false;
     }
     
+    @Override
     public void countCellsinGrid() {
         int burningCount = 0;
         int treeCount = 0;
         int emptyCount = 0;
         for (Cell cell : getGrid().getImmutableCellGrid().values()) {
-            if(cell.getMyNextState().equals(State.BURNING)) {
+            if(cell.getMyCurrentState().equals(State.BURNING)) {
                 burningCount++;
             }
-            if(cell.getMyNextState().equals(State.TREE)) {
+            if(cell.getMyCurrentState().equals(State.TREE)) {
                 treeCount++;
             }
-            if(cell.getMyNextState().equals(State.EMPTY)) {
+            if(cell.getMyCurrentState().equals(State.EMPTY)) {
                 emptyCount++;
             }
         }

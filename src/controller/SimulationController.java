@@ -17,6 +17,7 @@ public class SimulationController {
         this.simulationRoot = simulationRoot;
         File simulationConfig = new File("src/resources/Segregation.xml");
         initializeSimulation(simulationConfig.getAbsolutePath());
+        
     }
 
     /**
@@ -28,7 +29,7 @@ public class SimulationController {
         this.simulation = parser.createSimulation(rootElement);
         simulation.removeGridViewSceneGraph(simulationRoot);
         simulation.addGridViewSceneGraph(simulationRoot);
-        
+        simulation.countCellsinGrid();
     }
 
     public Simulation getSimulation () {

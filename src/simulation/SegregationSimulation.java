@@ -118,4 +118,11 @@ public class SegregationSimulation extends Simulation {
 
     }
 
+
+    @Override
+    public void countCellsinGrid () {
+        // TODO Auto-generated method stub
+        
+    }
+
 }

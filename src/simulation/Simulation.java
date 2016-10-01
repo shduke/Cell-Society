@@ -26,10 +26,17 @@ public abstract class Simulation {
     private GridView myGridView;
     private Neighbors neighbors;
     private String myDefaultState;
+    protected int stepNum;
+
+    public int getStepNum () {
+        return stepNum;
+    }
 
     Simulation (Map<String, Map<String, String>> simulationConfig) {
         initializeSimulation(simulationConfig);
     }
+    
+    public abstract void countCellsinGrid();
 
     public Grid getGrid () {
         return myGrid;

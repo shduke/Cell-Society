@@ -162,6 +162,12 @@ public class ForagingAntsSimulation extends Simulation {
         return cell;
     }
 
+    @Override
+    public void countCellsinGrid () {
+        // TODO Auto-generated method stub
+        
+    }
+
     
 
 }

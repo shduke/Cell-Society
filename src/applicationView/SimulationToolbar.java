@@ -38,6 +38,9 @@ public class SimulationToolbar {
                 new LineChart<Number,Number>(x_axis,y_axis);
         myLineChart.setTitle(GUIResources.getString("ChartTitle"));
         XYChart.Series firstSeries = new XYChart.Series();
+        //temp to get this to work
+        firstSeries.getData().add(new XYChart.Data(3, 15));
+        myLineChart.getData().add(firstSeries);
         //root.getChildren().add(myLineChart);
         return myLineChart;
     }
