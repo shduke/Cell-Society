@@ -47,9 +47,11 @@ public abstract class NeighborsHandler {
         Coordinate neighborDirectionCoordinate = coordinate.add(directionCoordinate);
         List<Cell> directionNeighbors = getAdjacentNeighbors(coordinate, neighborDirectionCoordinate);
         if (!myCellShape.equals("HEXAGON") &&
-            Neighbor.ORTHOGONAL.getNeighbors().contains(directionCoordinate) && getMyGrid().isCreated(neighborDirectionCoordinate)) {
+            Neighbor.ORTHOGONAL.getNeighbors().contains(directionCoordinate)) {
             directionNeighbors.removeAll(Neighbor.ORTHOGONAL.getNeighbors());
-            directionNeighbors.add(myGrid.getCell(neighborDirectionCoordinate));
+            if (getMyGrid().isCreated(neighborDirectionCoordinate)) {
+                directionNeighbors.add(myGrid.getCell(neighborDirectionCoordinate));
+            }
         }
         return directionNeighbors;
 
