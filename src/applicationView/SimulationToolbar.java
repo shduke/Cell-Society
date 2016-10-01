@@ -15,13 +15,14 @@ public class SimulationToolbar {
 
     private final ResourceBundle GUIResources;
     ApplicationController myAppController = new ApplicationController();
+    Group root;
     
     public SimulationToolbar() {
         GUIResources = ResourceBundle.getBundle("resources/English");
     }
     
     public void initSimToolbar(int height, int width, Scene myScene) {
-        Group root = (Group)myScene.getRoot();
+        root = (Group)myScene.getRoot();
         VBox mySimToolbar = new VBox();
         mySimToolbar.getChildren().addAll(createGraph(myScene));
         checkRunningSim();
@@ -37,6 +38,9 @@ public class SimulationToolbar {
                 new LineChart<Number,Number>(x_axis,y_axis);
         myLineChart.setTitle(GUIResources.getString("ChartTitle"));
         XYChart.Series firstSeries = new XYChart.Series();
+        //temp to get this to work
+        firstSeries.getData().add(new XYChart.Data(3, 15));
+        myLineChart.getData().add(firstSeries);
         //root.getChildren().add(myLineChart);
         return myLineChart;
     }

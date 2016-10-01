@@ -36,7 +36,6 @@ public class SharkCell extends Cell {
     
     public void update () {
         myCurrentBreedTime = myCurrentBreedTime == 0 ? myMaxBreedTime : myCurrentBreedTime-1;
-        System.out.println("my breed time is " + myCurrentBreedTime);
         if(myCurrentHealth == 0){
             this.setMyNextState(State.DEAD);
         }

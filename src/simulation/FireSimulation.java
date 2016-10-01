@@ -6,7 +6,6 @@ import cell.Cell;
 import cell.FireCell;
 import cell.State;
 import grid.Coordinate;
-import grid.Grid;
 import grid.Neighbor;
 
 
@@ -18,11 +17,11 @@ public class FireSimulation extends Simulation {
         super(simulationConfig);
     }
 
-    // very temporary code, just here to make it work
     @Override
     public void step () {
         getGrid().applyFuncToCell(p -> setNextState(p));
         updateGrid();
+        countCellsinGrid();
     }
 
     public boolean hasBurningNeighbor (Cell cell) {
@@ -34,10 +33,33 @@ public class FireSimulation extends Simulation {
         }
         return false;
     }
+    
+    @Override
+    public void countCellsinGrid() {
+        stepNum = getStepNum();
+        System.out.println("Num of steps: " + stepNum);
+        int burningCount = 0;
+        int treeCount = 0;
+        int emptyCount = 0;
+        for (Cell cell : getGrid().getImmutableCellGrid().values()) {
+            if(cell.getMyCurrentState().equals(State.BURNING)) {
+                burningCount++;
+            }
+            if(cell.getMyCurrentState().equals(State.TREE)) {
+                treeCount++;
+            }
+            if(cell.getMyCurrentState().equals(State.EMPTY)) {
+                emptyCount++;
+            }
+        }
+        System.out.println("Burning:" + burningCount);
+        System.out.println("Tree: " + treeCount);
+        System.out.println("Empty: " + emptyCount);
+        stepNum++;
+    }
 
     // is switching on cell state bad?
     public void setNextState (Cell cell) {
-        // System.out.println(cell.getMyCurrentState());
         if (cell.getMyCurrentState().equals(State.TREE)) {
             cell.setMyNextState(State.TREE);
             Random rn = new Random();
