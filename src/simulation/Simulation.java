@@ -19,13 +19,15 @@ import javafx.scene.shape.Shape;
 
 
 public abstract class Simulation {
-    private Shape myCellShape;
+    private String myCellShape;
 
     /// these 3 fields could be put in a gridViewController
     private Grid myGrid;
     private GridView myGridView;
-    private Neighbors neighbors;
+    private Neighbors myEdgeTypeNeighbors;
     private String myDefaultState;
+    private String myDefaultNeighbors;
+    
 
     Simulation (Map<String, Map<String, String>> simulationConfig) {
         initializeSimulation(simulationConfig);
@@ -39,11 +41,11 @@ public abstract class Simulation {
         this.myGrid = grid;
     }
 
-    public Shape getMyCellShape () {
+    public String getMyCellShape () {
         return myCellShape;
     }
 
-    public void setMyCellShape (Shape myCellShape) {
+    public void setMyCellShape (String myCellShape) {
         this.myCellShape = myCellShape;
     }
 
@@ -129,11 +131,11 @@ public abstract class Simulation {
     }
 
     public Neighbors getNeighbors () {
-        return neighbors;
+        return myEdgeTypeNeighbors;
     }
 
     public void setNeighbors (Neighbors neighbors) {
-        this.neighbors = neighbors;
+        this.myEdgeTypeNeighbors = neighbors;
     }
 
     /**
