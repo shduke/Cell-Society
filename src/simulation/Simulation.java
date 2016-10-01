@@ -98,6 +98,10 @@ public abstract class Simulation {
      * Grid cellGrid);
      */
 
+    /** Return the grid view
+     * 
+     * @return
+     */
     public GridView getGridView () {
         return myGridView;
     }

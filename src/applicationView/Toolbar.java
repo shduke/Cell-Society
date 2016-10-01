@@ -18,12 +18,14 @@ public class Toolbar {
     Button step;
     Button loadXMLbutton;
 
-    public Toolbar () {
-        GUIResources = ResourceBundle.getBundle("resources/English");
-    }
-
     public Button getPause () {
         return pause;
+    }
+
+    public Toolbar () {
+        String initFile = "resources";
+        String fileName = "/English";
+        GUIResources = ResourceBundle.getBundle(initFile + fileName);
     }
 
     public void initToolbar (int height, int width, Scene myScene) {
@@ -44,7 +46,6 @@ public class Toolbar {
 
     public void setPauseButton (EventHandler<MouseEvent> event) {
         pause.setOnMouseClicked(event);
-
     }
 
     public void setStepButton (EventHandler<MouseEvent> event) {
@@ -54,5 +55,4 @@ public class Toolbar {
     public void setXMLFileButton (EventHandler<MouseEvent> event) {
         loadXMLbutton.setOnMouseClicked(event);
     }
-
 }
