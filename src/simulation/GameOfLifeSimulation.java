@@ -36,8 +36,7 @@ public class GameOfLifeSimulation extends Simulation {
 
     public void setNextState (Cell cell) {
         int numberOfLivingNeighbors =
-                livingNeighbors(getNeighbors().getNeighbors(Neighbor.SQUARE.getNeighbors(),
-                                                            cell.getMyGridCoordinate(), getGrid()));
+                livingNeighbors(getNeighbors().getSurroundingNeighbors(cell.getMyGridCoordinate()));
         if (numberOfLivingNeighbors == 3) {
             cell.setMyNextState(State.LIVING);
         }

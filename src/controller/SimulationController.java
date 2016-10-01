@@ -15,7 +15,7 @@ public class SimulationController {
 
     SimulationController (Group simulationRoot) {
         this.simulationRoot = simulationRoot;
-        File simulationConfig = new File("src/resources/Segregation.xml");
+        File simulationConfig = new File("src/resources/Fire.xml");
         initializeSimulation(simulationConfig.getAbsolutePath());
     }
 
