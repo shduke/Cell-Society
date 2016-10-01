@@ -15,17 +15,18 @@ public class SimulationToolbar {
 
     private final ResourceBundle GUIResources;
     ApplicationController myAppController = new ApplicationController();
+    Group root;
     
     public SimulationToolbar() {
         GUIResources = ResourceBundle.getBundle("resources/English");
     }
     
     public void initSimToolbar(int height, int width, Scene myScene) {
-        Group root = (Group)myScene.getRoot();
+        root = (Group)myScene.getRoot();
         VBox mySimToolbar = new VBox();
         mySimToolbar.getChildren().addAll(createGraph(myScene));
         checkRunningSim();
-        //root.getChildren().add(mySimToolbar);
+        root.getChildren().add(mySimToolbar);
     }
     
     private LineChart<Number, Number> createGraph(Scene myScene) {
