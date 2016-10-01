@@ -17,12 +17,8 @@ public class FireSimulation extends Simulation {
         super(simulationConfig);
     }
 
-    // very temporary code, just here to make it work
     @Override
     public void step () {
-        stepNum = getStepNum();
-        stepNum++;
-        System.out.println("Num of steps: " + stepNum);
         getGrid().applyFuncToCell(p -> setNextState(p));
         updateGrid();
         countCellsinGrid();
@@ -41,6 +37,8 @@ public class FireSimulation extends Simulation {
     
     @Override
     public void countCellsinGrid() {
+        stepNum = getStepNum();
+        System.out.println("Num of steps: " + stepNum);
         int burningCount = 0;
         int treeCount = 0;
         int emptyCount = 0;
@@ -58,11 +56,11 @@ public class FireSimulation extends Simulation {
         System.out.println("Burning:" + burningCount);
         System.out.println("Tree: " + treeCount);
         System.out.println("Empty: " + emptyCount);
+        stepNum++;
     }
 
     // is switching on cell state bad?
     public void setNextState (Cell cell) {
-        // System.out.println(cell.getMyCurrentState());
         if (cell.getMyCurrentState().equals(State.TREE)) {
             cell.setMyNextState(State.TREE);
             Random rn = new Random();
