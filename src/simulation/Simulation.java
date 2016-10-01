@@ -9,8 +9,8 @@ import grid.Grid;
 import grid.GridView;
 import grid.HexagonGridView;
 import grid.Neighbor;
-import grid.Neighbors;
-import grid.NormalEdgeNeighbors;
+import grid.NeighborsHandler;
+import grid.NormalEdgeNeighborsHandler;
 import grid.RectangleGridView;
 import grid.TriangleGridView;
 import javafx.geometry.Dimension2D;
@@ -19,12 +19,12 @@ import javafx.scene.shape.Shape;
 
 
 public abstract class Simulation {
-    private String myCellShape;
+    private String myCellShape = "Square";
 
     /// these 3 fields could be put in a gridViewController
     private Grid myGrid;
     private GridView myGridView;
-    private Neighbors myEdgeTypeNeighbors;
+    private NeighborsHandler myNeighborsHandler;
     private String myDefaultState;
     private String myDefaultNeighbors;
     
@@ -61,11 +61,11 @@ public abstract class Simulation {
          * .parseDouble(simulationConfig.get("GeneralConfig").get("gridHeight"))),
          * getGrid()));
          */
-        setGridView(new TriangleGridView(new Dimension2D(Double
+        setGridView(new RectangleGridView(new Dimension2D(Double
                 .parseDouble(simulationConfig.get("GeneralConfig").get("gridWidth")), Double
                         .parseDouble(simulationConfig.get("GeneralConfig").get("gridHeight"))),
                                          getGrid()));
-        setNeighbors(new NormalEdgeNeighbors());
+        setNeighbors(new NormalEdgeNeighborsHandler(myCellShape, myGrid));
     }
 
     public void initializeGrid (Map<String, Map<String, String>> simulationConfig) {
@@ -130,12 +130,12 @@ public abstract class Simulation {
 
     }
 
-    public Neighbors getNeighbors () {
-        return myEdgeTypeNeighbors;
+    public NeighborsHandler getNeighbors () {
+        return myNeighborsHandler;
     }
 
-    public void setNeighbors (Neighbors neighbors) {
-        this.myEdgeTypeNeighbors = neighbors;
+    public void setNeighbors (NeighborsHandler neighbors) {
+        this.myNeighborsHandler = neighbors;
     }
 
     /**
@@ -143,8 +143,7 @@ public abstract class Simulation {
      * @return
      */
     public List<Cell> getSquareNeighbors (Cell cell) {
-        return getNeighbors().getNeighbors(Neighbor.SQUARE.getNeighbors(),
-                                           cell.getMyGridCoordinate(), getGrid());
+        return getNeighbors().getSurroundingNeighbors(cell.getMyGridCoordinate());
     }
 
     public void generateMap (int numberOfRows, int numberOfColumns, Grid cellGrid) {
