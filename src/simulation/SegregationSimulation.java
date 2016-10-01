@@ -19,15 +19,11 @@ public class SegregationSimulation extends Simulation {
         super(simulationConfig);
         generateMap(getGrid().getNumRows(), getGrid().getNumColumns(), getGrid());
     }
-    
 
     @Override
     public void step () {
         updateAgents();
         updateGrid();
-        // this.getGridView().updateView();
-        // TODO Auto-generated method stub
-
     }
 
     private void updateAgents () {

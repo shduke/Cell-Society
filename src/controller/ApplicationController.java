@@ -22,11 +22,12 @@ public class ApplicationController {
     public static final String TITLE = "Cell Society";
     private static final double SECOND_DELAY = 1000.0;
     private Toolbar myToolbar;
-    Timeline myTimeline;
-    XMLParser myParser = new XMLParser();
+    private Timeline myTimeline;
+    private XMLParser myParser = new XMLParser();
     private final ResourceBundle GUIResources;
     private Scene myScene;
     private Group root;
+    private SimulationController simulationController;
 
     public ApplicationController () {
         GUIResources = ResourceBundle.getBundle("resources/English");
@@ -37,6 +38,7 @@ public class ApplicationController {
         myTimeline.setCycleCount(Timeline.INDEFINITE);
         myTimeline.getKeyFrames().add(frame);
         System.out.println("My rate " + myTimeline.getRate());
+
     }
 
     public String getTitle () {
@@ -48,8 +50,6 @@ public class ApplicationController {
         getSimulationController().getSimulation().step();
 
     }
-
-    private SimulationController simulationController;
 
     public void play () {
         if (myTimeline.getStatus() == Status.RUNNING) {
@@ -84,7 +84,7 @@ public class ApplicationController {
 
     public void openFile (File myFile) {
         try {
-            
+
             String filePath = myFile.getAbsolutePath();
             simulationController.initializeSimulation(filePath);
             myToolbar.initToolbar(30, 500, myScene);
