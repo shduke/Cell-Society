@@ -9,6 +9,7 @@
 			<numberOfColumns>20</numberOfColumns>
 		</GeneralConfig>
 		<SimulationConfig>
+			<default>Empty</default>
 		</SimulationConfig>
 		<Cells InitialSetup="Specific">
 			<cell_4_6>Living</cell_4_6>

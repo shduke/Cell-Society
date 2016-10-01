@@ -9,6 +9,7 @@
 			<numberOfColumns>5</numberOfColumns>
 		</GeneralConfig>
 		<SimulationConfig>
+			<default>Empty</default>
 			<myAgentSatisfiedRatio>.5</myAgentSatisfiedRatio>	
 		</SimulationConfig>
 		<Cells InitialSetup="Specific">

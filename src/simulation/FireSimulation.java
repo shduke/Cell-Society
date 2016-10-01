@@ -18,27 +18,6 @@ public class FireSimulation extends Simulation {
         super(simulationConfig);
     }
 
-    // Allows them to specify what coordinates they went, the rest are set to default by a function,
-    // gets bounds and starter map from config
-    @Override
-    public void generateMap (int numberOfRows,
-                             int numberOfColumns,
-                             Grid cellGrid) {
-        for (int r = 0; r < numberOfRows; r++) {
-            for (int c = 0; c < numberOfColumns; c++) {
-                Coordinate coordinate = new Coordinate(r, c);
-                if (!cellGrid.isCreated(coordinate)) {
-                    FireCell cell = new FireCell(State.TREE, coordinate);
-                    if (r == 0 || c == 0 || r == (numberOfRows - 1) || c == (numberOfColumns - 1)) {
-                        cell.setMyCurrentState(State.EMPTY);
-                    }
-                    cellGrid.addCell(cell);
-                }
-
-            }
-        }
-    }
-
     // very temporary code, just here to make it work
     @Override
     public void step () {
@@ -48,7 +27,8 @@ public class FireSimulation extends Simulation {
 
     public boolean hasBurningNeighbor (Cell cell) {
         for (Cell neighborCell : getNeighbors().getNeighbors(Neighbor.SQUARE.getNeighbors(),
-                                                             cell.getMyGridCoordinate(), getGrid())) {
+                                                             cell.getMyGridCoordinate(),
+                                                             getGrid())) {
             if (neighborCell.getMyCurrentState().equals(State.BURNING)) {
                 return true;
             }
@@ -88,6 +68,12 @@ public class FireSimulation extends Simulation {
     @Override
     public Cell createCell (Coordinate coordinate, String currentState) {
         FireCell cell = new FireCell(State.valueOf(currentState.toUpperCase()), coordinate);
+        int r = (int) coordinate.getX();
+        int c = (int) coordinate.getY();
+        if (r == 0 || c == 0 || r == (getGrid().getNumRows() - 1) ||
+            c == (getGrid().getNumColumns() - 1)) {
+            cell.setMyCurrentState(State.EMPTY);
+        }
         cell.setBurnTimer(burnTime);
         return cell;
     }
