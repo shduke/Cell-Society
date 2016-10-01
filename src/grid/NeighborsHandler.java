@@ -44,11 +44,12 @@ public abstract class NeighborsHandler {
 
     public List<Cell> getDirectionNeighbors (Coordinate coordinate,
                                              Coordinate directionCoordinate) {
-        List<Cell> directionNeighbors = getAdjacentNeighbors(coordinate, directionCoordinate);
+        Coordinate neighborDirectionCoordinate = coordinate.add(directionCoordinate);
+        List<Cell> directionNeighbors = getAdjacentNeighbors(coordinate, neighborDirectionCoordinate);
         if (!myCellShape.equals("HEXAGON") &&
-            Neighbor.ORTHOGONAL.getNeighbors().contains(directionCoordinate)) {
+            Neighbor.ORTHOGONAL.getNeighbors().contains(directionCoordinate) && getMyGrid().isCreated(neighborDirectionCoordinate)) {
             directionNeighbors.removeAll(Neighbor.ORTHOGONAL.getNeighbors());
-            directionNeighbors.add(myGrid.getCell(coordinate.add(directionCoordinate)));
+            directionNeighbors.add(myGrid.getCell(neighborDirectionCoordinate));
         }
         return directionNeighbors;
 
