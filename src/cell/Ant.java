@@ -12,7 +12,7 @@ public class Ant extends Cell {
 
     private int myLifetime;
     private boolean myMovingStatus;
-    private String myOrientation;
+    private Coordinate myOrientation;
 
     public Ant (Coordinate coordinate, int lifetime) {
 
@@ -33,7 +33,7 @@ public class Ant extends Cell {
         }
     }
 
-    private void willMove () {
+    public void willMove () {
         myMovingStatus = true;
     }
 
@@ -57,7 +57,7 @@ public class Ant extends Cell {
                     return cell;
                 }
             }
-            this.wontMove();
+            //this.wontMove();
             return null;
             
         }
@@ -139,38 +139,12 @@ public class Ant extends Cell {
 
         int x = (int) (otherCoord.getX() - thisCoord.getX());
         int y = (int) (otherCoord.getY() - thisCoord.getY());
+        //return new Coordinate(x, y);
+        myOrientation = new Coordinate(x, y);
 
-        String first = "";
-        String second = "";
-        switch (x) {
-            case -1:
-                first = "TOP";
-                break;
-            case 0:
-                first = "MID";
-                break;
-            default:
-                first = "BOTTOM";
-                break;
-        }
-        switch (y) {
-            case -1:
-                second = "LEFT";
-                break;
-            case 0:
-                second = "MID";
-                break;
-            default:
-                second = "RIGHT";
-                break;
-        }
-
-        StringBuilder orientation = new StringBuilder();
-
-        orientation.append(first);
-        orientation.append(second);
-        this.myOrientation = orientation.toString();
-
+    }
+    public Coordinate getMyOrientation() {
+        return myOrientation;
     }
 
 }

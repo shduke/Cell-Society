@@ -43,23 +43,27 @@ public class ForagingAntsSimulation extends Simulation {
         this.getGridView().updateView();
 
     }
-    private void updateCells() {
+
+    private void updateCells () {
         Iterator<Cell> cells = getGrid().iterator();
         while (cells.hasNext()) {
             ForagingAntCell cell = (ForagingAntCell) cells.next();
             cell.update();
         }
     }
+
     private void updateAnts () {
         totalAnts = 0;
         Iterator<Cell> cells = getGrid().iterator();
         while (cells.hasNext()) {
             ForagingAntCell cell = (ForagingAntCell) cells.next();
-            //cell.update();
+            // cell.update();
             if (cell.getAnts().size() > 0) {
-                System.out.println(cell.getMyGridCoordinate());
+                //System.out.println(cell.getMyGridCoordinate());
             }
             for (Ant a : cell.getAnts()) {
+                System.out.println("Cell " + a.getMyGridCoordinate());
+                System.out.println("orientation " +a.getMyOrientation());
                 totalAnts++;
                 updateAnt(a);
             }
@@ -99,20 +103,22 @@ public class ForagingAntsSimulation extends Simulation {
             }
             ant.setMyNextState(ant.getMyCurrentState());
         }
-        
+
         // List<Cell> neighbors = getNeighbors().getNeighbors(, coordinate)
     }
 
     private void goHome (Ant ant) {
         // TODO calculate neighbors based on direction
-        List<Cell> neighbors = getSquareNeighbors(ant);
+        List<Cell> neighbors =
+                getNeighbors().getDirectionNeighbors(ant.getMyGridCoordinate(),
+                                                     ant.getMyOrientation());
         ForagingAntCell nextCell = ant.goHome(neighbors);
         if (nextCell == null) {
             nextCell = ant.goHome(getSquareNeighbors(ant));
         }
         if (nextCell != null) {
             dropPheromones(ant, false);
-
+            ant.willMove();
             nextCell.addAnt(ant);
             // ant.setMyNextGridCoordinate(nextCell.getMyGridCoordinate());
             // ((ForagingAntCell) getGrid().getCell(ant.getMyGridCoordinate())).addAnt(ant);
@@ -123,7 +129,9 @@ public class ForagingAntsSimulation extends Simulation {
      * @param ant
      */
     private void forage (Ant ant) {
-        List<Cell> neighbors = getSquareNeighbors(ant);
+        List<Cell> neighbors =
+                getNeighbors().getDirectionNeighbors(ant.getMyGridCoordinate(),
+                                                     ant.getMyOrientation());
         ForagingAntCell nextCell = ant.forage(neighbors);
         if (nextCell == null) {
             nextCell = ant.forage(getSquareNeighbors(ant));
@@ -132,6 +140,7 @@ public class ForagingAntsSimulation extends Simulation {
             dropPheromones(ant, ant.getMyCurrentState() == State.FOODSEARCH);
             System.out.println(nextCell.fullOfAnts());
             System.out.println("Ant will move: " + ant.isDeadOrMoving());
+            ant.willMove();
             nextCell.addAnt(ant);
             // ant.setMyNextGridCoordinate(nextCell.getMyGridCoordinate());
 
@@ -161,7 +170,7 @@ public class ForagingAntsSimulation extends Simulation {
     }
 
     private ForagingAntCell getBestDirection (Ant ant, boolean food) {
-        List<Cell> neighbors = getSquareNeighbors(ant);
+        List<Cell> neighbors = getNeighbors().getSurroundingNeighbors(ant.getMyGridCoordinate());
         return ant.getBestNeighbor(neighbors, food);
 
     }

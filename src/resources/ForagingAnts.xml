@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Title Name="Normal ForagingAnts">
+	<author>Michael</author>
+	<Simulation SimulationType="ForagingAnts">
+		<GeneralConfig>
+			<gridWidth>500</gridWidth>
+			<gridHeight>500</gridHeight>
+			<numberOfRows>20</numberOfRows>
+			<numberOfColumns>20</numberOfColumns>
+		</GeneralConfig>
+		<SimulationConfig>
+			<default>Empty</default>
+			<maxPheromones>1000</maxPheromones>
+			<diffusionRate>0.1</diffusionRate>
+			<evaporationRate>0.1</evaporationRate>
+			<k>0.001</k>
+			<n>10</n>
+			<maxAnts>10</maxAnts>
+			<antLifetime>500</antLifetime>
+		</SimulationConfig>
+		<Cells InitialSetup="Specific">
+			<cell_2_2>Nest</cell_2_2>
+			<cell_10_11>Food</cell_10_11>
+			<cell_4_17>Food</cell_4_17>
+		</Cells>
+	</Simulation>
+</Title>

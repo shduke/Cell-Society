@@ -59,7 +59,7 @@ public class ForagingAntCell extends Cell {
         for (Ant a : myNextAnts) {
             myAnts.add(a);
             a.setMyGridCoordinate(this.getMyGridCoordinate());
-            a.doneMoving();
+            //a.doneMoving();
         }
         myNextAnts.clear();
     }
