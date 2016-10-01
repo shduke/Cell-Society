@@ -21,6 +21,7 @@ public class GameOfLifeSimulation extends Simulation {
     public void step () {
         getGrid().applyFuncToCell(p -> setNextState(p));
         updateGrid();
+        countCellsinGrid();
     }
 
     private int livingNeighbors (List<Cell> neighbors) {
@@ -60,6 +61,27 @@ public class GameOfLifeSimulation extends Simulation {
             cell.setMyCurrentState(State.LIVING);
         }
         return cell;
+    }
+
+    @Override
+    public void countCellsinGrid () {
+        // TODO Auto-generated method stub
+        stepNum = getStepNum();
+        System.out.println("Num of steps: " + stepNum);
+        int livingCount = 0;
+        int emptyCount = 0;
+        for (Cell cell : getGrid().getImmutableCellGrid().values()) {
+            if(cell.getMyCurrentState().equals(State.LIVING)) {
+                livingCount++;
+            }
+            if(cell.getMyCurrentState().equals(State.EMPTY)) {
+                emptyCount++;
+            }
+        }
+        System.out.println("Living:" + livingCount);
+        System.out.println("Empty: " + emptyCount);
+        stepNum++;
+        
     }
 
 }
