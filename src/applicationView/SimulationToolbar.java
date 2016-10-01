@@ -42,11 +42,12 @@ public class SimulationToolbar {
     }
     
     private void checkRunningSim() {
+        //TODO: Fix this entire method
         File myFile = myAppController.getMyFile();
         if (myFile != null) {
         System.out.println(myFile.getPath());
         if (myFile.getPath().contains("Fire")) {
-            System.out.println("Cats");
+            //System.out.println("Cats");
         }
         }
     }
