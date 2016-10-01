@@ -9,6 +9,7 @@
 			<numberOfColumns>10</numberOfColumns>
 		</GeneralConfig>
 		<SimulationConfig>
+			<default>Empty</default>
 			<preyBreedTime>5</preyBreedTime>
 			<predatorBreedTime>16</predatorBreedTime>
 			<sharkMaxHealth>15</sharkMaxHealth>	
