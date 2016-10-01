@@ -17,7 +17,6 @@ public class SimulationController {
         this.simulationRoot = simulationRoot;
         File simulationConfig = new File("src/resources/Segregation.xml");
         initializeSimulation(simulationConfig.getAbsolutePath());
-        simulation.countCellsinGrid();
     }
 
     /**
