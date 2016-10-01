@@ -5,8 +5,8 @@ import java.util.Collections;
 import java.util.List;
 
 
-public enum Neighbor {
-                      SQUARE(
+public enum Neighbor {//refactor?
+                      SQUARESURROUNDING(
                              "TOPLEFT",
                              "MIDLEFT",
                              "BOTTOMLEFT",
@@ -15,8 +15,17 @@ public enum Neighbor {
                              "TOPRIGHT",
                              "MIDRIGHT",
                              "BOTTOMRIGHT"),
+                      TRIANGLESURROUNDING("TOPLEFT",
+                                          "MIDLEFT",
+                                          "BOTTOMLEFT",
+                                          "TOPMID",
+                                          "BOTTOMMID",
+                                          "TOPRIGHT",
+                                          "MIDRIGHT",
+                                          "BOTTOMRIGHT"),
                       ORTHOGONAL("MIDLEFT", "TOPMID", "BOTTOMMID", "MIDRIGHT"),
-                      DIAGONALS("TOPLEFT", "BOTTOMLEFT", "TOPRIGHT", "BOTTOMRIGHT");
+                      DIAGONALS("TOPLEFT", "BOTTOMLEFT", "TOPRIGHT", "BOTTOMRIGHT"),
+                      HEXAGONSURROUNDING("MIDLEFT", "TOPMID", "BOTTOMMID", "MIDRIGHT", "TOPLEFT", "TOPRIGHT");
 
     private List<Coordinate> neighbors;
 
