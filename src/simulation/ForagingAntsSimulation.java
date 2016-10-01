@@ -5,6 +5,7 @@ import java.util.List;
 import cell.Ant;
 import java.util.Map;
 import cell.Cell;
+import cell.EmptyCell;
 import grid.Coordinate;
 import grid.Grid;
 import grid.Neighbor;
@@ -17,6 +18,12 @@ public class ForagingAntsSimulation extends Simulation {
     private ForagingAntCell myNest;
     private List<Coordinate> foodCells;
     private double myMaxPheromones;
+    private double myDiffusionRate;
+    private double myEvaporationRate;
+    private int myAntLifetime;
+    private int myMaxAnts;
+    private double k;
+    private double n;
 
     public ForagingAntsSimulation (Map<String, Map<String, String>> simulationConfig) {
         super(simulationConfig);
@@ -26,6 +33,8 @@ public class ForagingAntsSimulation extends Simulation {
     public void step () {
         // TODO Auto-generated method stub
         updateAnts();
+        diffuse();
+        myNest.spawn(myAntLifetime);
 
     }
 
@@ -41,28 +50,45 @@ public class ForagingAntsSimulation extends Simulation {
     }
 
     public void updateAnt (Ant ant) {
+        ant.update();
+        if (ant.getMyNextState() == State.DEAD) {
+            return;
+        }
         if (isAtFoodSource(ant)) {
             ant.setMyNextState(State.HOMESEARCH);
             ForagingAntCell bestHome = getBestDirection(ant, false);
             ant.setOrientation(bestHome);
-            // get neighbors based on orientation
-            // pass list to ant.goHome
+            goHome(ant);
         }
         else if (isAtNest(ant)) {
             ant.setMyNextState(State.FOODSEARCH);
             ForagingAntCell bestFood = getBestDirection(ant, true);
             ant.setOrientation(bestFood);
             forage(ant);
-            // get Neighbors based on ant.getOrientation
-            // pass list to ant.forage
         }
         else {
             if (ant.getMyCurrentState() == State.FOODSEARCH) {
                 forage(ant);
             }
+            else {
+                goHome(ant);
+            }
         }
 
         // List<Cell> neighbors = getNeighbors().getNeighbors(, coordinate)
+    }
+
+    private void goHome (Ant ant) {
+        // TODO calculate neighbors based on direction
+        List<Cell> neighbors = null;
+        ForagingAntCell nextCell = ant.goHome(neighbors);
+        if (nextCell == null) {
+            nextCell = ant.goHome(getSquareNeighbors(ant));
+        }
+        if (nextCell != null) {
+            dropPheromones(ant, false);
+            ((ForagingAntCell) getGrid().getCell(ant.getMyGridCoordinate())).addAnt(ant);
+        }
     }
 
     /**
@@ -92,27 +118,10 @@ public class ForagingAntsSimulation extends Simulation {
         }
     }
 
-    /**
-     * @param cell
-     * @return
-     */
-    private List<Cell> getSquareNeighbors (Cell cell) {
-        return getNeighbors().getNeighbors(Neighbor.SQUARE.getNeighbors(),
-                                           cell.getMyGridCoordinate(), getGrid());
-    }
-
     private ForagingAntCell getBestDirection (Ant ant, boolean food) {
         List<Cell> neighbors = getSquareNeighbors(ant);
-        ForagingAntCell bestCell = null;
-        double mostPheromones = 0;
-        for (Cell c : neighbors) {
-            ForagingAntCell cell = (ForagingAntCell) c;
-            if (cell.getPheromones(food) >= mostPheromones) {
-                mostPheromones = cell.getPheromones(food);
-                bestCell = cell;
-            }
-        }
-        return bestCell;
+        return ant.getBestNeighbor(neighbors, food);
+
     }
 
     private boolean isAtNest (Ant ant) {
@@ -123,22 +132,36 @@ public class ForagingAntsSimulation extends Simulation {
         return foodCells.contains(ant.getMyGridCoordinate());
     }
 
+    private void diffuse () {
+        Iterator<Cell> cells = getGrid().iterator();
+        while (cells.hasNext()) {
+            ForagingAntCell cell = (ForagingAntCell) cells.next();
+            cell.diffuseAndEvaporate(getSquareNeighbors(cell), myDiffusionRate, myEvaporationRate);
+        }
+    }
+
     @Override
     public void initializeSimulationDetails (Map<String, String> simulationConfig) {
-        // TODO Auto-generated method stub
-
+        this.myMaxPheromones = Double.parseDouble(simulationConfig.get("maxPheromones"));
+        this.myDiffusionRate = Double.parseDouble(simulationConfig.get("diffusionRate"));
+        this.myEvaporationRate = Double.parseDouble(simulationConfig.get("evaporationRate"));
+        this.k = Double.parseDouble(simulationConfig.get("k"));
+        this.n = Double.parseDouble(simulationConfig.get("n"));
+        this.myMaxAnts = Integer.parseInt(simulationConfig.get("maxAnts"));
+        this.myAntLifetime = Integer.parseInt(simulationConfig.get("antLifetime"));
     }
 
     @Override
     public Cell createCell (Coordinate coordinate, String currentState) {
-        // TODO Auto-generated method stub
-        return null;
+        State state = State.valueOf(currentState.toUpperCase());
+        ForagingAntCell cell =
+                new ForagingAntCell(state, coordinate, myMaxPheromones, myMaxAnts, k, n);
+        if (currentState.equals("Nest")) {
+            myNest = cell;
+        }
+        return cell;
     }
 
-    @Override
-    public void generateMap (int numberOfRows, int numberOfColumns, Grid cellGrid) {
-        // TODO Auto-generated method stub
-
-    }
+    
 
 }

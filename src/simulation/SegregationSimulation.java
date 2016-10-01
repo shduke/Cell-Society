@@ -19,22 +19,7 @@ public class SegregationSimulation extends Simulation {
         super(simulationConfig);
         generateMap(getGrid().getNumRows(), getGrid().getNumColumns(), getGrid());
     }
-
-    @Override
-    public void generateMap (int numberOfRows,
-                             int numberOfColumns,
-                             Grid cellGrid) {
-        for (int r = 0; r < numberOfRows; r++) {
-            for (int c = 0; c < numberOfColumns; c++) {
-                Coordinate coordinate = new Coordinate(r, c);
-                if (!cellGrid.isCreated(coordinate)) {
-                    EmptyCell cell = new EmptyCell(coordinate);
-                    cellGrid.addCell(cell);
-                }
-
-            }
-        }
-    }
+    
 
     @Override
     public void step () {
@@ -115,29 +100,20 @@ public class SegregationSimulation extends Simulation {
         getGrid().getCellGrid().put(startCell.getMyGridCoordinate(), startCell);
     }
 
-    public void createNeighbors (Cell cell) {
-
-        // TODO Auto-generated method stub
-
-    }
-
     @Override
     public void initializeSimulationDetails (Map<String, String> simulationConfig) {
-        // TODO Auto-generated method stub
         this.myAgentSatisfiedRatio =
-                Double.parseDouble((simulationConfig.get("myAgentSatisfiedRatio")));
+                Double.parseDouble(simulationConfig.get("myAgentSatisfiedRatio"));
     }
 
     @Override
     public Cell createCell (Coordinate coordinate, String currentState) {
-        // TODO Auto-generated method stub
-
-        State st = State.valueOf(currentState.toUpperCase());
-        if (st == State.EMPTY) {
+        State state = State.valueOf(currentState.toUpperCase());
+        if (state == State.EMPTY) {
             return new EmptyCell(coordinate);
         }
         else {
-            return new AgentCell(st, coordinate, myAgentSatisfiedRatio);
+            return new AgentCell(state, coordinate, myAgentSatisfiedRatio);
         }
 
     }

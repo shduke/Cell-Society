@@ -15,7 +15,6 @@ public class GameOfLifeSimulation extends Simulation {
 
     public GameOfLifeSimulation (Map<String, Map<String, String>> simulationConfig) {
         super(simulationConfig);
-        // TODO Auto-generated constructor stub
     }
 
     @Override
@@ -34,7 +33,6 @@ public class GameOfLifeSimulation extends Simulation {
         return count;
     }
 
-    
     public void setNextState (Cell cell) {
         int numberOfLivingNeighbors =
                 livingNeighbors(getNeighbors().getNeighbors(Neighbor.SQUARE.getNeighbors(),
@@ -52,31 +50,17 @@ public class GameOfLifeSimulation extends Simulation {
 
     @Override
     public void initializeSimulationDetails (Map<String, String> simulationConfig) {
-        // TODO Auto-generated method stub
+
     }
 
     @Override
     public Cell createCell (Coordinate coordinate, String currentState) {
-        return new GameOfLifeCell(State.valueOf(currentState.toUpperCase()), coordinate);
-    }
-
-    @Override
-    public void generateMap (int numberOfRows, int numberOfColumns, Grid cellGrid) {
-        Random rn = new Random();
-        for (int r = 0; r < numberOfRows; r++) {
-            for (int c = 0; c < numberOfColumns; c++) {
-                Coordinate coordinate = new Coordinate(r, c);
-                if (!cellGrid.isCreated(coordinate)) {
-                    GameOfLifeCell cell = new GameOfLifeCell(State.EMPTY, coordinate);
-                    if (rn.nextInt(2) == 1) {
-                        cell.setMyCurrentState(State.LIVING);
-                    }
-                    cellGrid.addCell(cell);
-                }
-
-            }
+        GameOfLifeCell cell =
+                new GameOfLifeCell(State.valueOf(currentState.toUpperCase()), coordinate);
+        if (new Random().nextInt(2) == 1) {
+            cell.setMyCurrentState(State.LIVING);
         }
-
+        return cell;
     }
 
 }

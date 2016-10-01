@@ -1,12 +1,14 @@
 package simulation;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import cell.Cell;
 import grid.Coordinate;
 import grid.Grid;
 import grid.GridView;
 import grid.HexagonGridView;
+import grid.Neighbor;
 import grid.Neighbors;
 import grid.NormalEdgeNeighbors;
 import grid.RectangleGridView;
@@ -23,6 +25,7 @@ public abstract class Simulation {
     private Grid myGrid;
     private GridView myGridView;
     private Neighbors neighbors;
+    private String myDefaultState;
 
     Simulation (Map<String, Map<String, String>> simulationConfig) {
         initializeSimulation(simulationConfig);
@@ -50,19 +53,25 @@ public abstract class Simulation {
         initializeSimulationDetails(simulationConfig.get("SimulationConfig"));
         initializeGrid(simulationConfig);
         generateMap(getGrid().getNumRows(), getGrid().getNumColumns(), getGrid());
-        /*setGridView(new RectangleGridView(new Dimension2D(Double
+        /*
+         * setGridView(new RectangleGridView(new Dimension2D(Double
+         * .parseDouble(simulationConfig.get("GeneralConfig").get("gridWidth")), Double
+         * .parseDouble(simulationConfig.get("GeneralConfig").get("gridHeight"))),
+         * getGrid()));
+         */
+        setGridView(new TriangleGridView(new Dimension2D(Double
                 .parseDouble(simulationConfig.get("GeneralConfig").get("gridWidth")), Double
                         .parseDouble(simulationConfig.get("GeneralConfig").get("gridHeight"))),
-                                          getGrid()));*/
-        setGridView(new TriangleGridView(new Dimension2D(Double
-        .parseDouble(simulationConfig.get("GeneralConfig").get("gridWidth")), Double
-                .parseDouble(simulationConfig.get("GeneralConfig").get("gridHeight"))),
-                                  getGrid()));
+                                         getGrid()));
         setNeighbors(new NormalEdgeNeighbors());
     }
 
     public void initializeGrid (Map<String, Map<String, String>> simulationConfig) {
         Map<Coordinate, Cell> cellGrid = new HashMap<Coordinate, Cell>();
+        setGrid(new Grid(Integer
+                .parseInt(simulationConfig.get("GeneralConfig").get("numberOfRows")), Integer
+                        .parseInt(simulationConfig.get("GeneralConfig").get("numberOfRows")),
+                         cellGrid));
         for (Map.Entry<String, String> entry : simulationConfig.get("Cells").entrySet()) {
             String[] coordinateStrings = entry.getKey().split("_");
             Cell cell =
@@ -71,19 +80,23 @@ public abstract class Simulation {
                                entry.getValue());
             cellGrid.put(cell.getMyGridCoordinate(), cell);
         }
-        setGrid(new Grid(Integer
-                .parseInt(simulationConfig.get("GeneralConfig").get("numberOfRows")), Integer
-                        .parseInt(simulationConfig.get("GeneralConfig").get("numberOfRows")),
-                         cellGrid));
+
+        setDefaultState(simulationConfig.get("SimulationConfig").get("default"));
+    }
+
+    private void setDefaultState (String state) {
+        myDefaultState = state;
     }
 
     public abstract void initializeSimulationDetails (Map<String, String> simulationConfig);
 
     public abstract Cell createCell (Coordinate coordinate, String currentState);
 
-    public abstract void generateMap (int numberOfRows,
-                                      int numberOfColumns,
-                                      Grid cellGrid);
+    /*
+     * public abstract void generateMap (int numberOfRows,
+     * int numberOfColumns,
+     * Grid cellGrid);
+     */
 
     public GridView getGridView () {
         return myGridView;
@@ -98,7 +111,10 @@ public abstract class Simulation {
     }
 
     public void removeGridViewSceneGraph (Group root) {
-        root.getChildren().remove(myGridView.getRoot());
+        root.getChildren().clear();
+        //myGridView.getRoot().getChildren().clear();
+        //root.getChildren().removeAll(myGridView.getRoot().getChildren());
+        //root.getChildren().remove(myGridView.getRoot());
     }
 
     /// if laggy change order
@@ -114,6 +130,27 @@ public abstract class Simulation {
 
     public void setNeighbors (Neighbors neighbors) {
         this.neighbors = neighbors;
+    }
+
+    /**
+     * @param cell
+     * @return
+     */
+    public List<Cell> getSquareNeighbors (Cell cell) {
+        return getNeighbors().getNeighbors(Neighbor.SQUARE.getNeighbors(),
+                                           cell.getMyGridCoordinate(), getGrid());
+    }
+
+    public void generateMap (int numberOfRows, int numberOfColumns, Grid cellGrid) {
+        for (int r = 0; r < numberOfRows; r++) {
+            for (int c = 0; c < numberOfColumns; c++) {
+                Coordinate coordinate = new Coordinate(r, c);
+                if (!cellGrid.isCreated(coordinate)) {
+                    cellGrid.addCell(createCell(coordinate, myDefaultState));
+                }
+
+            }
+        }
     }
 
     // How to go from the inputed XML ShapeType to making RectangleGrid()
