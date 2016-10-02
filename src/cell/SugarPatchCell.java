@@ -10,6 +10,7 @@ public class SugarPatchCell extends Cell {
     private int myMaxSugar;
     // private int myGrowBackRate;
     private SugarAgentCell myAgent;
+    private SugarAgentCell myNextAgent;
 
     public SugarPatchCell (State currentState,
                            Coordinate coordinate,
@@ -17,7 +18,14 @@ public class SugarPatchCell extends Cell {
         super(currentState, coordinate);
         myMaxSugar = maxSugar;
         mySugar = myMaxSugar;
+        myAgent = null;
+        myNextAgent = null;
 
+    }
+
+    public void update () {
+        myAgent = myNextAgent;
+        myNextAgent = null;
     }
 
     public int getSugar () {
@@ -25,7 +33,8 @@ public class SugarPatchCell extends Cell {
     }
 
     public void growBack (int rate) {
-        mySugar += rate;
+        if (mySugar + rate <= myMaxSugar)
+            mySugar += rate;
     }
 
     public SugarAgentCell getAgent () {
@@ -41,11 +50,19 @@ public class SugarPatchCell extends Cell {
     }
 
     public boolean isEmpty () {
-        return myAgent == null;
+        return myAgent == null && myNextAgent == null;
+    }
+
+    public void initAgent (SugarAgentCell agent) {
+        myAgent = agent;
+    }
+
+    public boolean hasAgent () {
+        return myAgent != null;
     }
 
     public void addAgent (SugarAgentCell agent) {
-        myAgent = agent;
+        myNextAgent = agent;
     }
 
     @Override
