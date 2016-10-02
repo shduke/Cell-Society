@@ -1,16 +1,12 @@
 package grid;
-
 import java.util.ArrayList;
 import java.util.List;
 import cell.Cell;
 import grid.Neighbor;
-
-
 // abstract class or interface
 public abstract class NeighborsHandler {
     private String myCellShape;
     private Grid myGrid;
-
     NeighborsHandler (String cellShape, Grid grid) {
         myCellShape = cellShape.toUpperCase();
         myGrid = grid;
@@ -20,13 +16,11 @@ public abstract class NeighborsHandler {
      * neighbors.add(cell);
      * }
      */
-
     /*
      * public Iterator<Coordinate> getNeighborCoordinates () {
      * return Collections.unmodifiableList(allowableNeighbors).iterator();
      * }
      */
-
     /// getSurroundingNeighbors
     /// getAdjacent
     /// get
@@ -35,13 +29,11 @@ public abstract class NeighborsHandler {
      * return allowableNeighbors;
      * }
      */
-
     /*
      * public void setAllowableNeighbors (List<Coordinate> allowableNeighbors) {
      * this.allowableNeighbors = allowableNeighbors;
      * }
      */
-
     public List<Cell> getDirectionNeighbors (Coordinate coordinate,
                                              Coordinate directionCoordinate) {
         Coordinate neighborDirectionCoordinate = coordinate.add(directionCoordinate);
@@ -54,23 +46,17 @@ public abstract class NeighborsHandler {
             if (getMyGrid().isCreated(neighborDirectionCoordinate)) {
                 directionNeighbors.add(myGrid.getCell(neighborDirectionCoordinate));
             }
-
         }
 
         return directionNeighbors;
-
     }
-
     public List<Cell> getSurroundingNeighbors (Coordinate coordinate) {
         return getNeighbors(Neighbor.valueOf(myCellShape + "SURROUNDING").getNeighbors(),
                             coordinate);
     }
-
     public List<Cell> getOrthogonalNeighbors (Coordinate coordinate) {
         return getNeighbors(Neighbor.valueOf("ORTHOGONAL").getNeighbors(), coordinate);
-
     }
-
     public List<Cell> getAdjacentNeighbors (Coordinate coordinate,
                                             Coordinate directionNeighborCoordinate) {
         List<Cell> originNeighbors = getSurroundingNeighbors(coordinate);
@@ -78,11 +64,8 @@ public abstract class NeighborsHandler {
         originNeighbors.retainAll(directionNeighbors);
         return originNeighbors;
     }
-
     public abstract List<Cell> getVisionNeighbors (Coordinate coordinate);
-
     public List<Cell> getNeighbors (List<Coordinate> allowableNeighbors,
-
                                     Coordinate coordinate) {
         List<Cell> neighbors = new ArrayList<Cell>();
         for (Coordinate neighborRelativeCoordinate : allowableNeighbors) {
@@ -99,26 +82,19 @@ public abstract class NeighborsHandler {
             }
         }
         return neighbors;
-
     }
-
     public abstract Coordinate handleEdgeCoordinate (Coordinate coordinate,
                                                      Coordinate neighborRelativeCoordinate);
-
     // public abstract List<Cell> adjustNeighbor(List<Coordinate> );
-
     /*
      * public void addUncreatedNeighbor (Coordinate uncreatedNeighbors) {
      * uncreatedNeighborCoordinates.add(uncreatedNeighbors);
      * }
      */
-
     public Grid getMyGrid () {
         return myGrid;
     }
-
     public void setMyGrid (Grid myGrid) {
         this.myGrid = myGrid;
     }
-
 }
