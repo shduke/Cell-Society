@@ -72,7 +72,7 @@ public abstract class Simulation {
                 .parseDouble(simulationConfig.get("GeneralConfig").get("gridWidth")), Double
                         .parseDouble(simulationConfig.get("GeneralConfig").get("gridHeight"))),
                                          getGrid()));
-        setNeighbors(new ToroidalEdgeNeighborsHandler(myCellShape, myGrid));
+        setNeighbors(new NormalEdgeNeighborsHandler(myCellShape, myGrid));
     }
 
     public void initializeGrid (Map<String, Map<String, String>> simulationConfig) {

@@ -181,6 +181,6 @@ public class ForagingAntCell extends Cell {
         int green = (int) ((myHomePheromones / myMaxPheromones) * 255);
         int blue = (int) ((myFoodPheromones / myMaxPheromones) * 255);
         // System.out.println(red + ", " + green +", " + blue);
-        return Color.rgb(red, 0, 0);
+        return Color.rgb(red, green, blue);
     }
 }
