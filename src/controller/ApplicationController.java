@@ -12,12 +12,11 @@ import javafx.animation.Timeline;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import xml.XMLParser;
+import simulation.Simulation;
 
 
 public class ApplicationController {
@@ -25,14 +24,12 @@ public class ApplicationController {
     private static final double SECOND_DELAY = 1000.0;
     private Toolbar myToolbar;
     private Timeline myTimeline;
-    private XMLParser myParser = new XMLParser();
     private final ResourceBundle GUIResources;
     private Scene myScene;
     private Group root;
     private Group root2;
     private SimulationController simulationController;
     private File myFile;
-    private Pane pane2;
 
     public ApplicationController () {
         GUIResources = ResourceBundle.getBundle("resources/English");
@@ -57,12 +54,14 @@ public class ApplicationController {
         simulationController = new SimulationController(root2, height, width);
         root.relocate(0, 0);
         root.getChildren().add(root2);
-        myToolbar.initToolbar(30, width, myScene);
         SimulationToolbar mySimToolbar = new SimulationToolbar();
         mySimToolbar.initSimToolbar(height, 50, myScene);
+        myToolbar.initToolbar(30, width, myScene);
+
         handleEvents(width, root);
         return myScene;
     }
+    
 
     private void update () {
         setSpeed();
@@ -148,4 +147,5 @@ public class ApplicationController {
     public SimulationController getSimulationController () {
         return simulationController;
     }
+    
 }

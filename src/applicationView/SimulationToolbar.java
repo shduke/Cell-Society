@@ -3,9 +3,12 @@ package applicationView;
 import java.io.File;
 import java.util.ResourceBundle;
 import controller.ApplicationController;
+import controller.SimulationController;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
+import simulation.Simulation;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
@@ -21,14 +24,13 @@ public class SimulationToolbar {
     }
     
     public void initSimToolbar(int height, int width, Scene myScene) {
-        root = (Group)myScene.getRoot();
+        root = (Group) myScene.getRoot();
         Group root2 = new Group();
         VBox mySimToolbar = new VBox();
         mySimToolbar.getChildren().addAll(createGraph(myScene));
+        mySimToolbar.setAlignment(Pos.CENTER_RIGHT);
         checkRunningSim();
-        Scene scene1 = new Scene(root2, 30, 30);
-        root2.getChildren().add(mySimToolbar);
-        //root.getChildren().add(scene1.getRoot());
+        root.getChildren().add(mySimToolbar);
     }
     
     private LineChart<Number, Number> createGraph(Scene myScene) {
@@ -38,12 +40,15 @@ public class SimulationToolbar {
         x_axis.setLabel(GUIResources.getString("XAxis"));
         final LineChart<Number,Number> myLineChart = 
                 new LineChart<Number,Number>(x_axis,y_axis);
-        myLineChart.setTitle(GUIResources.getString("ChartTitle"));
+        //myLineChart.setTitle(GUIResources.getString("ChartTitle"));
+        myLineChart.setPrefWidth(500);
+        myLineChart.setPrefHeight(50);
+        myLineChart.setTranslateY(400);
         XYChart.Series firstSeries = new XYChart.Series();
         //temp to get this to work
-        //firstSeries.getData().add(new XYChart.Data(simulation.getStepNum(), 15));
+        //firstSeries.getData().add(new XYChart.Data(SimulationController.getSimulation().getStepNum(), 15));
         myLineChart.getData().add(firstSeries);
-        //root.getChildren().add(myLineChart);
+        root.getChildren().add(myLineChart);
         return myLineChart;
     }
     
