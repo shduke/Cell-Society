@@ -26,6 +26,12 @@ public class AntCell extends Cell {
         // System.out.println(this.getMyGridCoordinate() + " is moving to " + myNextCoordinate);
         // this.setMyGridCoordinate(myNextCoordinate);
         // myNextCoordinate = this.getMyGridCoordinate();
+        System.out.println("This ant does " + (this.hasFood() ? "" : " not ") +
+                           " have food and is going " + this.getMyCurrentState());
+        if (this.hasFood()) {
+            this.setMyCurrentState(State.HOMESEARCH);
+            this.setMyNextState(State.HOMESEARCH);
+        }
         myMovingStatus = false;
         myLifetime--;
         if (myLifetime == 0) {
@@ -42,9 +48,7 @@ public class AntCell extends Cell {
     }
 
     public ForagingAntCell forage (List<Cell> neighbors) {
-        System.out.println(neighbors.size() + " all cells");
         if (tryToMove(neighbors)) {
-            System.out.println(neighbors.size() + " not full cells");
             double total = getProbSum(neighbors);
             double random = new Random().nextDouble() * total;
             double counter = 0;
@@ -152,8 +156,12 @@ public class AntCell extends Cell {
         return myFood;
     }
 
-    public void pickUpOrDropFood () {
-        myFood = !myFood;
+    public void pickUpFood () {
+        myFood = true;
+    }
+
+    public void dropFood () {
+        myFood = false;
     }
 
 }

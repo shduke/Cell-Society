@@ -36,11 +36,7 @@ public class ForagingAntCell extends Cell {
         myFoodPheromones = 0;
     }
 
-    public void breed (int numAnts, int lifetime) {
-        for (int i = 0; i < numAnts; i++) {
-            myNextAnts.add(new AntCell(this.getMyGridCoordinate(), lifetime));
-        }
-    }
+    
 
     public void update () {
 
@@ -66,7 +62,7 @@ public class ForagingAntCell extends Cell {
     public void addAnt (AntCell ant) {
 
         myNextAnts.add(ant);
-
+        
     }
 
     private void removeDeadAnts () {
@@ -74,7 +70,6 @@ public class ForagingAntCell extends Cell {
         while (iter.hasNext()) {
             if (iter.next().isDeadOrMoving()) {
                 iter.remove();
-                System.out.println("REMOVE ANT");
             }
         }
     }
@@ -104,6 +99,7 @@ public class ForagingAntCell extends Cell {
 
     public void setPheromones (double value, boolean food) {
         if (food) {
+            System.out.println("Food phero " + value);
             myFoodPheromones = value;
         }
         else {
