@@ -9,8 +9,8 @@ import javafx.scene.paint.Color;
 
 public class ForagingAntCell extends Cell {
 
-    private List<Ant> myAnts;
-    private List<Ant> myNextAnts;
+    private List<AntCell> myAnts;
+    private List<AntCell> myNextAnts;
 
     private double myFoodPheromones;
     private double myHomePheromones;
@@ -26,8 +26,8 @@ public class ForagingAntCell extends Cell {
                             double k,
                             double n) {
         super(myState, myCoordinate);
-        myAnts = new ArrayList<Ant>();
-        myNextAnts = new ArrayList<Ant>();
+        myAnts = new ArrayList<AntCell>();
+        myNextAnts = new ArrayList<AntCell>();
         myMaxPheromones = maxPheromones;
         myMaxAnts = maxAnts;
         myK = k;
@@ -38,7 +38,7 @@ public class ForagingAntCell extends Cell {
 
     public void breed (int numAnts, int lifetime) {
         for (int i = 0; i < numAnts; i++) {
-            myNextAnts.add(new Ant(this.getMyGridCoordinate(), lifetime));
+            myNextAnts.add(new AntCell(this.getMyGridCoordinate(), lifetime));
         }
     }
 
@@ -55,7 +55,7 @@ public class ForagingAntCell extends Cell {
     }
 
     private void addNextAnts () {
-        for (Ant a : myNextAnts) {
+        for (AntCell a : myNextAnts) {
             myAnts.add(a);
             a.setMyGridCoordinate(this.getMyGridCoordinate());
             // a.doneMoving();
@@ -63,14 +63,14 @@ public class ForagingAntCell extends Cell {
         myNextAnts.clear();
     }
 
-    public void addAnt (Ant ant) {
+    public void addAnt (AntCell ant) {
 
         myNextAnts.add(ant);
 
     }
 
     private void removeDeadAnts () {
-        Iterator<Ant> iter = myAnts.iterator();
+        Iterator<AntCell> iter = myAnts.iterator();
         while (iter.hasNext()) {
             if (iter.next().isDeadOrMoving()) {
                 iter.remove();
@@ -114,7 +114,7 @@ public class ForagingAntCell extends Cell {
     public void spawn (int antLifetime) {
         System.out.println("SPAWN");
         if (myAnts.size() < myMaxAnts) {
-            addAnt(new Ant(this.getMyGridCoordinate(), antLifetime));
+            addAnt(new AntCell(this.getMyGridCoordinate(), antLifetime));
         }
     }
 
@@ -142,7 +142,7 @@ public class ForagingAntCell extends Cell {
         return food ? myFoodPheromones : myHomePheromones;
     }
 
-    public List<Ant> getAnts () {
+    public List<AntCell> getAnts () {
         return myAnts;
     }
 
