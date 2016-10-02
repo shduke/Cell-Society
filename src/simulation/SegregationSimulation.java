@@ -18,7 +18,6 @@ public class SegregationSimulation extends Simulation {
         super(simulationConfig);
         generateMap(getGrid().getNumRows(), getGrid().getNumColumns(), getGrid());
     }
-    
 
     @Override
     public void step () {
@@ -54,8 +53,7 @@ public class SegregationSimulation extends Simulation {
 
     private boolean isUnsatisfied (AgentCell cell) {
         List<Cell> neighbors =
-                getNeighbors().getNeighbors(Neighbor.SQUARE.getNeighbors(),
-                                            cell.getMyGridCoordinate(), getGrid());
+                getNeighbors().getSurroundingNeighbors(cell.getMyGridCoordinate());
 
         int totalNeighbors = 0;
         int friendlyNeighbors = 0;

@@ -23,6 +23,7 @@ public abstract class Simulation {
     private String myCellShape = "Square";
 
     /// these 3 fields could be put in a gridViewController
+    private Group myRoot;
     private Grid myGrid;
     private GridView myGridView;
     private NeighborsHandler myNeighborsHandler;
@@ -71,7 +72,7 @@ public abstract class Simulation {
                 .parseDouble(simulationConfig.get("GeneralConfig").get("gridWidth")), Double
                         .parseDouble(simulationConfig.get("GeneralConfig").get("gridHeight"))),
                                          getGrid()));
-        setNeighbors(new ToroidalEdgeNeighborsHandler(myCellShape, myGrid));
+        setNeighbors(new NormalEdgeNeighborsHandler(myCellShape, myGrid));
     }
 
     public void initializeGrid (Map<String, Map<String, String>> simulationConfig) {
@@ -110,12 +111,18 @@ public abstract class Simulation {
      * 
      * @return
      */
+    public Group getSimulationView() {
+        return this.myRoot;
+    }
+    
     public GridView getGridView () {
         return myGridView;
     }
 
     public void setGridView (GridView gridView) {
+        myRoot = new Group();
         this.myGridView = gridView;
+        this.myRoot.getChildren().add(myGridView.getRoot());
     }
 
     public void addGridViewSceneGraph (Group root) {

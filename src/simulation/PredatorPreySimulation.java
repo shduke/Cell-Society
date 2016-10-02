@@ -101,8 +101,8 @@ public class PredatorPreySimulation extends Simulation {
 
     private void updateShark (SharkCell shark) {
         List<Cell> neighbors =
-                getNeighbors().getNeighbors(myNeighborType.getNeighbors(),
-                                            shark.getMyGridCoordinate(), getGrid());
+                getNeighbors().getSurroundingNeighbors(shark.getMyGridCoordinate());
+                                            
         List<Cell> canMoveOrBreed = getOpenCells(neighbors);
         List<Cell> foodCells = getEdibleCells(neighbors);
         shark.update();
@@ -128,8 +128,8 @@ public class PredatorPreySimulation extends Simulation {
     private void updateFish (FishCell fish) {
         fish.update();
         List<Cell> neighbors =
-                getNeighbors().getNeighbors(myNeighborType.getNeighbors(),
-                                            fish.getMyGridCoordinate(), getGrid());
+                getNeighbors().getSurroundingNeighbors(fish.getMyGridCoordinate());
+                                         
         List<Cell> canMoveOrBreed = getOpenCells(neighbors);
         breed(fish, canMoveOrBreed);
         move(fish, canMoveOrBreed);
@@ -239,7 +239,7 @@ public class PredatorPreySimulation extends Simulation {
 
     @Override
     public void initializeSimulationDetails (Map<String, String> simulationConfig) {
-        this.myNeighborType = Neighbor.SQUARE;
+        //this.myNeighborType = Neighbor.SQUARE;
         this.myPreyBreedTime = Integer.parseInt(simulationConfig.get("preyBreedTime"));
         this.myPredatorBreedTime = Integer.parseInt(simulationConfig.get("predatorBreedTime"));
         this.mySharkMaxHealth = Integer.parseInt(simulationConfig.get("sharkMaxHealth"));

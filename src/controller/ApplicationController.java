@@ -23,11 +23,12 @@ public class ApplicationController {
     public static final String TITLE = "Cell Society";
     private static final double SECOND_DELAY = 1000.0;
     private Toolbar myToolbar;
-    Timeline myTimeline;
-    XMLParser myParser = new XMLParser();
+    private Timeline myTimeline;
+    private XMLParser myParser = new XMLParser();
     private final ResourceBundle GUIResources;
     private Scene myScene;
     private Group root;
+    private SimulationController simulationController;
     private File myFile;
 
     public ApplicationController () {
@@ -38,6 +39,7 @@ public class ApplicationController {
         myTimeline = new Timeline();
         myTimeline.setCycleCount(Timeline.INDEFINITE);
         myTimeline.getKeyFrames().add(frame);
+
     }
 
     public String getTitle () {
@@ -60,8 +62,6 @@ public class ApplicationController {
         getSimulationController().getSimulation().step();
 
     }
-
-    private SimulationController simulationController;
 
     public void play () {
         if (myTimeline.getStatus() == Status.RUNNING) {

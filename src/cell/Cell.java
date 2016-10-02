@@ -1,6 +1,7 @@
 package cell;
 
 import grid.Coordinate;
+import javafx.scene.paint.Color;
 
 
 public abstract class Cell {
@@ -45,6 +46,10 @@ public abstract class Cell {
     public void updateState () {
         myCurrentState = myNextState;
         myNextState = null;
+    }
+    
+    public Color getColor() {
+        return this.getMyCurrentState().getColor();
     }
 
 }
