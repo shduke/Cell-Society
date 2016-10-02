@@ -47,7 +47,7 @@ public abstract class NeighborsHandler {
         Coordinate neighborDirectionCoordinate = coordinate.add(directionCoordinate);
         List<Cell> directionNeighbors =
                 getAdjacentNeighbors(coordinate, neighborDirectionCoordinate);
-        System.out.println(Neighbor.ORTHOGONAL.getNeighbors().contains(directionCoordinate));
+
         if (!myCellShape.equals("HEXAGON") &&
             Neighbor.ORTHOGONAL.getNeighbors().contains(directionCoordinate)) {
             directionNeighbors.removeAll(getOrthogonalNeighbors(coordinate));
@@ -56,7 +56,7 @@ public abstract class NeighborsHandler {
             }
 
         }
-        System.out.println("Acutal neighbors " + directionNeighbors.size());
+
         return directionNeighbors;
 
     }
@@ -76,7 +76,6 @@ public abstract class NeighborsHandler {
         List<Cell> originNeighbors = getSurroundingNeighbors(coordinate);
         List<Cell> directionNeighbors = getSurroundingNeighbors(directionNeighborCoordinate);
         originNeighbors.retainAll(directionNeighbors);
-        System.out.println("Neighbors " + originNeighbors.size());
         return originNeighbors;
     }
 
