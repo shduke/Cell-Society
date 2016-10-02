@@ -33,7 +33,7 @@ public abstract class Simulation {
         initializeSimulation(simulationConfig);
     }
     
-    public abstract void countCellsinGrid();
+    public abstract List<Integer> countCellsinGrid();
 
     public Grid getGrid () {
         return myGrid;

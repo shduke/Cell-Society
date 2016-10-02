@@ -296,8 +296,7 @@ public class PredatorPreySimulation extends Simulation {
     }
 
     @Override
-    public void countCellsinGrid () {
-        // TODO Auto-generated method stub
+    public List<Integer> countCellsinGrid () {
         stepNum = getStepNum();
         System.out.println("Num of steps: " + stepNum);
         int fishCount = 0;
@@ -320,6 +319,12 @@ public class PredatorPreySimulation extends Simulation {
         System.out.println("Running fish " + myFishCount);
         System.out.println("Running shark " + mySharkCount);
         stepNum++;
+        List<Integer> myOutput = new ArrayList<Integer>();
+        myOutput.add(stepNum-1);
+        myOutput.add(fishCount);
+        myOutput.add(sharkCount);
+        myOutput.add(emptyCount);
+        return myOutput;
     }
 
 }

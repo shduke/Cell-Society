@@ -114,7 +114,7 @@ public class SegregationSimulation extends Simulation {
 
 
     @Override
-    public void countCellsinGrid () {
+    public List<Integer> countCellsinGrid () {
         stepNum = getStepNum();
         System.out.println("Num of steps: " + stepNum);
         int xCount = 0;
@@ -135,6 +135,12 @@ public class SegregationSimulation extends Simulation {
         System.out.println("O: " + oCount);
         System.out.println("Empty: " + emptyCount);
         stepNum++;
+        List<Integer> myOutput = new ArrayList<Integer>();
+        myOutput.add(stepNum-1);
+        myOutput.add(xCount);
+        myOutput.add(oCount);
+        myOutput.add(emptyCount);
+        return myOutput;
     }
 
 }

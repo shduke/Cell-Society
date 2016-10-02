@@ -2,7 +2,9 @@ package controller;
 
 import javafx.animation.Animation.Status;
 import javafx.event.EventHandler;
+import java.util.List;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import Exceptions.XMLException;
 import applicationView.SimulationToolbar;
@@ -27,7 +29,7 @@ public class ApplicationController {
     private final ResourceBundle GUIResources;
     private Scene myScene;
     private Group root;
-    private Group root2;
+    private Group root2 = new Group();
     private SimulationController simulationController;
     private File myFile;
 
@@ -49,7 +51,7 @@ public class ApplicationController {
     
     public Scene init (int width, int height) {
         root = new Group();
-        root2 = new Group();
+        //root2 = new Group();
         myScene = new Scene(root, width, height, Color.BLACK);
         simulationController = new SimulationController(root2, height, width);
         root.relocate(0, 0);
@@ -60,6 +62,17 @@ public class ApplicationController {
 
         handleEvents(width, root);
         return myScene;
+    }
+    
+    public List<Integer> graphCalculations() {
+        List<Integer> myOutput = new ArrayList<Integer>();
+        if(simulationController != null)
+            myOutput = simulationController.getSimulation().countCellsinGrid();
+        else {
+            myOutput.add(0);
+            myOutput.add(20);
+        }
+        return myOutput;
     }
     
 

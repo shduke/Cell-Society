@@ -1,5 +1,7 @@
 package simulation;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import cell.Cell;
@@ -35,7 +37,7 @@ public class FireSimulation extends Simulation {
     }
     
     @Override
-    public void countCellsinGrid() {
+    public List<Integer> countCellsinGrid() {
         stepNum = getStepNum();
         System.out.println("Num of steps: " + stepNum);
         int burningCount = 0;
@@ -56,6 +58,12 @@ public class FireSimulation extends Simulation {
         System.out.println("Tree: " + treeCount);
         System.out.println("Empty: " + emptyCount);
         stepNum++;
+        List<Integer> myOutput = new ArrayList<Integer>();
+        myOutput.add(stepNum-1);
+        myOutput.add(burningCount);
+        myOutput.add(treeCount);
+        myOutput.add(emptyCount);
+        return myOutput;
     }
 
     // is switching on cell state bad?
