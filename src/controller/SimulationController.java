@@ -35,7 +35,7 @@ public class SimulationController {
         }
         this.mySimulations.add(0, parser.createSimulation(rootElement));
         simulationRoot.getChildren().add(mySimulations.get(0).getSimulationView());
-
+        mySimulations.get(mySimulations.size() - 1).countCellsinGrid();
     }
 
     public Simulation getSimulation () {
