@@ -195,7 +195,6 @@ public class PredatorPreySimulation extends Simulation {
 
         babyFish.setMyCurrentState(State.EMPTY);
         babyFish.setMyNextState(State.FISH);
-        // return babyShark;
         getGrid().getCellGrid().put(babyFish.getMyGridCoordinate(), babyFish);
     }
 
@@ -207,7 +206,6 @@ public class PredatorPreySimulation extends Simulation {
 
         babyShark.setMyCurrentState(State.EMPTY);
         babyShark.setMyNextState(State.SHARK);
-        // return babyShark;
         getGrid().getCellGrid().put(babyShark.getMyGridCoordinate(), babyShark);
     }
 

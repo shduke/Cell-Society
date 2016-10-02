@@ -22,10 +22,13 @@ public class SimulationToolbar {
     
     public void initSimToolbar(int height, int width, Scene myScene) {
         root = (Group)myScene.getRoot();
+        Group root2 = new Group();
         VBox mySimToolbar = new VBox();
         mySimToolbar.getChildren().addAll(createGraph(myScene));
         checkRunningSim();
-        //root.getChildren().add(mySimToolbar);
+        Scene scene1 = new Scene(root2, 30, 30);
+        root2.getChildren().add(mySimToolbar);
+        //root.getChildren().add(scene1.getRoot());
     }
     
     private LineChart<Number, Number> createGraph(Scene myScene) {

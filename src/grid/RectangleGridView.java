@@ -21,8 +21,6 @@ public class RectangleGridView extends GridView {
                 Rectangle gridCellDisplay = new Rectangle(cellWidth, cellHeight);
                 gridCellDisplay.setX(xView);
                 gridCellDisplay.setY(yView);
-                // System.out.println(gridCellDisplay.getX() + " " + gridCellDisplay.getY() + " " +
-                // cellWidth + " " + cellHeight);
                 configureShape(gridCellDisplay, new Coordinate(r, c));
                 addCellToRoot(gridCellDisplay);
             }

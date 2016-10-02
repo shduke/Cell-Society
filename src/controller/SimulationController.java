@@ -15,9 +15,10 @@ public class SimulationController {
     private XMLParser parser = new XMLParser();
     private Group simulationRoot;
 
-    SimulationController (Group simulationRoot) {
+    SimulationController (Group simulationRoot, int height, int width) {
         this.mySimulations = new ArrayList<Simulation>();
         this.simulationRoot = simulationRoot;
+        simulationRoot.relocate(height/4, width/4);
         File simulationConfig = new File("src/resources/Fire.xml");
         initializeSimulation(simulationConfig.getAbsolutePath());
     }

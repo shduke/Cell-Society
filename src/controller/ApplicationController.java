@@ -12,6 +12,7 @@ import javafx.animation.Timeline;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -28,8 +29,10 @@ public class ApplicationController {
     private final ResourceBundle GUIResources;
     private Scene myScene;
     private Group root;
+    private Group root2;
     private SimulationController simulationController;
     private File myFile;
+    private Pane pane2;
 
     public ApplicationController () {
         GUIResources = ResourceBundle.getBundle("resources/English");
@@ -46,10 +49,14 @@ public class ApplicationController {
         return TITLE;
     }
     
+    
     public Scene init (int width, int height) {
         root = new Group();
-        myScene = new Scene(root, width, height, Color.WHITE);
-        simulationController = new SimulationController(root);
+        root2 = new Group();
+        myScene = new Scene(root, width, height, Color.BLACK);
+        simulationController = new SimulationController(root2, height, width);
+        root.relocate(0, 0);
+        root.getChildren().add(root2);
         myToolbar.initToolbar(30, width, myScene);
         SimulationToolbar mySimToolbar = new SimulationToolbar();
         mySimToolbar.initSimToolbar(height, 50, myScene);
@@ -60,7 +67,6 @@ public class ApplicationController {
     private void update () {
         setSpeed();
         getSimulationController().getSimulation().step();
-
     }
 
     public void play () {
@@ -104,6 +110,7 @@ public class ApplicationController {
     public void openFile (File myFile) throws XMLException{
         try {
             String filePath = myFile.getAbsolutePath();
+            myToolbar.removeToolbar(root);
             simulationController.initializeSimulation(filePath);
             myToolbar.initToolbar(30, 500, myScene);
             handleEvents(500, root);

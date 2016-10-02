@@ -7,16 +7,11 @@ import cell.Cell;
 import grid.Coordinate;
 import grid.Grid;
 import grid.GridView;
-import grid.HexagonGridView;
-import grid.Neighbor;
 import grid.NeighborsHandler;
-import grid.NormalEdgeNeighborsHandler;
 import grid.RectangleGridView;
 import grid.ToroidalEdgeNeighborsHandler;
-import grid.TriangleGridView;
 import javafx.geometry.Dimension2D;
 import javafx.scene.Group;
-import javafx.scene.shape.Shape;
 
 
 public abstract class Simulation {
@@ -62,16 +57,12 @@ public abstract class Simulation {
         initializeSimulationDetails(simulationConfig.get("SimulationConfig"));
         initializeGrid(simulationConfig);
         generateMap(getGrid().getNumRows(), getGrid().getNumColumns(), getGrid());
-        /*
-         * setGridView(new RectangleGridView(new Dimension2D(Double
-         * .parseDouble(simulationConfig.get("GeneralConfig").get("gridWidth")), Double
-         * .parseDouble(simulationConfig.get("GeneralConfig").get("gridHeight"))),
-         * getGrid()));
-         */
-        setGridView(new RectangleGridView(new Dimension2D(Double
-                .parseDouble(simulationConfig.get("GeneralConfig").get("gridWidth")), Double
-                        .parseDouble(simulationConfig.get("GeneralConfig").get("gridHeight"))),
-                                         getGrid()));
+        //temp calculations to mess with grid size
+        Double myWidth = Double .parseDouble(simulationConfig.get("GeneralConfig").get("gridWidth"));
+        Double myHeight = Double .parseDouble(simulationConfig.get("GeneralConfig").get("gridHeight"));
+        myWidth = myWidth/2;
+        myHeight = myHeight/2;
+        setGridView(new RectangleGridView(new Dimension2D(myWidth, myHeight), getGrid()));
         setNeighbors(new ToroidalEdgeNeighborsHandler(myCellShape, myGrid));
     }
 
@@ -101,17 +92,12 @@ public abstract class Simulation {
 
     public abstract Cell createCell (Coordinate coordinate, String currentState);
 
-    /*
-     * public abstract void generateMap (int numberOfRows,
-     * int numberOfColumns,
-     * Grid cellGrid);
-     */
-
     /** Return the grid view
      * 
      * @return
      */
     public Group getSimulationView() {
+        ///****THIS ONE******
         return this.myRoot;
     }
     
@@ -131,9 +117,6 @@ public abstract class Simulation {
 
     public void removeGridViewSceneGraph (Group root) {
         root.getChildren().clear();
-        //myGridView.getRoot().getChildren().clear();
-        //root.getChildren().removeAll(myGridView.getRoot().getChildren());
-        //root.getChildren().remove(myGridView.getRoot());
     }
 
     /// if laggy change order
