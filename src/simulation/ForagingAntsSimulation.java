@@ -137,7 +137,7 @@ public class ForagingAntsSimulation extends Simulation {
             nextCell = ant.forage(getSquareNeighbors(ant));
         }
         if (nextCell != null) {
-            dropPheromones(ant, ant.getMyCurrentState() == State.FOODSEARCH);
+            dropPheromones(ant, true);
             System.out.println(nextCell.fullOfAnts());
             System.out.println("Ant will move: " + ant.isDeadOrMoving());
             ant.willMove();

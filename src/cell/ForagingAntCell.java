@@ -43,14 +43,13 @@ public class ForagingAntCell extends Cell {
     }
 
     public void update () {
-        
+
         updateAnts();
     }
 
     private void updateAnts () {
         removeDeadAnts();
         addNextAnts();
-        
 
         // moveAnts();
     }
@@ -59,15 +58,15 @@ public class ForagingAntCell extends Cell {
         for (Ant a : myNextAnts) {
             myAnts.add(a);
             a.setMyGridCoordinate(this.getMyGridCoordinate());
-            //a.doneMoving();
+            // a.doneMoving();
         }
         myNextAnts.clear();
     }
 
     public void addAnt (Ant ant) {
-        
+
         myNextAnts.add(ant);
-        
+
     }
 
     private void removeDeadAnts () {
@@ -98,7 +97,7 @@ public class ForagingAntCell extends Cell {
             ForagingAntCell cell = (ForagingAntCell) c;
             valueToAdd = Math.max(valueToAdd, cell.getPheromones(food));
         }
-        double desired = Math.max(0,valueToAdd - 2);
+        double desired = Math.max(0, valueToAdd - 2);
         setPheromones(Math.max(desired, getPheromones(food)), food);
 
     }
@@ -162,25 +161,26 @@ public class ForagingAntCell extends Cell {
 
     @Override
     public Color getColor () {
-       
-        if(myHomePheromones == myMaxPheromones){
+
+        if (myHomePheromones == myMaxPheromones) {
             return Color.rgb(0, 255, 0);
         }
-        if(myFoodPheromones == myMaxPheromones){
+        if (myFoodPheromones == myMaxPheromones) {
             return Color.rgb(0, 0, 255);
         }
         /*
-        if (myAnts.size() > 0) {
-            Color color = Color.RED;
-            for (int i = 0; i < myAnts.size() / 2; i++) {
-                color = color.darker();
-            }
-            return color;
-        }*/
-        int red = (int) ((double) (myAnts.size() / myMaxAnts) * 255);
+         * if (myAnts.size() > 0) {
+         * Color color = Color.RED;
+         * for (int i = 0; i < myAnts.size() / 2; i++) {
+         * color = color.darker();
+         * }
+         * return color;
+         * }
+         */
+        int red = (int) (((double) Math.min(myAnts.size(), myMaxAnts) / (double) myMaxAnts) * 255);
         int green = (int) ((myHomePheromones / myMaxPheromones) * 255);
         int blue = (int) ((myFoodPheromones / myMaxPheromones) * 255);
         // System.out.println(red + ", " + green +", " + blue);
-        return Color.rgb(red, green, blue);
+        return Color.rgb(red, 0, 0);
     }
 }

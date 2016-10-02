@@ -46,13 +46,15 @@ public abstract class NeighborsHandler {
                                              Coordinate directionCoordinate) {
         Coordinate neighborDirectionCoordinate = coordinate.add(directionCoordinate);
         List<Cell> directionNeighbors = getAdjacentNeighbors(coordinate, neighborDirectionCoordinate);
+       System.out.println(Neighbor.ORTHOGONAL.getNeighbors().contains(directionCoordinate));
         if (!myCellShape.equals("HEXAGON") &&
             Neighbor.ORTHOGONAL.getNeighbors().contains(directionCoordinate)) {
-            directionNeighbors.removeAll(Neighbor.ORTHOGONAL.getNeighbors());
+            directionNeighbors.removeAll(getOrthogonalNeighbors(coordinate));
             if (getMyGrid().isCreated(neighborDirectionCoordinate)) {
                 directionNeighbors.add(myGrid.getCell(neighborDirectionCoordinate));
             }
         }
+        System.out.println("Acutal neighbors " + directionNeighbors.size());
         return directionNeighbors;
 
     }
