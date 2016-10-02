@@ -14,12 +14,27 @@ public class ToroidalEdgeNeighborsHandler extends NeighborsHandler{
         // TODO Auto-generated method stub
         return null;
     }
+    
+    public double wrapCoordinate(double value, int bound) {
+        if(value < 0) {
+            return value + bound;
+        }
+        else if (value >= bound) {
+            return 0;
+        }
+        else {
+            return value;
+        }
+        
+    }
 
     @Override
     public Coordinate handleEdgeCoordinate (Coordinate coordinate,
                                       Coordinate neighborRelativeCoordinate) {
-        double x = coordinate.getX() - neighborRelativeCoordinate.getX() * (getMyGrid().getNumColumns() - 1);
-        double y = coordinate.getY() - neighborRelativeCoordinate.getY() * (getMyGrid().getNumColumns() - 1);
+        Coordinate offGridCoordinate = coordinate.add(neighborRelativeCoordinate);
+        //double x = Math.max(0, coordinate.getX() - neighborRelativeCoordinate.getX() * (getMyGrid().getNumColumns() - 1));
+        double x = wrapCoordinate(offGridCoordinate.getX(), getMyGrid().getNumColumns());
+        double y = wrapCoordinate(offGridCoordinate.getY(), getMyGrid().getNumRows());
         return new Coordinate(x, y);
     }
 

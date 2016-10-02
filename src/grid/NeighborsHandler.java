@@ -43,7 +43,8 @@ public abstract class NeighborsHandler {
      */
 
     public List<Cell> getDirectionNeighbors(Coordinate coordinate, Coordinate directionCoordinate) {
-        List<Cell> directionNeighbors = getAdjacentNeighbors(coordinate, directionCoordinate);
+        Coordinate directionNeighborCoordinate = coordinate.add(directionCoordinate);
+        List<Cell> directionNeighbors = getAdjacentNeighbors(coordinate, directionNeighborCoordinate);
         if(!myCellShape.equals("HEXAGON") && Neighbor.ORTHOGONAL.getNeighbors().contains(directionCoordinate)) {
             directionNeighbors.removeAll(Neighbor.ORTHOGONAL.getNeighbors());
             directionNeighbors.add(myGrid.getCell(coordinate.add(directionCoordinate)));
@@ -57,12 +58,12 @@ public abstract class NeighborsHandler {
     }
     
     public List<Cell> getOrthogonalNeighbors(Coordinate coordinate) {
-        return getNeighbors(Neighbor.valueOf(myCellShape + "ORTHOGONAL").getNeighbors() , coordinate);
+        return getNeighbors(Neighbor.valueOf("ORTHOGONAL").getNeighbors() , coordinate);
     }
 
-    public List<Cell> getAdjacentNeighbors (Coordinate coordinate, Coordinate neighborCoordinate) {
+    public List<Cell> getAdjacentNeighbors (Coordinate coordinate, Coordinate directionNeighborCoordinate) {
         List<Cell> originNeighbors = getSurroundingNeighbors(coordinate);
-        List<Cell> directionNeighbors = getSurroundingNeighbors(neighborCoordinate);
+        List<Cell> directionNeighbors = getSurroundingNeighbors(directionNeighborCoordinate);
         originNeighbors.retainAll(directionNeighbors);
         return originNeighbors;
     }
@@ -79,7 +80,7 @@ public abstract class NeighborsHandler {
         } else {
             Coordinate handledCoordinate = handleEdgeCoordinate(coordinate, neighborRelativeCoordinate);
             if(handledCoordinate != null) {
-                neighbors.add(myGrid.getCell(neighborCoordinate));
+                neighbors.add(myGrid.getCell(handledCoordinate));
             }
         }
     }

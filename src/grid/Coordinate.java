@@ -12,6 +12,10 @@ public class Coordinate {
     public Coordinate add (Coordinate coordinate) {
         return new Coordinate(x + coordinate.getX(), y + coordinate.getY());
     }
+    
+    public Coordinate subtract (Coordinate coordinate) {
+        return new Coordinate(x - coordinate.getX(), y - coordinate.getY());
+    }
 
     @Override
     public boolean equals (Object obj) {

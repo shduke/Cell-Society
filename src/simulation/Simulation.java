@@ -12,6 +12,7 @@ import grid.Neighbor;
 import grid.NeighborsHandler;
 import grid.NormalEdgeNeighborsHandler;
 import grid.RectangleGridView;
+import grid.ToroidalEdgeNeighborsHandler;
 import grid.TriangleGridView;
 import javafx.geometry.Dimension2D;
 import javafx.scene.Group;
@@ -70,7 +71,7 @@ public abstract class Simulation {
                 .parseDouble(simulationConfig.get("GeneralConfig").get("gridWidth")), Double
                         .parseDouble(simulationConfig.get("GeneralConfig").get("gridHeight"))),
                                          getGrid()));
-        setNeighbors(new NormalEdgeNeighborsHandler(myCellShape, myGrid));
+        setNeighbors(new ToroidalEdgeNeighborsHandler(myCellShape, myGrid));
     }
 
     public void initializeGrid (Map<String, Map<String, String>> simulationConfig) {
@@ -161,6 +162,10 @@ public abstract class Simulation {
 
             }
         }
+    }
+    
+    public void handleMapGeneration(String generationType) {
+        
     }
 
     // How to go from the inputed XML ShapeType to making RectangleGrid()
