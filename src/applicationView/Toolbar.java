@@ -18,7 +18,6 @@ public class Toolbar {
     Button step;
     Button loadXMLbutton;
 
-
     public Button getPause () {
         return pause;
     }

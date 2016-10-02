@@ -6,7 +6,6 @@ import cell.Cell;
 import cell.FireCell;
 import cell.State;
 import grid.Coordinate;
-import grid.Grid;
 import grid.Neighbor;
 
 
@@ -18,26 +17,49 @@ public class FireSimulation extends Simulation {
         super(simulationConfig);
     }
 
-    // very temporary code, just here to make it work
     @Override
     public void step () {
         getGrid().applyFuncToCell(p -> setNextState(p));
         updateGrid();
+        countCellsinGrid();
     }
 
     public boolean hasBurningNeighbor (Cell cell) {
         for (Cell neighborCell : getNeighbors()
-                .getSurroundingNeighbors(cell.getMyGridCoordinate())) {
+                .getOrthogonalNeighbors(cell.getMyGridCoordinate())) {
             if (neighborCell.getMyCurrentState().equals(State.BURNING)) {
                 return true;
             }
         }
         return false;
     }
+    
+    @Override
+    public void countCellsinGrid() {
+        stepNum = getStepNum();
+        System.out.println("Num of steps: " + stepNum);
+        int burningCount = 0;
+        int treeCount = 0;
+        int emptyCount = 0;
+        for (Cell cell : getGrid().getImmutableCellGrid().values()) {
+            if(cell.getMyCurrentState().equals(State.BURNING)) {
+                burningCount++;
+            }
+            if(cell.getMyCurrentState().equals(State.TREE)) {
+                treeCount++;
+            }
+            if(cell.getMyCurrentState().equals(State.EMPTY)) {
+                emptyCount++;
+            }
+        }
+        System.out.println("Burning:" + burningCount);
+        System.out.println("Tree: " + treeCount);
+        System.out.println("Empty: " + emptyCount);
+        stepNum++;
+    }
 
     // is switching on cell state bad?
     public void setNextState (Cell cell) {
-        // System.out.println(cell.getMyCurrentState());
         if (cell.getMyCurrentState().equals(State.TREE)) {
             cell.setMyNextState(State.TREE);
             Random rn = new Random();
@@ -69,10 +91,10 @@ public class FireSimulation extends Simulation {
         FireCell cell = new FireCell(State.valueOf(currentState.toUpperCase()), coordinate);
         int r = (int) coordinate.getX();
         int c = (int) coordinate.getY();
-        if (r == 0 || c == 0 || r == (getGrid().getNumRows() - 1) ||
+        /*if (r == 0 || c == 0 || r == (getGrid().getNumRows() - 1) ||
             c == (getGrid().getNumColumns() - 1)) {
             cell.setMyCurrentState(State.EMPTY);
-        }
+        }*/
         cell.setBurnTimer(burnTime);
         return cell;
     }

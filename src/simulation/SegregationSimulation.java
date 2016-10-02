@@ -6,7 +6,6 @@ import cell.Cell;
 import cell.EmptyCell;
 import cell.State;
 import grid.Coordinate;
-import grid.Grid;
 import grid.Neighbor;
 import java.util.*;
 
@@ -22,6 +21,7 @@ public class SegregationSimulation extends Simulation {
 
     @Override
     public void step () {
+        countCellsinGrid();
         updateAgents();
         updateGrid();
     }
@@ -80,7 +80,6 @@ public class SegregationSimulation extends Simulation {
                 .filter(p -> (p.getMyCurrentState() == State.EMPTY &&
                               (p.getMyNextState() == State.EMPTY || p.getMyNextState() == null)))
                 .collect(Collectors.toCollection( () -> openCells));
-        System.out.println(openCells.size());
         if (openCells.size() == 0)
             return;
         Cell moveTo = openCells.get(new Random().nextInt(openCells.size()));
@@ -111,6 +110,31 @@ public class SegregationSimulation extends Simulation {
             return new AgentCell(state, coordinate, myAgentSatisfiedRatio);
         }
 
+    }
+
+
+    @Override
+    public void countCellsinGrid () {
+        stepNum = getStepNum();
+        System.out.println("Num of steps: " + stepNum);
+        int xCount = 0;
+        int oCount = 0;
+        int emptyCount = 0;
+        for (Cell cell : getGrid().getImmutableCellGrid().values()) {
+            if(cell.getMyCurrentState().equals(State.X)) {
+                xCount++;
+            }
+            if(cell.getMyCurrentState().equals(State.O)) {
+                oCount++;
+            }
+            if(cell.getMyCurrentState().equals(State.EMPTY)) {
+                emptyCount++;
+            }
+        }
+        System.out.println("X:" + xCount);
+        System.out.println("O: " + oCount);
+        System.out.println("Empty: " + emptyCount);
+        stepNum++;
     }
 
 }

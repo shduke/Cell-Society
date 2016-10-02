@@ -45,14 +45,16 @@ public abstract class NeighborsHandler {
     public List<Cell> getDirectionNeighbors (Coordinate coordinate,
                                              Coordinate directionCoordinate) {
         Coordinate neighborDirectionCoordinate = coordinate.add(directionCoordinate);
-        List<Cell> directionNeighbors = getAdjacentNeighbors(coordinate, neighborDirectionCoordinate);
-       System.out.println(Neighbor.ORTHOGONAL.getNeighbors().contains(directionCoordinate));
+        List<Cell> directionNeighbors =
+                getAdjacentNeighbors(coordinate, neighborDirectionCoordinate);
+        System.out.println(Neighbor.ORTHOGONAL.getNeighbors().contains(directionCoordinate));
         if (!myCellShape.equals("HEXAGON") &&
             Neighbor.ORTHOGONAL.getNeighbors().contains(directionCoordinate)) {
             directionNeighbors.removeAll(getOrthogonalNeighbors(coordinate));
             if (getMyGrid().isCreated(neighborDirectionCoordinate)) {
                 directionNeighbors.add(myGrid.getCell(neighborDirectionCoordinate));
             }
+
         }
         System.out.println("Acutal neighbors " + directionNeighbors.size());
         return directionNeighbors;
@@ -65,13 +67,14 @@ public abstract class NeighborsHandler {
     }
 
     public List<Cell> getOrthogonalNeighbors (Coordinate coordinate) {
-        return getNeighbors(Neighbor.valueOf(myCellShape + "ORTHOGONAL").getNeighbors(),
-                            coordinate);
+        return getNeighbors(Neighbor.valueOf("ORTHOGONAL").getNeighbors(), coordinate);
+
     }
 
-    public List<Cell> getAdjacentNeighbors (Coordinate coordinate, Coordinate neighborCoordinate) {
+    public List<Cell> getAdjacentNeighbors (Coordinate coordinate,
+                                            Coordinate directionNeighborCoordinate) {
         List<Cell> originNeighbors = getSurroundingNeighbors(coordinate);
-        List<Cell> directionNeighbors = getSurroundingNeighbors(neighborCoordinate);
+        List<Cell> directionNeighbors = getSurroundingNeighbors(directionNeighborCoordinate);
         originNeighbors.retainAll(directionNeighbors);
         System.out.println("Neighbors " + originNeighbors.size());
         return originNeighbors;
@@ -80,6 +83,7 @@ public abstract class NeighborsHandler {
     public abstract List<Cell> getVisionNeighbors (Coordinate coordinate);
 
     public List<Cell> getNeighbors (List<Coordinate> allowableNeighbors,
+
                                     Coordinate coordinate) {
         List<Cell> neighbors = new ArrayList<Cell>();
         for (Coordinate neighborRelativeCoordinate : allowableNeighbors) {
@@ -91,11 +95,12 @@ public abstract class NeighborsHandler {
                 Coordinate handledCoordinate =
                         handleEdgeCoordinate(coordinate, neighborRelativeCoordinate);
                 if (handledCoordinate != null) {
-                    neighbors.add(myGrid.getCell(neighborCoordinate));
+                    neighbors.add(myGrid.getCell(handledCoordinate));
                 }
             }
         }
         return neighbors;
+
     }
 
     public abstract Coordinate handleEdgeCoordinate (Coordinate coordinate,

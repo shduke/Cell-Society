@@ -17,7 +17,6 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import xml.XMLParser;
-import xml.XMLParserException;
 
 
 public class ApplicationController {
@@ -40,7 +39,6 @@ public class ApplicationController {
         myTimeline = new Timeline();
         myTimeline.setCycleCount(Timeline.INDEFINITE);
         myTimeline.getKeyFrames().add(frame);
-        System.out.println("My rate " + myTimeline.getRate());
 
     }
 
