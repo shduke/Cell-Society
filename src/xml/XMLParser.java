@@ -10,6 +10,7 @@ import simulation.GameOfLifeSimulation;
 import simulation.PredatorPreySimulation;
 import simulation.SegregationSimulation;
 import simulation.Simulation;
+import simulation.SugarSimulation;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -37,10 +38,13 @@ public class XMLParser {
         else if (simulationType.equals("PredatorPrey")) {
             simulation = new PredatorPreySimulation(generateSimulationConfig(rootElement));
         }
-        else if(simulationType.equals("Segregation")){
+        else if (simulationType.equals("Segregation")) {
             simulation = new SegregationSimulation(generateSimulationConfig(rootElement));
         }
-        else{
+        else if (simulationType.equals("Sugar")) {
+            simulation = new SugarSimulation(generateSimulationConfig(rootElement));
+        }
+        else {
             simulation = new ForagingAntsSimulation(generateSimulationConfig(rootElement));
         }
         return simulation;
@@ -89,7 +93,7 @@ public class XMLParser {
     public NodeList getChildNodesOfTag (String tagName, Element rootElement) {
         return rootElement.getElementsByTagName(tagName).item(0).getChildNodes();
     }
-    
+
     /*
      * public String getTagValue (String tagName, Element rootElement) {
      * return rootElement.getAttribute(tagName);
