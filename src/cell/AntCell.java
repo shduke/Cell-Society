@@ -8,24 +8,24 @@ import grid.Coordinate;
 import grid.Neighbor;
 
 
-public class Ant extends Cell {
+public class AntCell extends Cell {
 
     private int myLifetime;
     private boolean myMovingStatus;
     private Coordinate myOrientation;
+    private boolean myFood;
 
-    public Ant (Coordinate coordinate, int lifetime) {
+    public AntCell (Coordinate coordinate, int lifetime) {
 
         super(State.FOODSEARCH, coordinate);
         myLifetime = lifetime;
-   
+
     }
 
-   
     public void update () {
-        //System.out.println(this.getMyGridCoordinate() + " is moving to " + myNextCoordinate);
-        //this.setMyGridCoordinate(myNextCoordinate);
-        //myNextCoordinate = this.getMyGridCoordinate();
+        // System.out.println(this.getMyGridCoordinate() + " is moving to " + myNextCoordinate);
+        // this.setMyGridCoordinate(myNextCoordinate);
+        // myNextCoordinate = this.getMyGridCoordinate();
         myMovingStatus = false;
         myLifetime--;
         if (myLifetime == 0) {
@@ -57,9 +57,9 @@ public class Ant extends Cell {
                     return cell;
                 }
             }
-            //this.wontMove();
+            // this.wontMove();
             return null;
-            
+
         }
         return null;
 
@@ -72,10 +72,10 @@ public class Ant extends Cell {
     public ForagingAntCell goHome (List<Cell> neighbors) {
         if (tryToMove(neighbors)) {
             ForagingAntCell bestNeighbor = getBestNeighbor(neighbors, false);
-            if(bestNeighbor!=null){
+            if (bestNeighbor != null) {
                 setOrientation(bestNeighbor);
             }
-            else{
+            else {
                 this.wontMove();
             }
             return bestNeighbor;
@@ -139,12 +139,21 @@ public class Ant extends Cell {
 
         int x = (int) (otherCoord.getX() - thisCoord.getX());
         int y = (int) (otherCoord.getY() - thisCoord.getY());
-        //return new Coordinate(x, y);
+        // return new Coordinate(x, y);
         myOrientation = new Coordinate(x, y);
 
     }
-    public Coordinate getMyOrientation() {
+
+    public Coordinate getMyOrientation () {
         return myOrientation;
+    }
+
+    public boolean hasFood () {
+        return myFood;
+    }
+
+    public void pickUpOrDropFood () {
+        myFood = !myFood;
     }
 
 }
