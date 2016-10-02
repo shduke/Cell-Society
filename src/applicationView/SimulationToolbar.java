@@ -9,7 +9,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.Button;
 
 public class SimulationToolbar {
 
@@ -39,7 +38,7 @@ public class SimulationToolbar {
         myLineChart.setTitle(GUIResources.getString("ChartTitle"));
         XYChart.Series firstSeries = new XYChart.Series();
         //temp to get this to work
-        firstSeries.getData().add(new XYChart.Data(3, 15));
+        //firstSeries.getData().add(new XYChart.Data(simulation.getStepNum(), 15));
         myLineChart.getData().add(firstSeries);
         //root.getChildren().add(myLineChart);
         return myLineChart;
