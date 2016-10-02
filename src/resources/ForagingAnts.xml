@@ -5,14 +5,14 @@
 		<GeneralConfig>
 			<gridWidth>500</gridWidth>
 			<gridHeight>500</gridHeight>
-			<numberOfRows>20</numberOfRows>
-			<numberOfColumns>20</numberOfColumns>
+			<numberOfRows>30</numberOfRows>
+			<numberOfColumns>30</numberOfColumns>
 		</GeneralConfig>
 		<SimulationConfig>
 			<default>Empty</default>
-			<maxPheromones>1000</maxPheromones>
-			<diffusionRate>0.1</diffusionRate>
-			<evaporationRate>0.1</evaporationRate>
+			<maxPheromones>5000</maxPheromones>
+			<diffusionRate>0.01</diffusionRate>
+			<evaporationRate>0.01</evaporationRate>
 			<k>0.001</k>
 			<n>10</n>
 			<maxAnts>10</maxAnts>
@@ -20,8 +20,8 @@
 		</SimulationConfig>
 		<Cells InitialSetup="Specific">
 			<cell_2_2>Nest</cell_2_2>
-			<cell_10_11>Food</cell_10_11>
-			<cell_4_17>Food</cell_4_17>
+			<cell_20_11>Food</cell_20_11>
+			<cell_5_27>Food</cell_5_27>
 		</Cells>
 	</Simulation>
 </Title>
