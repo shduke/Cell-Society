@@ -163,6 +163,10 @@ public abstract class Simulation {
             }
         }
     }
+    
+    public void handleMapGeneration(String generationType) {
+        
+    }
 
     // How to go from the inputed XML ShapeType to making RectangleGrid()
 }
