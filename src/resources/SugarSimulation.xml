@@ -7,9 +7,12 @@
 			<gridHeight>500</gridHeight>
 			<numberOfRows>20</numberOfRows>
 			<numberOfColumns>20</numberOfColumns>
+			<defaultState>Empty</defaultState>
+			<neighborsToConsider>Cardinal</neighborsToConsider>
+			<edgeType>Normal</edgeType>
 		</GeneralConfig>
 		<SimulationConfig>
-			<default>Empty</default>
+			
 			<maxInitialSugar>25</maxInitialSugar>	
 			<maxVision>6</maxVision>
 			<maxMetabolism>4</maxMetabolism>

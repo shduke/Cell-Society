@@ -32,7 +32,7 @@ public class SimulationController {
         Element rootElement = parser.getRootElement(xmlFilename);
 
         if (mySimulations.size() > 0) {
-            mySimulations.get(mySimulations.size() - 1).getSimulationView();
+            mySimulations.get(mySimulations.size() - 1).getSimulationView().getChildren().clear();
             mySimulations.remove(mySimulations.size() - 1);
         }
         this.mySimulations.add(0, parser.createSimulation(rootElement));
