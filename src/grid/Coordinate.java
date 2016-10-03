@@ -1,24 +1,24 @@
 package grid;
 
 public class Coordinate {
-    private double x;
-    private double y;
+    private double myX;
+    private double myY;
 
-    public Coordinate (double x, double y) { /// put cell class in grid package?
-        this.x = x;
-        this.y = y;
+    public Coordinate (double x, double y) {
+        this.myX = x;
+        this.myY = y;
     }
 
     public Coordinate add (Coordinate coordinate) {
-        return new Coordinate(x + coordinate.getX(), y + coordinate.getY());
+        return new Coordinate(myX + coordinate.getX(), myY + coordinate.getY());
     }
-    
+
     public Coordinate subtract (Coordinate coordinate) {
-        return new Coordinate(x - coordinate.getX(), y - coordinate.getY());
+        return new Coordinate(myX - coordinate.getX(), myY - coordinate.getY());
     }
-    
+
     public Coordinate scale (double scaleFactor) {
-        return new Coordinate(x * scaleFactor, y * scaleFactor);
+        return new Coordinate(myX * scaleFactor, myY * scaleFactor);
     }
 
     @Override
@@ -29,7 +29,7 @@ public class Coordinate {
         if (obj == null || !(obj instanceof Coordinate)) {
             return false;
         }
-        return ((x == ((Coordinate) obj).getX()) && (y == ((Coordinate) obj).getY()));
+        return (myX == ((Coordinate)obj).getX()) && (myY == ((Coordinate)obj).getY());
     }
 
     @Override
@@ -39,20 +39,20 @@ public class Coordinate {
          * result = 31 * result + y;
          * return result;
          */
-        return (int) (x + (y + (((x + 1) / 2) * ((x + 1) / 2))));
+        return (int)(myX + (myY + (((myX + 1) / 2) * ((myX + 1) / 2))));
     }
 
     public double getX () {
-        return x;
+        return myX;
     }
 
     public double getY () {
-        return y;
+        return myY;
     }
-    
+
     @Override
-    public String toString(){
-        return x + ", " + y;
+    public String toString () {
+        return myX + ", " + myY;
     }
 
 }

@@ -2,69 +2,65 @@ package applicationView;
 
 import java.util.ResourceBundle;
 import javafx.event.EventHandler;
-import javafx.geometry.HPos;
-import javafx.geometry.VPos;
 import javafx.scene.Group;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.input.*;
 
 
 public class Toolbar {
 
-    private final ResourceBundle GUIResources;
-    Slider slider;
-    Button pause;
-    Button step;
-    Button loadXMLbutton;
-
-    public Button getPause () {
-        return pause;
-    }
+    private static final double MIN_SLIDER_VALUE = 0.5;
+    private static final double MAX_SLIDER_VALUE = 2.0;
+    private final ResourceBundle myGUIResources;
+    private Slider mySlider;
+    private Button myPause;
+    private Button myStep;
+    private Button myLoadXMLbutton;
+    private HBox myToolbar;
 
     public Toolbar () {
         String initFile = "resources";
         String fileName = "/English";
-        GUIResources = ResourceBundle.getBundle(initFile + fileName);
+        myGUIResources = ResourceBundle.getBundle(initFile + fileName);
     }
 
-    private HBox myToolbar;
-    
-    public void initToolbar (int height, int width) {
-        //Group root = (Group) myScene.getRoot();
-        //myScene.setRoot(root);
-        myToolbar = new HBox(height);
-        slider = new Slider(0.5, 2, 1);
-        pause = new Button(GUIResources.getString("PlayCommand"));
-        step = new Button(GUIResources.getString("StepCommand"));
-        loadXMLbutton = new Button(GUIResources.getString("LoadXML"));
-        myToolbar.getChildren().addAll(slider, pause, step, loadXMLbutton);
-        //root.getChildren().add(myToolbar);
+    public Button getPause () {
+        return myPause;
     }
-    public Node getToolbar(){
+
+    public void initToolbar (int height, int width) {
+        myToolbar = new HBox(height);
+        mySlider = new Slider(MIN_SLIDER_VALUE, MAX_SLIDER_VALUE, 1);
+        myPause = new Button(myGUIResources.getString("PlayCommand"));
+        myStep = new Button(myGUIResources.getString("StepCommand"));
+        myLoadXMLbutton = new Button(myGUIResources.getString("LoadXML"));
+        myToolbar.getChildren().addAll(mySlider, myPause, myStep, myLoadXMLbutton);
+    }
+
+    public Node getToolbar () {
         return myToolbar;
     }
-    public void removeToolbar(Group root) {
+
+    public void removeToolbar (Group root) {
         root.getChildren().remove(myToolbar);
     }
 
     public double getSpeed () {
-        return slider.getValue();
+        return mySlider.getValue();
     }
 
     public void setPauseButton (EventHandler<MouseEvent> event) {
-        pause.setOnMouseClicked(event);
+        myPause.setOnMouseClicked(event);
     }
 
     public void setStepButton (EventHandler<MouseEvent> event) {
-        step.setOnMouseClicked(event);
+        myStep.setOnMouseClicked(event);
     }
 
     public void setXMLFileButton (EventHandler<MouseEvent> event) {
-        loadXMLbutton.setOnMouseClicked(event);
+        myLoadXMLbutton.setOnMouseClicked(event);
     }
 }
