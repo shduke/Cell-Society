@@ -55,8 +55,6 @@ public class PredatorPreySimulation extends Simulation {
         updateSharks();
         updateFishes();
         updateGrid();
-        //this.getGridView().updateView();
-        //countCellsinGrid();
 
     }
 

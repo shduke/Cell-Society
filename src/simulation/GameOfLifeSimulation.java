@@ -27,7 +27,6 @@ public class GameOfLifeSimulation extends Simulation {
     public void step () {
         getGrid().applyFuncToCell(p -> setNextState(p));
         updateGrid();
-        countCellsinGrid();
     }
 
     private int livingNeighbors (List<Cell> neighbors) {

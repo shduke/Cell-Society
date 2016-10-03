@@ -24,7 +24,6 @@ public class SegregationSimulation extends Simulation {
 
     @Override
     public void step () {
-        countCellsinGrid();
         updateAgents();
         updateGrid();
     }

@@ -9,12 +9,6 @@ import cell.Cell;
 import cell.FireCell;
 import cell.State;
 import grid.Coordinate;
-import grid.Neighbor;
-
-
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 
 import javafx.scene.paint.Color;
@@ -33,8 +27,6 @@ public class FireSimulation extends Simulation {
     public void step () {
         getGrid().applyFuncToCell(p -> setNextState(p));
         updateGrid();
-        System.out.println(probCatch);
-        // countCellsinGrid();
     }
 
     public boolean hasBurningNeighbor (Cell cell) {

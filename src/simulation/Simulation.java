@@ -46,15 +46,10 @@ public abstract class Simulation {
         initializeView();
 
         initializeSimulation(simulationConfig);
-
-        
-
     }
 
     private void initializeView () {
         mySimulationGraph = new SimulationGraph();
-        // myView = new BorderPane();
-        // myView.setLeft(null);
         mySimulationToolbar = new SimulationToolbar();
     }
 
@@ -192,9 +187,7 @@ public abstract class Simulation {
     public void updateGrid () {
         myGrid.updateGrid();
         myGridView.updateView();
-        System.out.println(countCellsinGrid());
         mySimulationGraph.updateGraph(countCellsinGrid());
-
     }
 
     public NeighborsHandler getNeighborsHandler () {
