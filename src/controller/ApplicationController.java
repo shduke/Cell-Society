@@ -2,13 +2,10 @@ package controller;
 
 import javafx.animation.Animation.Status;
 import javafx.event.EventHandler;
-import java.util.List;
 import java.io.File;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
-import Exceptions.XMLException;
-import applicationView.SimulationToolbar;
 import applicationView.Toolbar;
+import exceptions.XMLException;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Group;
@@ -22,20 +19,22 @@ import javafx.util.Duration;
 
 
 public class ApplicationController {
-    public static final String TITLE = "Cell Society";
+    private static final String TITLE = "Cell Society";
+    private static final int TOOLBAR_HEIGHT = 30;
+    private static final int TOOLBAR_WIDTH = 650;
     private static final double SECOND_DELAY = 1000.0;
     private Toolbar myToolbar;
     private Timeline myTimeline;
-    private final ResourceBundle GUIResources;
+    private final ResourceBundle myGUIResources;
     private Scene myScene;
-    private Group root;
+    private Group myRoot;
     private SimulationController mySimulationController;
     private File myFile;
     private BorderPane myApplicationView;
 
     public ApplicationController () {
         myApplicationView = new BorderPane();
-        GUIResources = ResourceBundle.getBundle("resources/English");
+        myGUIResources = ResourceBundle.getBundle("resources/English");
         myToolbar = new Toolbar();
         KeyFrame frame = new KeyFrame(Duration.millis(SECOND_DELAY),
                                       e -> update());
@@ -51,21 +50,13 @@ public class ApplicationController {
 
     public Scene init (int width, int height) {
 
-        mySimulationController = new SimulationController(root, height, width);
-        root = new Group();
-        root.getChildren().add(myApplicationView);
-        myScene = new Scene(root, width, height, Color.BLACK);
-        myToolbar.initToolbar(30, width);
+        mySimulationController = new SimulationController(myRoot, height, width);
+        myRoot = new Group();
+        myRoot.getChildren().add(myApplicationView);
+        myScene = new Scene(myRoot, width, height, Color.BLACK);
+        myToolbar.initToolbar(TOOLBAR_HEIGHT, width);
         resetApplicationView();
-
-        // myApplicationView.setBottom();
-        // root.relocate(0, 0);
-        // root.getChildren().add(root2);
-        // mySimToolbar = new SimulationToolbar();
-        // mySimToolbar.initSimToolbar(height, 50, myScene);
-        // simulationController.setMySimToolbar(mySimToolbar);
-
-        handleEvents(width, root);
+        handleEvents();
         return myScene;
     }
 
@@ -75,8 +66,7 @@ public class ApplicationController {
         myApplicationView.setTop(myToolbar.getToolbar());
         myApplicationView
                 .setBottom(mySimulationController.getSimulation().getGraphView().createGraph());
-        
-       
+
     }
 
     private void update () {
@@ -88,11 +78,11 @@ public class ApplicationController {
     public void play () {
         if (myTimeline.getStatus() == Status.RUNNING) {
             myTimeline.pause();
-            myToolbar.getPause().setText(GUIResources.getString("PlayCommand"));
+            myToolbar.getPause().setText(myGUIResources.getString("PlayCommand"));
         }
         else {
             myTimeline.play();
-            myToolbar.getPause().setText(GUIResources.getString("PauseCommand"));
+            myToolbar.getPause().setText(myGUIResources.getString("PauseCommand"));
         }
 
     }
@@ -123,21 +113,21 @@ public class ApplicationController {
         return myFile;
     }
 
-    public void openFile (File myFile) throws XMLException {
+    public void openFile (File file) throws XMLException {
         try {
-            String filePath = myFile.getAbsolutePath();
-            myToolbar.removeToolbar(root);
+            String filePath = file.getAbsolutePath();
+            myToolbar.removeToolbar(myRoot);
             mySimulationController.initializeSimulation(filePath);
-            myToolbar.initToolbar(30, 500);
+            myToolbar.initToolbar(TOOLBAR_HEIGHT, TOOLBAR_WIDTH);
             resetApplicationView();
-            handleEvents(500, root);
+            handleEvents();
         }
         catch (XMLException xmlexcept) {
-            throw new XMLException(xmlexcept, GUIResources.getString("XMLException"));
+            throw new XMLException(xmlexcept, myGUIResources.getString("XMLException"));
         }
     }
 
-    private void handleEvents (int width, Group root) {
+    private void handleEvents () {
         EventHandler<MouseEvent> pause = new EventHandler<MouseEvent>() {
             @Override
             public void handle (MouseEvent m) {
