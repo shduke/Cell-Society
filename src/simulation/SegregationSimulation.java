@@ -27,6 +27,15 @@ public class SegregationSimulation extends Simulation {
         updateAgents();
         updateGrid();
     }
+    
+    @Override
+    public void getSimulationNames () {
+        List<String> myList = new ArrayList<String>();
+        for (State n : getSimulationStates()) {
+            myList.add(n.name());
+        }
+        mySimulationGraph.addToLegend(myList);
+    }
 
     private void updateAgents () {
         Iterator<Cell> cells = getGrid().iterator();

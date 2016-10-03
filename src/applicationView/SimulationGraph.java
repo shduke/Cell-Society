@@ -14,7 +14,6 @@ import javafx.scene.shape.Rectangle;
 
 public class SimulationGraph {
     private final ResourceBundle GUIResources;
-    private Group myRoot;
 
     private Series<Number, Number> myFirstSeries = new XYChart.Series<Number, Number>();
     private Series<Number, Number> mySecondSeries = new XYChart.Series<Number, Number>();
@@ -36,9 +35,17 @@ public class SimulationGraph {
         myLineChart.setLegendVisible(true);
         myLineChart.setLegendSide(Side.RIGHT);
         myLineChart.setCreateSymbols(false);
-        //myLineChart.getData().forEach(data -> data.setNode(rect));
-        //myLineChart.setLegendSide(value);
         return myLineChart;
+    }
+    
+    public void addToLegend(List<String> myList) {
+        myFirstSeries.setName(myList.get(0));
+        if (myList.size() > 1) {
+            mySecondSeries.setName(myList.get(1));
+        }
+        if (myList.size() > 2) {
+            myThirdSeries.setName(myList.get(2));
+        }
     }
 
     public Series<Number, Number> updateGraph (List<Integer> myOutput) {

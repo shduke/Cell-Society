@@ -64,9 +64,9 @@ public class FireSimulation extends Simulation {
         stepNum++;
         List<Integer> myOutput = new ArrayList<Integer>();
         myOutput.add(stepNum - 1);
-        myOutput.add(burningCount);
-        myOutput.add(treeCount);
         myOutput.add(emptyCount);
+        myOutput.add(treeCount);
+        myOutput.add(burningCount);
         return myOutput;
     }
 
@@ -125,18 +125,6 @@ public class FireSimulation extends Simulation {
         Slider otherSlider = new Slider(.5, 2, 1);
         toolbar.addSlider(otherSlider, "other shit");
     }
-//    private State randomGeneration() {
-//        Random rn = new Random();
-//        double spawnRandomNumber = rn.nextDouble() * 100;
-//        double currentProbability = 0;
-//        for(FireState state : FireState.values()) {
-//            currentProbability += state.getProbability();
-//            if(spawnRandomNumber < currentProbability) {
-//                return state;
-//            }
-//        }
-//        return FireState.valueOf(getDefaultState());
-//    }
     
     private enum FireState implements State {
 
@@ -177,6 +165,15 @@ public class FireSimulation extends Simulation {
     @Override
     public State getSimulationState (String simulationState) {
         return FireState.valueOf(simulationState.toUpperCase());
+    }
+    
+    @Override
+    public void getSimulationNames () {
+        List<String> myList = new ArrayList<String>();
+        for (State n : getSimulationStates()) {
+            myList.add(n.name());
+        }
+        mySimulationGraph.addToLegend(myList);
     }
 
 }
