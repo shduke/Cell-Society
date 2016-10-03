@@ -42,7 +42,6 @@ public class FireSimulation extends Simulation {
     @Override
     public List<Integer> countCellsinGrid () {
         stepNum = getStepNum();
-        System.out.println("Num of steps: " + stepNum);
         int burningCount = 0;
         int treeCount = 0;
         int emptyCount = 0;
@@ -58,9 +57,6 @@ public class FireSimulation extends Simulation {
                 emptyCount++;
             }
         }
-        System.out.println("Burning:" + burningCount);
-        System.out.println("Tree: " + treeCount);
-        System.out.println("Empty: " + emptyCount);
         stepNum++;
         List<Integer> myOutput = new ArrayList<Integer>();
         myOutput.add(stepNum - 1);

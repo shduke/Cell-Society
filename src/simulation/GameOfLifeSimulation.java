@@ -72,7 +72,6 @@ public class GameOfLifeSimulation extends Simulation {
     @Override
     public List<Integer> countCellsinGrid () {
         stepNum = getStepNum();
-        System.out.println("Num of steps: " + stepNum);
         int livingCount = 0;
         int emptyCount = 0;
         for (Cell cell : getGrid().getImmutableCellGrid().values()) {
@@ -83,8 +82,6 @@ public class GameOfLifeSimulation extends Simulation {
                 emptyCount++;
             }
         }
-        System.out.println("Living:" + livingCount);
-        System.out.println("Empty: " + emptyCount);
         stepNum++;
 
         List<Integer> myOutput = new ArrayList<Integer>();
