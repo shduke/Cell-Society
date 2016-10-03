@@ -13,7 +13,6 @@ import javafx.scene.paint.*;
  */
 public class PredatorPreySimulation extends Simulation {
 
-    private Neighbor myNeighborType;
     private int myPreyBreedTime;
     private int myPredatorBreedTime;
     private int mySharkMaxHealth;
@@ -224,7 +223,6 @@ public class PredatorPreySimulation extends Simulation {
 
     @Override
     public void initializeSimulationDetails (Map<String, String> simulationConfig) {
-        // this.myNeighborType = Neighbor.SQUARE;
         this.myPreyBreedTime = Integer.parseInt(simulationConfig.get("preyBreedTime"));
         this.myPredatorBreedTime = Integer.parseInt(simulationConfig.get("predatorBreedTime"));
         this.mySharkMaxHealth = Integer.parseInt(simulationConfig.get("sharkMaxHealth"));
@@ -271,7 +269,7 @@ public class PredatorPreySimulation extends Simulation {
     public State[] getSimulationStates () {
         return PredatorPreyState.values();
     }
-    
+
     @Override
     public void getSimulationNames () {
         List<String> myList = new ArrayList<String>();
