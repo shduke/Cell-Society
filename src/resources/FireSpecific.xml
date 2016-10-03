@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Title Name="Normal Fire">
+<Title Name="Specific Fire">
 	<author>Sean</author>
 	<Simulation SimulationType="Fire">
 		<GeneralConfig>
@@ -9,15 +9,12 @@
 			<numberOfColumns>10</numberOfColumns>
 			<defaultState>Tree</defaultState>
 			<cellShape>Rectangle</cellShape>
-			<neighborsToConsider>Cardinal</neighborsToConsider>
-			<edgeType>Normal</edgeType>
-			<generationType>Probability</generationType>
-			<BURNING_Probability>10.0</BURNING_Probability>
-			<TREE_Probability>60.0</TREE_Probability>
-			<EMPTY_Probability>30.0</EMPTY_Probability>
+			<neighborsToConsider>Square</neighborsToConsider>
+			<edgeType>Toroidal</edgeType>
+			<generationType>Specific</generationType>
 		</GeneralConfig>
 		<SimulationConfig>
-			<burnTime>3</burnTime>
+			<burnTime>2</burnTime>
     		<probCatch>50</probCatch>
 		</SimulationConfig>
 		<Cells>

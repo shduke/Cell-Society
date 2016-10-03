@@ -104,15 +104,18 @@ public class GameOfLifeSimulation extends Simulation {
             myProbability = 0;
         }
 
+        @Override
         public Color getColor () {
             return myColor;
         }
 
         
+        @Override
         public double getProbability () {
             return myProbability;
         }
 
+        @Override
         public void setProbability (double probability) {
             myProbability = probability;
         }
