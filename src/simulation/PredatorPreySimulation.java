@@ -54,9 +54,9 @@ public class PredatorPreySimulation extends Simulation {
 
         updateSharks();
         updateFishes();
-        getGrid().updateGrid();
-        this.getGridView().updateView();
-        countCellsinGrid();
+        updateGrid();
+        //this.getGridView().updateView();
+        //countCellsinGrid();
 
     }
 
@@ -301,6 +301,7 @@ public class PredatorPreySimulation extends Simulation {
         myOutput.add(fishCount);
         myOutput.add(sharkCount);
         myOutput.add(emptyCount);
+        System.out.println(myOutput);
         return myOutput;
     }
 
@@ -309,7 +310,7 @@ public class PredatorPreySimulation extends Simulation {
         Slider preyBreedSlider = new Slider(1, 10, myPreyBreedTime);
         preyBreedSlider.valueProperty()
                 .addListener(e -> myPreyBreedTime = (int) preyBreedSlider.getValue());
-
+        toolbar.addSlider(preyBreedSlider, "preyBreedTime");
     }
 
     @Override
@@ -319,7 +320,7 @@ public class PredatorPreySimulation extends Simulation {
 
     @Override
     public State getSimulationState (String simulationState) {
-        return PredatorPreyState.valueOf(simulationState);
+        return PredatorPreyState.valueOf(simulationState.toUpperCase());
     }
 
     public enum PredatorPreyState implements State {

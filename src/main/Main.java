@@ -10,7 +10,7 @@ import javafx.stage.Stage;
  * 
  */
 public class Main extends Application {
-    public static final int SIZE = 500;
+    public static final int SIZE = 650;
     public static final int FRAMES_PER_SECOND = 1;
 
 

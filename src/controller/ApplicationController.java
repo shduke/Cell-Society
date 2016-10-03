@@ -14,6 +14,7 @@ import javafx.animation.Timeline;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -28,12 +29,12 @@ public class ApplicationController {
     private final ResourceBundle GUIResources;
     private Scene myScene;
     private Group root;
-    private Group root2 = new Group();
-    private SimulationController simulationController;
+    private SimulationController mySimulationController;
     private File myFile;
-    private SimulationToolbar mySimToolbar;
+    private BorderPane myApplicationView;
 
     public ApplicationController () {
+        myApplicationView = new BorderPane();
         GUIResources = ResourceBundle.getBundle("resources/English");
         myToolbar = new Toolbar();
         KeyFrame frame = new KeyFrame(Duration.millis(SECOND_DELAY),
@@ -47,27 +48,41 @@ public class ApplicationController {
     public String getTitle () {
         return TITLE;
     }
-    
-    
+
     public Scene init (int width, int height) {
+
+        mySimulationController = new SimulationController(root, height, width);
         root = new Group();
+        root.getChildren().add(myApplicationView);
         myScene = new Scene(root, width, height, Color.BLACK);
-        simulationController = new SimulationController(root2, height, width);
-        root.relocate(0, 0);
-        root.getChildren().add(root2);
-        //mySimToolbar = new SimulationToolbar();
-        //mySimToolbar.initSimToolbar(height, 50, myScene);
-        //simulationController.setMySimToolbar(mySimToolbar);
-        myToolbar.initToolbar(30, width, myScene);
+        myToolbar.initToolbar(30, width);
+        resetApplicationView();
+
+        // myApplicationView.setBottom();
+        // root.relocate(0, 0);
+        // root.getChildren().add(root2);
+        // mySimToolbar = new SimulationToolbar();
+        // mySimToolbar.initSimToolbar(height, 50, myScene);
+        // simulationController.setMySimToolbar(mySimToolbar);
+
         handleEvents(width, root);
         return myScene;
     }
-    
+
+    private void resetApplicationView () {
+        myApplicationView.setCenter(mySimulationController.getSimulation().getGridView().getRoot());
+        myApplicationView.setRight(mySimulationController.getSimulation().getSimulationToolbar());
+        myApplicationView.setTop(myToolbar.getToolbar());
+        myApplicationView
+                .setBottom(mySimulationController.getSimulation().getGraphView().createGraph());
+        
+       
+    }
 
     private void update () {
         setSpeed();
         getSimulationController().updateSimulations();
-        
+
     }
 
     public void play () {
@@ -86,7 +101,7 @@ public class ApplicationController {
         if (myTimeline.getStatus() == Status.RUNNING) {
             myTimeline.stop();
         }
-        simulationController.updateSimulations();
+        mySimulationController.updateSimulations();
     }
 
     public void setSpeed () {
@@ -103,17 +118,18 @@ public class ApplicationController {
             openFile(myFile);
         }
     }
-    
+
     public File getMyFile () {
         return myFile;
     }
 
-    public void openFile (File myFile) throws XMLException{
+    public void openFile (File myFile) throws XMLException {
         try {
             String filePath = myFile.getAbsolutePath();
             myToolbar.removeToolbar(root);
-            simulationController.initializeSimulation(filePath);
-            myToolbar.initToolbar(30, 500, myScene);
+            mySimulationController.initializeSimulation(filePath);
+            myToolbar.initToolbar(30, 500);
+            resetApplicationView();
             handleEvents(500, root);
         }
         catch (XMLException xmlexcept) {
@@ -122,32 +138,32 @@ public class ApplicationController {
     }
 
     private void handleEvents (int width, Group root) {
-        EventHandler<MouseEvent> event = new EventHandler<MouseEvent>() {
+        EventHandler<MouseEvent> pause = new EventHandler<MouseEvent>() {
             @Override
             public void handle (MouseEvent m) {
                 play();
             }
         };
-        EventHandler<MouseEvent> eventTwo = new EventHandler<MouseEvent>() {
+        EventHandler<MouseEvent> step = new EventHandler<MouseEvent>() {
             @Override
             public void handle (MouseEvent m) {
                 step();
             }
         };
-        EventHandler<MouseEvent> eventThree = new EventHandler<MouseEvent>() {
+        EventHandler<MouseEvent> loadXML = new EventHandler<MouseEvent>() {
             @Override
             public void handle (MouseEvent m) {
                 pause();
                 openFileChooser(new FileChooser());
             }
         };
-        myToolbar.setPauseButton(event);
-        myToolbar.setStepButton(eventTwo);
-        myToolbar.setXMLFileButton(eventThree);
+        myToolbar.setPauseButton(pause);
+        myToolbar.setStepButton(step);
+        myToolbar.setXMLFileButton(loadXML);
     }
 
     public SimulationController getSimulationController () {
-        return simulationController;
+        return mySimulationController;
     }
-    
+
 }
