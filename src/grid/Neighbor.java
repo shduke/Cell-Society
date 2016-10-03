@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 
-public enum Neighbor {// refactor?
+public enum Neighbor {
                       SQUARE(
                              "TOPLEFT",
                              "MIDLEFT",
@@ -18,8 +18,20 @@ public enum Neighbor {// refactor?
                       DIAGONAL("TOPLEFT", "TOPRIGHT", "BOTTOMRIGHT", "BOTTOMLEFT"),
                       CARDINAL("MIDLEFT", "TOPMID", "BOTTOMMID", "MIDRIGHT"),
                       SQUAREORTHOGONAL("MIDLEFT", "TOPMID", "BOTTOMMID", "MIDRIGHT"),
-                      HEXAGON("MIDLEFT", "TOPMID", "BOTTOMMID", "MIDRIGHT", "BOTTOMLEFT", "BOTTOMRIGHT"),
-                      HEXAGONEVEN("MIDLEFT", "MIDRIGHT", "TOPMID", "BOTTOMLEFT", "BOTTOMRIGHT", "BOTTOMMID"),
+                      HEXAGON(
+                              "MIDLEFT",
+                              "TOPMID",
+                              "BOTTOMMID",
+                              "MIDRIGHT",
+                              "BOTTOMLEFT",
+                              "BOTTOMRIGHT"),
+                      HEXAGONEVEN(
+                                  "MIDLEFT",
+                                  "MIDRIGHT",
+                                  "TOPMID",
+                                  "BOTTOMLEFT",
+                                  "BOTTOMRIGHT",
+                                  "BOTTOMMID"),
                       HEXAGONORTHOGONAL(
                                         "MIDLEFT",
                                         "TOPMID",
@@ -28,18 +40,18 @@ public enum Neighbor {// refactor?
                                         "TOPLEFT",
                                         "TOPRIGHT");
 
-    private List<Coordinate> neighbors;
+    private List<Coordinate> myNeighbors;
 
     Neighbor (String ... args) {
         ArrayList<Coordinate> neighbors = new ArrayList<Coordinate>();
         for (String arg : args) {
             neighbors.add(Positions.valueOf(arg).getCoordinate());
         }
-        this.neighbors = Collections.unmodifiableList(neighbors);
+        this.myNeighbors = Collections.unmodifiableList(neighbors);
     }
 
     public List<Coordinate> getNeighbors () {
-        return neighbors;
+        return myNeighbors;
     }
 
     private enum Positions {
@@ -51,14 +63,14 @@ public enum Neighbor {// refactor?
                             TOPRIGHT(1, -1),
                             MIDRIGHT(1, 0),
                             BOTTOMRIGHT(1, 1);
-        Coordinate coordinate;
+        private Coordinate myCoordinate;
 
         Positions (int x, int y) {
-            this.coordinate = new Coordinate(x, y);
+            this.myCoordinate = new Coordinate(x, y);
         }
 
         private Coordinate getCoordinate () {
-            return coordinate;
+            return myCoordinate;
         }
     }
 }

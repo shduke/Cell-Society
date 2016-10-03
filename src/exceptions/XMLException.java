@@ -1,6 +1,11 @@
-package Exceptions;
+package exceptions;
 
 public class XMLException extends RuntimeException {
+
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
 
     public XMLException (String message, Object ... values) {
         super(String.format(message, values));
