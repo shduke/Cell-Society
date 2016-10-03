@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import org.w3c.dom.Element;
+import applicationView.SimulationToolbar;
 import javafx.scene.Group;
 import simulation.Simulation;
 import xml.XMLParser;
@@ -38,13 +39,29 @@ public class SimulationController {
         simulationRoot.getChildren().add(mySimulations.get(0).getSimulationView());
         mySimulations.get(mySimulations.size() - 1).countCellsinGrid();
     }
+    
+    public void graphCalculations() {
+        
+        List<Integer> myOutput = new ArrayList<Integer>();
+        myOutput = getSimulation().countCellsinGrid();
+        mySimToolbar.updateGraph(myOutput);
+    }
 
     public Simulation getSimulation () {
         return mySimulations.get(0);
     }
 
+    private SimulationToolbar mySimToolbar;
+    
+    public void setMySimToolbar (SimulationToolbar mySimToolbar) {
+        this.mySimToolbar = mySimToolbar;
+    }
+
     public void updateSimulations () {
+        
         for (Simulation s : mySimulations) {
+            System.out.println("Hi");
+            mySimToolbar.updateGraph(s.countCellsinGrid());
             s.step();
         }
     }

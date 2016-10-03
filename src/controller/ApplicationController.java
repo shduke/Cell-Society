@@ -30,8 +30,9 @@ public class ApplicationController {
     private Scene myScene;
     private Group root;
     private Group root2 = new Group();
-    private SimulationController simulationController;
+    private SimulationController simulationController; //= new SimulationController(root2, 500, 500);
     private File myFile;
+    private SimulationToolbar mySimToolbar; //= new SimulationToolbar();
 
     public ApplicationController () {
         GUIResources = ResourceBundle.getBundle("resources/English");
@@ -56,29 +57,21 @@ public class ApplicationController {
         simulationController = new SimulationController(root2, height, width);
         root.relocate(0, 0);
         root.getChildren().add(root2);
-        SimulationToolbar mySimToolbar = new SimulationToolbar();
+        mySimToolbar = new SimulationToolbar();
         mySimToolbar.initSimToolbar(height, 50, myScene);
+        simulationController.setMySimToolbar(mySimToolbar);
         myToolbar.initToolbar(30, width, myScene);
-
         handleEvents(width, root);
         return myScene;
     }
     
-    public List<Integer> graphCalculations() {
-        List<Integer> myOutput = new ArrayList<Integer>();
-        if(simulationController != null)
-            myOutput = simulationController.getSimulation().countCellsinGrid();
-        else {
-            myOutput.add(0);
-            myOutput.add(20);
-        }
-        return myOutput;
-    }
+
     
 
     private void update () {
         setSpeed();
-        getSimulationController().getSimulation().step();
+        getSimulationController().updateSimulations();
+        
     }
 
     public void play () {
@@ -88,6 +81,7 @@ public class ApplicationController {
         }
         else {
             myTimeline.play();
+            //simulationController.graphCalculations();
             myToolbar.getPause().setText(GUIResources.getString("PauseCommand"));
         }
 
@@ -97,6 +91,8 @@ public class ApplicationController {
         if (myTimeline.getStatus() == Status.RUNNING) {
             myTimeline.stop();
         }
+        System.out.println("Cats");
+        //simulationController.graphCalculations();
         simulationController.getSimulation().step();
     }
 

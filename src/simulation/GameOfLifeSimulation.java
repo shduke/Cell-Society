@@ -8,9 +8,6 @@ import cell.Cell;
 import cell.GameOfLifeCell;
 import cell.State;
 import grid.Coordinate;
-import grid.Grid;
-import grid.Neighbor;
-
 
 public class GameOfLifeSimulation extends Simulation {
 
