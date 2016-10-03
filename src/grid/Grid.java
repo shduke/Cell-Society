@@ -6,21 +6,19 @@ import cell.*;
 
 
 public class Grid implements Iterable<Cell> {
-    private Map<Coordinate, Cell> cellGrid = new HashMap<Coordinate, Cell>();
+    private Map<Coordinate, Cell> myCellGrid = new HashMap<Coordinate, Cell>();
 
-    private int numberOfRows;
-    private int numberOfColumns;
+    private int myNumberOfRows;
+    private int myNumberOfColumns;
 
-    public Grid (int numberOfRows, int numberOfColumns, Map<Coordinate, Cell> initCells) {// Might be a
-                                                                              // collection of
-                                                                              // states
-        this.numberOfRows = numberOfRows;
-        this.numberOfColumns = numberOfColumns;
-        this.cellGrid = initCells;
+    public Grid (int numberOfRows, int numberOfColumns, Map<Coordinate, Cell> initCells) {
+        this.myNumberOfRows = numberOfRows;
+        this.myNumberOfColumns = numberOfColumns;
+        this.myCellGrid = initCells;
     }
 
     public Map<Coordinate, Cell> getCellGrid () {
-        return cellGrid;
+        return myCellGrid;
     }
 
     public Map<Coordinate, Cell> getImmutableCellGrid () {
@@ -32,11 +30,11 @@ public class Grid implements Iterable<Cell> {
         return getImmutableCellGrid().values().iterator();
     }
 
-    public void applyFuncToCell(Consumer<Cell> func) {
+    public void applyFuncToCell (Consumer<Cell> func) {
         getImmutableCellGrid().values().forEach(func);
     }
 
-    //update (put in cell class)
+    // update (put in cell class)
     public void updateGrid () {
         for (Cell cell : getImmutableCellGrid().values()) {
             cell.setMyCurrentState(cell.getMyNextState());
@@ -45,32 +43,32 @@ public class Grid implements Iterable<Cell> {
     }
 
     public Boolean isCreated (Coordinate coordinate) {
-        return cellGrid.containsKey(coordinate);
+        return myCellGrid.containsKey(coordinate);
     }
 
     public Boolean isInGrid (Coordinate coordinate) {
-        return (coordinate.getX() > -1 && coordinate.getX() < getNumRows() ||
-                coordinate.getY() > -1 && coordinate.getY() < getNumColumns());
+        return coordinate.getX() > -1 && coordinate.getX() < getNumRows() ||
+               coordinate.getY() > -1 && coordinate.getY() < getNumColumns();
     }
 
     public Cell getCell (Coordinate coordinate) {
-        return cellGrid.get(coordinate);
+        return myCellGrid.get(coordinate);
     }
 
     public void addCell (Cell cell) {
-        cellGrid.put(cell.getMyGridCoordinate(), cell);
+        myCellGrid.put(cell.getMyGridCoordinate(), cell);
     }
 
     public int getNumRows () {
-        return numberOfRows;
+        return myNumberOfRows;
     }
 
     public int getNumColumns () {
-        return numberOfColumns;
+        return myNumberOfColumns;
     }
 
     public void setCellGrid (Map<Coordinate, Cell> cellGrid) {
-        this.cellGrid = cellGrid;
+        this.myCellGrid = cellGrid;
     }
 
     /**
@@ -80,7 +78,7 @@ public class Grid implements Iterable<Cell> {
      * @param col
      * @return
      */
-    //public abstract Neighbors getNeighbors (Cell cell, boolean diagonal);
+    // public abstract Neighbors getNeighbors (Cell cell, boolean diagonal);
 
     /**
      * @param cell
@@ -88,14 +86,16 @@ public class Grid implements Iterable<Cell> {
      * @param x
      * @param y
      */
-    /*protected void checkAdjacent (Cell cell, Neighbors neighbors, int x, int y) {
-        Coordinate coord =
-                new Coordinate(x + cell.getMyGridCoordinate().getX(),
-                               y + cell.getMyGridCoordinate().getY());
-        if (cellGrid.containsKey(coord)) {
-            neighbors.addNeighbor(cellGrid.get(coord));
-        }
-    }*/
+    /*
+     * protected void checkAdjacent (Cell cell, Neighbors neighbors, int x, int y) {
+     * Coordinate coord =
+     * new Coordinate(x + cell.getMyGridCoordinate().getX(),
+     * y + cell.getMyGridCoordinate().getY());
+     * if (cellGrid.containsKey(coord)) {
+     * neighbors.addNeighbor(cellGrid.get(coord));
+     * }
+     * }
+     */
 
     // abstract public void createNeighbors (Cell cell);
 

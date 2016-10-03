@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Title Name="Normal Sugar">
+	<author>Michael</author>
+		<Simulation SimulationType="Sugar">
+		<GeneralConfig>
+			<gridWidth>500</gridWidth>
+			<gridHeight>500</gridHeight>
+			<numberOfRows>30</numberOfRows>
+			<numberOfColumns>30</numberOfColumns>
+			<defaultState>Empty</defaultState>
+			<cellShape>Rectangle</cellShape>
+			<neighborsToConsider>Cardinal</neighborsToConsider>
+			<edgeType>Normal</edgeType>
+			<generationType>Specific</generationType>
+		</GeneralConfig>
+		<SimulationConfig>
+			<maxInitialSugar>25</maxInitialSugar>	
+			<maxVision>10</maxVision>
+			<maxMetabolism>4</maxMetabolism>
+			<sugarGrowBackInterval>2</sugarGrowBackInterval>
+			<sugarGrowBackRate>1</sugarGrowBackRate>
+			<maxPatchSugar>6</maxPatchSugar>
+			<initialAgents>0</initialAgents>
+		</SimulationConfig>
+		<Cells>
+		<cell_0_24>ALIVE</cell_0_24>
+<cell_0_25>ALIVE</cell_0_25>
+
+<cell_0_27>ALIVE</cell_0_27>
+
+<cell_0_29>ALIVE</cell_0_29>
+<cell_1_24>ALIVE</cell_1_24>
+
+<cell_1_26>ALIVE</cell_1_26>
+<cell_1_27>ALIVE</cell_1_27>
+
+<cell_1_29>ALIVE</cell_1_29>
+<cell_2_24>ALIVE</cell_2_24>
+<cell_2_25>ALIVE</cell_2_25>
+
+<cell_2_27>ALIVE</cell_2_27>
+
+<cell_2_29>ALIVE</cell_2_29>
+<cell_3_24>ALIVE</cell_3_24>
+
+<cell_3_26>ALIVE</cell_3_26>
+<cell_3_27>ALIVE</cell_3_27>
+<cell_3_28>ALIVE</cell_3_28>
+
+<cell_4_24>ALIVE</cell_4_24>
+
+<cell_4_26>ALIVE</cell_4_26>
+
+<cell_4_28>ALIVE</cell_4_28>
+<cell_4_29>ALIVE</cell_4_29>
+
+<cell_5_25>ALIVE</cell_5_25>
+<cell_5_26>ALIVE</cell_5_26>
+
+<cell_5_28>ALIVE</cell_5_28>
+<cell_5_29>ALIVE</cell_5_29>
+<cell_23_0>SUGAR</cell_23_0>
+<cell_23_1>SUGAR</cell_23_1>
+<cell_23_2>SUGAR</cell_23_2>
+<cell_23_3>SUGAR</cell_23_3>
+<cell_23_4>SUGAR</cell_23_4>
+<cell_23_5>SUGAR</cell_23_5>
+<cell_23_6>SUGAR</cell_23_6>
+<cell_24_0>SUGAR</cell_24_0>
+<cell_24_1>SUGAR</cell_24_1>
+<cell_24_2>SUGAR</cell_24_2>
+<cell_24_3>SUGAR</cell_24_3>
+<cell_24_4>SUGAR</cell_24_4>
+<cell_24_5>SUGAR</cell_24_5>
+<cell_24_6>SUGAR</cell_24_6>
+<cell_25_0>SUGAR</cell_25_0>
+<cell_25_1>SUGAR</cell_25_1>
+<cell_25_2>SUGAR</cell_25_2>
+<cell_25_3>SUGAR</cell_25_3>
+<cell_25_4>SUGAR</cell_25_4>
+<cell_25_5>SUGAR</cell_25_5>
+<cell_25_6>SUGAR</cell_25_6>
+<cell_26_0>SUGAR</cell_26_0>
+<cell_26_1>SUGAR</cell_26_1>
+<cell_26_2>SUGAR</cell_26_2>
+<cell_26_3>SUGAR</cell_26_3>
+<cell_26_4>SUGAR</cell_26_4>
+<cell_26_5>SUGAR</cell_26_5>
+<cell_26_6>SUGAR</cell_26_6>
+<cell_27_0>SUGAR</cell_27_0>
+<cell_27_1>SUGAR</cell_27_1>
+<cell_27_2>SUGAR</cell_27_2>
+<cell_27_3>SUGAR</cell_27_3>
+<cell_27_4>SUGAR</cell_27_4>
+<cell_27_5>SUGAR</cell_27_5>
+<cell_27_6>SUGAR</cell_27_6>
+<cell_28_0>SUGAR</cell_28_0>
+<cell_28_1>SUGAR</cell_28_1>
+<cell_28_2>SUGAR</cell_28_2>
+<cell_28_3>SUGAR</cell_28_3>
+<cell_28_4>SUGAR</cell_28_4>
+<cell_28_5>SUGAR</cell_28_5>
+<cell_28_6>SUGAR</cell_28_6>
+<cell_29_0>SUGAR</cell_29_0>
+<cell_29_1>SUGAR</cell_29_1>
+<cell_29_2>SUGAR</cell_29_2>
+<cell_29_3>SUGAR</cell_29_3>
+<cell_29_4>SUGAR</cell_29_4>
+<cell_29_5>SUGAR</cell_29_5>
+<cell_29_6>SUGAR</cell_29_6>
+		</Cells>
+	</Simulation>
+</Title>

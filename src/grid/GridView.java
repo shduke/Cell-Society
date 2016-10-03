@@ -1,22 +1,19 @@
 package grid;
 
-import cell.State;
 import javafx.geometry.Dimension2D;
 import javafx.scene.Group;
-import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Shape;
 
 
 public abstract class GridView {
-    Group root = new Group();
-    Dimension2D gridSize;
-    Grid grid;
+    private Group myRoot = new Group();
+    protected Grid myGrid;
+    protected Dimension2D myGridSize;
 
-    // change to take in Grid Config object
     public GridView (Dimension2D gridSize, Grid grid) {
-        this.gridSize = gridSize;
-        this.grid = grid;
+        this.myGridSize = gridSize;
+        this.myGrid = grid;
         displayGrid();
     }
 
@@ -24,19 +21,19 @@ public abstract class GridView {
 
     public void updateView () {
         // root = new Group();
-        root.getChildren().clear();
+        myRoot.getChildren().clear();
         displayGrid();
     }
 
     public Group getRoot () {
-        return root;
+        return myRoot;
     }
 
     public void configureShape (Shape shape, Coordinate key) {
         shape.setStrokeWidth(2);
         shape.setStroke(Paint.valueOf("BLACK"));
-        if (grid.getImmutableCellGrid().containsKey(key)) {
-            shape.setFill(grid.getCell(key).getColor());
+        if (myGrid.getImmutableCellGrid().containsKey(key)) {
+            shape.setFill(myGrid.getCell(key).getColor());
 
         } /*
            * else{
@@ -46,7 +43,7 @@ public abstract class GridView {
     }
 
     public void addCellToRoot (Shape shape) {
-        //System.out.println(root.getChildren().size());
-        root.getChildren().add(shape);
+        // System.out.println(root.getChildren().size());
+        myRoot.getChildren().add(shape);
     }
 }

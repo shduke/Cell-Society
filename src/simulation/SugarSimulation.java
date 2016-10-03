@@ -28,18 +28,15 @@ public class SugarSimulation extends Simulation {
     private int myInitialAgents;
     private int myMaxPatchSugar;
     private int myNumAgents;
-    private int myMovingAgents;
 
     public SugarSimulation (Map<String, Map<String, String>> simulationConfig) {
         super(simulationConfig);
         myTicker = 0;
         myNumAgents = 0;
-        myMovingAgents = 0;
     }
 
     @Override
     public List<Integer> countCellsinGrid () {
-        // TODO Auto-generated method stub
         List<Integer> cellCounts = new ArrayList<Integer>();
         cellCounts.add(myTicker);
         cellCounts.add(myNumAgents);
@@ -56,83 +53,11 @@ public class SugarSimulation extends Simulation {
         }
         updatePatches();
         countCellsinGrid();
-        getGrid().updateGrid();
-        this.getGridView().updateView();
+        updateGrid();
         myTicker++;
     }
 
-    private void updatePatches () {
-        Iterator<Cell> cellIter = getGrid().iterator();
-        while (cellIter.hasNext()) {
-            ((SugarPatchCell) cellIter.next()).update();
-        }
-    }
-
-    private void updateAgents () {
-        myMovingAgents = 0;
-        myNumAgents = 0;
-        List<Cell> cells = new ArrayList<Cell>(getGrid().getCellGrid().values());
-        Collections.shuffle(cells);
-        Iterator<Cell> cellIter = cells.iterator();
-        while (cellIter.hasNext()) {
-            SugarPatchCell cell = (SugarPatchCell) cellIter.next();
-            if (cell.hasAgent()) {
-
-                SugarAgentCell agent = cell.getAgent();
-                System.out.println(agent.getMyCurrentState());
-                System.out.println(agent.getMyNextState());
-                System.out.println(agent.isDead() + " dead?");
-                if (agent.getMyCurrentState() == SugarState.DEAD || agent.isDead()) {
-                    cell.killAgent();
-                    System.out.println("KILL");
-                }
-                else if (!(agent.getMyNextState() == SugarState.DEAD)) {
-                    if (agent.getMyCurrentState() == SugarState.ALIVE) {
-                        // myNumAgents++;
-                    }
-                    updateAgent(agent, cell);
-                }
-            }
-        }
-    }
-
-    private void updateAgent (SugarAgentCell agent, SugarPatchCell current) {
-        List<Cell> neighbors =
-                getNeighborsHandler().getVisionNeighbors(agent.getMyGridCoordinate(),
-                                                         agent.getVision());
-        // getNeighbors(agent.getMyGridCoordinate(), agent.getVision());
-        SugarPatchCell moveTo = agent.findSugar(neighbors, current.getSugar());
-        if (moveTo != null) {
-            System.out.println("Moving");
-            myMovingAgents++;
-            move(agent, moveTo);
-            current.killAgent();
-            agent.eat(moveTo);
-        }
-        else {
-            System.out.println("not moving");
-            agent.eat(current);
-        }
-        myNumAgents++;
-        agent.update();
-        if (!agent.isDead()) {
-            // myNumAgents++;
-        }
-    }
-
-    private void move (SugarAgentCell agent, SugarPatchCell moveTo) {
-        SugarAgentCell newAgent = new SugarAgentCell(agent);
-        moveTo.addAgent(newAgent);
-        newAgent.setMyGridCoordinate(moveTo.getMyGridCoordinate());
-    }
-
-    private void growBackSugar () {
-        Iterator<Cell> cellIter = getGrid().iterator();
-        while (cellIter.hasNext()) {
-            SugarPatchCell cell = (SugarPatchCell) cellIter.next();
-            cell.growBack(mySugarGrowBackRate);
-        }
-    }
+    
 
     @Override
     public void initializeSimulationDetails (Map<String, String> simulationConfig) {
@@ -155,9 +80,14 @@ public class SugarSimulation extends Simulation {
         int metabolism = r.nextInt(myMaxMetabolism);
         SugarAgentCell agent =
                 new SugarAgentCell(SugarState.ALIVE, coordinate, vision, initialSugar, metabolism);
-        // int initialSugar = new Random().nextInt(myMaxInitialSugar);
         int maxSugar = r.nextInt(myMaxPatchSugar);
-        SugarPatchCell cell = new SugarPatchCell(SugarState.EMPTY, coordinate, maxSugar);
+        SugarPatchCell cell;
+        if(currentState == SugarState.SUGAR){
+            cell = new SugarPatchCell(SugarState.EMPTY, coordinate, myMaxPatchSugar);
+        }
+        else {
+            cell = new SugarPatchCell(SugarState.EMPTY, coordinate, maxSugar);
+        }
         if (currentState == SugarState.ALIVE) {
             cell.initAgent(agent);
         }
@@ -196,7 +126,8 @@ public class SugarSimulation extends Simulation {
     public enum SugarState implements State {
                                              ALIVE(Color.RED),
                                              DEAD(Color.BLACK),
-                                             EMPTY(Color.WHITE);
+                                             EMPTY(Color.WHITE),
+                                             SUGAR(Color.ORANGE);
 
         private final Color myColor;
         private double myProbability;
@@ -222,6 +153,71 @@ public class SugarSimulation extends Simulation {
 
         }
 
+    }
+    
+    private void updatePatches () {
+        Iterator<Cell> cellIter = getGrid().iterator();
+        while (cellIter.hasNext()) {
+            ((SugarPatchCell) cellIter.next()).update();
+        }
+    }
+
+    private void updateAgents () {
+        myNumAgents = 0;
+        List<Cell> cells = new ArrayList<Cell>(getGrid().getCellGrid().values());
+        Collections.shuffle(cells);
+        Iterator<Cell> cellIter = cells.iterator();
+        while (cellIter.hasNext()) {
+            SugarPatchCell cell = (SugarPatchCell) cellIter.next();
+            if (cell.hasAgent()) {
+
+                SugarAgentCell agent = cell.getAgent();
+                System.out.println(agent.getMyCurrentState());
+                System.out.println(agent.getMyNextState());
+                System.out.println(agent.isDead() + " dead?");
+                if (agent.getMyCurrentState() == SugarState.DEAD || agent.isDead()) {
+                    cell.killAgent();
+                    System.out.println("KILL");
+                }
+                else if (!(agent.getMyNextState() == SugarState.DEAD)) {
+                    if (agent.getMyCurrentState() == SugarState.ALIVE) {
+                        // myNumAgents++;
+                    }
+                    updateAgent(agent, cell);
+                }
+            }
+        }
+    }
+
+    private void updateAgent (SugarAgentCell agent, SugarPatchCell current) {
+        List<Cell> neighbors =
+                getNeighborsHandler().getVisionNeighbors(agent.getMyGridCoordinate(),
+                                                         agent.getVision());
+        SugarPatchCell moveTo = agent.findSugar(neighbors, current.getSugar());
+        if (moveTo != null) {
+            move(agent, moveTo);
+            current.killAgent();
+            agent.eat(moveTo);
+        }
+        else {
+            agent.eat(current);
+        }
+        myNumAgents++;
+        agent.update();
+    }
+
+    private void move (SugarAgentCell agent, SugarPatchCell moveTo) {
+        SugarAgentCell newAgent = new SugarAgentCell(agent);
+        moveTo.addAgent(newAgent);
+        newAgent.setMyGridCoordinate(moveTo.getMyGridCoordinate());
+    }
+
+    private void growBackSugar () {
+        Iterator<Cell> cellIter = getGrid().iterator();
+        while (cellIter.hasNext()) {
+            SugarPatchCell cell = (SugarPatchCell) cellIter.next();
+            cell.growBack(mySugarGrowBackRate);
+        }
     }
 
 }

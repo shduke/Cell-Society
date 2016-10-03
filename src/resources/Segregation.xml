@@ -7,12 +7,17 @@
 			<gridHeight>500</gridHeight>
 			<numberOfRows>5</numberOfRows>
 			<numberOfColumns>5</numberOfColumns>
+			<defaultState>Empty</defaultState>
+			<cellShape>Rectangle</cellShape>
+			<neighborsToConsider>Square</neighborsToConsider>
+			<edgeType>Normal</edgeType>
+			<generationType>Specific</generationType>
 		</GeneralConfig>
 		<SimulationConfig>
 			<default>Empty</default>
 			<myAgentSatisfiedRatio>.5</myAgentSatisfiedRatio>	
 		</SimulationConfig>
-		<Cells InitialSetup="Specific">
+		<Cells>
 			<cell_2_3>O</cell_2_3>
 			<cell_3_2>O</cell_3_2>
 			<cell_1_1>O</cell_1_1>
