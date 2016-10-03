@@ -8,20 +8,21 @@
 			<numberOfRows>20</numberOfRows>
 			<numberOfColumns>20</numberOfColumns>
 			<defaultState>Empty</defaultState>
+			<cellShape>Rectangle</cellShape>
 			<neighborsToConsider>Cardinal</neighborsToConsider>
 			<edgeType>Normal</edgeType>
+			<generationType>Specific</generationType>
 		</GeneralConfig>
 		<SimulationConfig>
-			
 			<maxInitialSugar>25</maxInitialSugar>	
-			<maxVision>6</maxVision>
+			<maxVision>10</maxVision>
 			<maxMetabolism>4</maxMetabolism>
-			<sugarGrowBackInterval>1</sugarGrowBackInterval>
+			<sugarGrowBackInterval>3</sugarGrowBackInterval>
 			<sugarGrowBackRate>1</sugarGrowBackRate>
-			<maxPatchSugar>4</maxPatchSugar>
-			<initialAgents>10</initialAgents>
+			<maxPatchSugar>6</maxPatchSugar>
+			<initialAgents>2</initialAgents>
 		</SimulationConfig>
-		<Cells InitialSetup="Specific">
+		<Cells>
 		</Cells>
 	</Simulation>
 </Title>

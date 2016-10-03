@@ -57,7 +57,10 @@ public class SugarAgentCell extends Cell {
     public boolean isDead() {
         return this.mySugar <= 0;
     }
-
+    
+    public int getVision() {
+        return myVision;
+    }
     public void eat (SugarPatchCell cell) {
         mySugar += Math.min(myMetabolism, cell.getSugar());
         cell.setSugar(Math.max(0, cell.getSugar() - myMetabolism));

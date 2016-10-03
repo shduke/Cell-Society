@@ -1,19 +1,23 @@
 package grid;
+
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.PriorityQueue;
+import java.util.Queue;
 import cell.Cell;
 import grid.Neighbor;
+
+
 // abstract class or interface
 public abstract class NeighborsHandler {
-    //private String myCellShape;
+    // private String myCellShape;
     private String myNeighborsToConsider;
     private Grid myGrid;
 
-
     NeighborsHandler (String neighborsToConsider, Grid grid) {
         myNeighborsToConsider = neighborsToConsider;
-        //myCellShape = cellShape.toUpperCase();
+        // myCellShape = cellShape.toUpperCase();
         myGrid = grid;
     }
     /*
@@ -40,18 +44,22 @@ public abstract class NeighborsHandler {
      * }
      */
 
-
     public List<Cell> getVisionNeighbors (Coordinate coordinate, int visionDistance) {
         List<Cell> visionNeighbors = new ArrayList<Cell>();
-        PriorityQueue<Cell> visionQueue = new PriorityQueue<Cell>(getSurroundingNeighbors(coordinate));
-        for(int i = 0; i < visionDistance; i++) {
+        Queue<Cell> visionQueue =
+                new LinkedList<Cell>(getSurroundingNeighbors(coordinate));
+        for (int i = 0; i < visionDistance; i++) {
             int bound = visionQueue.size();
             int index = 0;
-            while(index < bound) {
+            while (index < bound) {
                 Cell cell = visionQueue.poll();
                 visionNeighbors.add(cell);
-                Coordinate nextVisionCoordinate = cell.getMyGridCoordinate().add(coordinate.scale(i));
-                if(getMyGrid().isCreated(nextVisionCoordinate)) {
+                Coordinate nextVisionCoordinate =
+                        coordinate.add((cell.getMyGridCoordinate().subtract(coordinate)
+                                .scale(1.0 / (i - 1)).scale(i)));
+
+                cell.getMyGridCoordinate().add(coordinate.scale(i));
+                if (getMyGrid().isCreated(nextVisionCoordinate)) {
                     visionQueue.add(getMyGrid().getCell(nextVisionCoordinate));
                 }
                 index++;
@@ -69,15 +77,19 @@ public abstract class NeighborsHandler {
         directionNeighbors.retainAll(getOrthogonalNeighbors(neighborDirectionCoordinate));
         return directionNeighbors;
     }
+
     public List<Cell> getSurroundingNeighbors (Coordinate coordinate) {
         return getNeighbors(Neighbor.valueOf(myNeighborsToConsider).getNeighbors(),
                             coordinate);
     }
+
     public List<Cell> getOrthogonalNeighbors (Coordinate coordinate) {
 
-        return getNeighbors(Neighbor.valueOf(myNeighborsToConsider + "ORTHOGONAL").getNeighbors(), coordinate);
+        return getNeighbors(Neighbor.valueOf(myNeighborsToConsider + "ORTHOGONAL").getNeighbors(),
+                            coordinate);
 
     }
+
     public List<Cell> getAdjacentNeighbors (Coordinate coordinate,
                                             Coordinate directionNeighborCoordinate) {
         List<Cell> originNeighbors = getSurroundingNeighbors(coordinate);
@@ -85,7 +97,9 @@ public abstract class NeighborsHandler {
         originNeighbors.retainAll(directionNeighbors);
         return originNeighbors;
     }
+
     public abstract List<Cell> getVisionNeighbors (Coordinate coordinate);
+
     public List<Cell> getNeighbors (List<Coordinate> allowableNeighbors,
                                     Coordinate coordinate) {
         List<Cell> neighbors = new ArrayList<Cell>();
@@ -104,8 +118,10 @@ public abstract class NeighborsHandler {
         }
         return neighbors;
     }
+
     public abstract Coordinate handleEdgeCoordinate (Coordinate coordinate,
                                                      Coordinate neighborRelativeCoordinate);
+
     // public abstract List<Cell> adjustNeighbor(List<Coordinate> );
     /*
      * public void addUncreatedNeighbor (Coordinate uncreatedNeighbors) {
@@ -115,6 +131,7 @@ public abstract class NeighborsHandler {
     public Grid getMyGrid () {
         return myGrid;
     }
+
     public void setMyGrid (Grid myGrid) {
         this.myGrid = myGrid;
     }
