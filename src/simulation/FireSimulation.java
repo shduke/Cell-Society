@@ -23,7 +23,7 @@ public class FireSimulation extends Simulation {
     public void step () {
         getGrid().applyFuncToCell(p -> setNextState(p));
         updateGrid();
-        countCellsinGrid();
+        //countCellsinGrid();
     }
 
     public boolean hasBurningNeighbor (Cell cell) {

@@ -40,12 +40,12 @@ public class SimulationController {
         mySimulations.get(mySimulations.size() - 1).countCellsinGrid();
     }
     
-    public void graphCalculations() {
+  /*  public void graphCalculations() {
         
         List<Integer> myOutput = new ArrayList<Integer>();
         myOutput = getSimulation().countCellsinGrid();
         mySimToolbar.updateGraph(myOutput);
-    }
+    }*/
 
     public Simulation getSimulation () {
         return mySimulations.get(0);
@@ -60,7 +60,6 @@ public class SimulationController {
     public void updateSimulations () {
         
         for (Simulation s : mySimulations) {
-            System.out.println("Hi");
             mySimToolbar.updateGraph(s.countCellsinGrid());
             s.step();
         }

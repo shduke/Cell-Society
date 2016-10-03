@@ -18,7 +18,6 @@ import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import simulation.Simulation;
 
 
 public class ApplicationController {
@@ -30,9 +29,9 @@ public class ApplicationController {
     private Scene myScene;
     private Group root;
     private Group root2 = new Group();
-    private SimulationController simulationController; //= new SimulationController(root2, 500, 500);
+    private SimulationController simulationController;
     private File myFile;
-    private SimulationToolbar mySimToolbar; //= new SimulationToolbar();
+    private SimulationToolbar mySimToolbar;
 
     public ApplicationController () {
         GUIResources = ResourceBundle.getBundle("resources/English");
@@ -52,7 +51,6 @@ public class ApplicationController {
     
     public Scene init (int width, int height) {
         root = new Group();
-        //root2 = new Group();
         myScene = new Scene(root, width, height, Color.BLACK);
         simulationController = new SimulationController(root2, height, width);
         root.relocate(0, 0);
@@ -64,8 +62,6 @@ public class ApplicationController {
         handleEvents(width, root);
         return myScene;
     }
-    
-
     
 
     private void update () {
@@ -81,7 +77,6 @@ public class ApplicationController {
         }
         else {
             myTimeline.play();
-            //simulationController.graphCalculations();
             myToolbar.getPause().setText(GUIResources.getString("PauseCommand"));
         }
 
@@ -91,9 +86,7 @@ public class ApplicationController {
         if (myTimeline.getStatus() == Status.RUNNING) {
             myTimeline.stop();
         }
-        System.out.println("Cats");
-        //simulationController.graphCalculations();
-        simulationController.getSimulation().step();
+        simulationController.updateSimulations();
     }
 
     public void setSpeed () {

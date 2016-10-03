@@ -41,18 +41,10 @@ public class SimulationToolbar {
         final NumberAxis x_axis = new NumberAxis();
         final NumberAxis y_axis = new NumberAxis();
         x_axis.setLabel(GUIResources.getString("XAxis"));
-        //myLineChart = 
-        //        new LineChart<Number,Number>(x_axis,y_axis);
-        myLineChart.setTitle(GUIResources.getString("ChartTitle"));
-        //firstSeries = new XYChart.Series<Number, Number>();
+        //myLineChart.setTitle(GUIResources.getString("ChartTitle"));
         myLineChart.setPrefWidth(500);
-        myLineChart.setPrefHeight(50);
-        myLineChart.setTranslateY(400);
-        //myGraphValues = new ArrayList<Integer>();
-        //myGraphValues = (ArrayList<Integer>) myAppController.graphCalculations();
-        //System.out.println("Vals " + myGraphValues.get(0) + " " + myGraphValues.get(1));
-        //firstSeries.getData().add(new XYChart.Data<Number, Number>(myGraphValues.get(0), myGraphValues.get(1)));
-        //myLineChart.getData().addAll(firstSeries);
+        myLineChart.setPrefHeight(40);
+        myLineChart.setTranslateY(370);
         return myLineChart;
     }
     
@@ -60,8 +52,6 @@ public class SimulationToolbar {
         firstSeries.getData().add(new Data<Number, Number>(myOutput.get(0), myOutput.get(1)));
         System.out.println("Hi " + firstSeries.getData());
         myLineChart.getData().add(firstSeries);
-        System.out.println("r: " + root);
-        //root.getChildren().add(myLineChart);
         return firstSeries;
     }
     
