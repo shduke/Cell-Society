@@ -1,4 +1,5 @@
 package grid;
+
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -6,16 +7,17 @@ import java.util.PriorityQueue;
 import java.util.Set;
 import cell.Cell;
 import grid.Neighbor;
+
+
 // abstract class or interface
 public abstract class NeighborsHandler {
-    //private String myCellShape;
+    // private String myCellShape;
     private String myNeighborsToConsider;
     private Grid myGrid;
 
-
     NeighborsHandler (String neighborsToConsider, Grid grid) {
         myNeighborsToConsider = neighborsToConsider;
-        //myCellShape = cellShape.toUpperCase();
+        // myCellShape = cellShape.toUpperCase();
         myGrid = grid;
     }
     /*
@@ -42,7 +44,6 @@ public abstract class NeighborsHandler {
      * }
      */
 
-
     public List<Cell> getVisionNeighbors (Coordinate coordinate, int visionDistance) {
         List<Coordinate> directionNeighbors = Neighbor.valueOf(myNeighborsToConsider).getNeighbors();
         Set<Cell> visionNeighbors = new LinkedHashSet<Cell>();
@@ -51,28 +52,15 @@ public abstract class NeighborsHandler {
             for(Coordinate direction : directionNeighbors) {
                 Coordinate nextVisionCoordinate = coordinate.add(direction.scale(i));
                 if(!getMyGrid().isCreated(nextVisionCoordinate)) {
-                    nextVisionCoordinate =
-                            handleEdgeCoordinate(coordinate, coordinate.add(direction.scale(i)));
+                    nextVisionCoordinate = handleEdgeCoordinate(coordinate, coordinate.add(direction.scale(i)));
                 }
-                visionNeighbors.add(getMyGrid().getCell(nextVisionCoordinate));
+                if(nextVisionCoordinate != null) {
+                    visionNeighbors.add(getMyGrid().getCell(nextVisionCoordinate));
+                }
             }
         }
         
-        /*PriorityQueue<Cell> visionQueue = new PriorityQueue<Cell>(getSurroundingNeighbors(coordinate));
-        for(int i = 0; i < visionDistance; i++) {
-            int bound = visionQueue.size();
-            int index = 0;
-            while(index < bound) {
-                Cell cell = visionQueue.poll();
-                visionNeighbors.add(cell);
-                Coordinate nextVisionCoordinate = cell.getMyGridCoordinate().add(   coordinate.scale(i));
-                //Coordinate nextVisionCoordinate = cell.getMyGridCoordinate().add(coordinate.scale(i));
-                if(getMyGrid().isCreated(nextVisionCoordinate)) {
-                    visionQueue.add(getMyGrid().getCell(nextVisionCoordinate));
-                }
-                index++;
-            }
-        }*/
+        List<Cell> blah =  new ArrayList<Cell>(visionNeighbors);
         return new ArrayList<Cell>(visionNeighbors);
     }
 
@@ -85,16 +73,20 @@ public abstract class NeighborsHandler {
         directionNeighbors.retainAll(getOrthogonalNeighbors(neighborDirectionCoordinate));
         return directionNeighbors;
     }
+
     public List<Cell> getSurroundingNeighbors (Coordinate coordinate) {
         List<Coordinate> blah = Neighbor.valueOf(myNeighborsToConsider).getNeighbors();
         return getNeighbors(Neighbor.valueOf(myNeighborsToConsider).getNeighbors(),
                             coordinate);
     }
+
     public List<Cell> getOrthogonalNeighbors (Coordinate coordinate) {
 
-        return getNeighbors(Neighbor.valueOf(myNeighborsToConsider + "ORTHOGONAL").getNeighbors(), coordinate);
+        return getNeighbors(Neighbor.valueOf(myNeighborsToConsider + "ORTHOGONAL").getNeighbors(),
+                            coordinate);
 
     }
+
     public List<Cell> getAdjacentNeighbors (Coordinate coordinate,
                                             Coordinate directionNeighborCoordinate) {
         List<Cell> originNeighbors = getSurroundingNeighbors(coordinate);
@@ -102,7 +94,9 @@ public abstract class NeighborsHandler {
         originNeighbors.retainAll(directionNeighbors);
         return originNeighbors;
     }
+
     public abstract List<Cell> getVisionNeighbors (Coordinate coordinate);
+
     public List<Cell> getNeighbors (List<Coordinate> allowableNeighbors,
                                     Coordinate coordinate) {
         List<Cell> neighbors = new ArrayList<Cell>();
@@ -121,8 +115,10 @@ public abstract class NeighborsHandler {
         }
         return neighbors;
     }
+
     public abstract Coordinate handleEdgeCoordinate (Coordinate coordinate,
                                                      Coordinate neighborRelativeCoordinate);
+
     // public abstract List<Cell> adjustNeighbor(List<Coordinate> );
     /*
      * public void addUncreatedNeighbor (Coordinate uncreatedNeighbors) {
@@ -132,6 +128,7 @@ public abstract class NeighborsHandler {
     public Grid getMyGrid () {
         return myGrid;
     }
+
     public void setMyGrid (Grid myGrid) {
         this.myGrid = myGrid;
     }

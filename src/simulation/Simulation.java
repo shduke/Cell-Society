@@ -53,6 +53,7 @@ public abstract class Simulation {
 
     private void initializeView () {
         myView = new BorderPane();
+        myView.setLeft(null);
         mySimulationToolbar = new SimulationToolbar();
     }
 
@@ -169,7 +170,7 @@ public abstract class Simulation {
      * @return
      */
 
-    public Node getSimulationView () {
+    public BorderPane getSimulationView () {
 
         /// ****THIS ONE******
         return this.myView;

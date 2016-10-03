@@ -20,7 +20,7 @@ public class SimulationController {
     SimulationController (Group simulationRoot, int height, int width) {
         this.mySimulations = new ArrayList<Simulation>();
         this.simulationRoot = simulationRoot;
-        File simulationConfig = new File("src/resources/GameOfLife.xml");
+        File simulationConfig = new File("src/resources/Fire.xml");
         initializeSimulation(simulationConfig.getAbsolutePath());
     }
 
@@ -32,7 +32,7 @@ public class SimulationController {
         Element rootElement = parser.getRootElement(xmlFilename);
 
         if (mySimulations.size() > 0) {
-            mySimulations.get(mySimulations.size() - 1).getSimulationView();
+            mySimulations.get(mySimulations.size() - 1).getSimulationView().getChildren().clear();
             mySimulations.remove(mySimulations.size() - 1);
         }
         this.mySimulations.add(0, parser.createSimulation(rootElement));
