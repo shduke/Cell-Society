@@ -26,8 +26,8 @@ import java.util.Map;
 public class XMLParser {
     private static final DocumentBuilder DOCUMENT_BUILDER = getDocumentBuilder();
 
-    public Simulation createSimulation (Element rootElement) {
-        String simulationType = getSimulationType(rootElement);
+    public Simulation createSimulation (Element rootElement) throws XMLParserException{
+        try {String simulationType = getSimulationType(rootElement);
         Simulation simulation;
         if (simulationType.equals("Fire")) {
             simulation = new FireSimulation(generateSimulationConfig(rootElement));
@@ -48,6 +48,10 @@ public class XMLParser {
             simulation = new ForagingAntsSimulation(generateSimulationConfig(rootElement));
         }
         return simulation;
+        }
+        catch(Exception e) {
+            throw new XMLParserException(e);
+        }
     }
 
     public void printMap (Map<String, String> input) {
@@ -81,7 +85,6 @@ public class XMLParser {
                 sectionMap.put(keyTag, valSimData);
             }
         }
-        // printMap(initCells);
         return sectionMap;
     }
 
@@ -93,21 +96,6 @@ public class XMLParser {
     public NodeList getChildNodesOfTag (String tagName, Element rootElement) {
         return rootElement.getElementsByTagName(tagName).item(0).getChildNodes();
     }
-
-    /*
-     * public String getTagValue (String tagName, Element rootElement) {
-     * return rootElement.getAttribute(tagName);
-     * // return rootElement.getElementsByTagName(tagName).item(0).getFirstChild().getNodeValue();
-     * }
-     * 
-     * public Double getDoubleValue (String tagName, Element rootElement) {
-     * return Double.parseDouble(getTagValue(tagName, rootElement));
-     * }
-     * 
-     * public int getIntValue (String tagName, Element rootElement) {
-     * return Integer.parseInt(getTagValue(tagName, rootElement));
-     * }
-     */
 
     /**
      * Gets the root element in an XML file.

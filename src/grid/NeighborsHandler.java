@@ -7,6 +7,7 @@ import java.util.PriorityQueue;
 import java.util.Set;
 import cell.Cell;
 import grid.Neighbor;
+import javafx.scene.paint.Color;
 
 
 // abstract class or interface
@@ -17,37 +18,12 @@ public abstract class NeighborsHandler {
 
     NeighborsHandler (String neighborsToConsider, Grid grid) {
         myNeighborsToConsider = neighborsToConsider;
-        // myCellShape = cellShape.toUpperCase();
         myGrid = grid;
     }
-    /*
-     * public void addNeighbor (Cell cell) {
-     * neighbors.add(cell);
-     * }
-     */
-    /*
-     * public Iterator<Coordinate> getNeighborCoordinates () {
-     * return Collections.unmodifiableList(allowableNeighbors).iterator();
-     * }
-     */
-    /// getSurroundingNeighbors
-    /// getAdjacent
-    /// get
-    /*
-     * public List<Coordinate> getAllowableNeighbors () {
-     * return allowableNeighbors;
-     * }
-     */
-    /*
-     * public void setAllowableNeighbors (List<Coordinate> allowableNeighbors) {
-     * this.allowableNeighbors = allowableNeighbors;
-     * }
-     */
 
     public List<Cell> getVisionNeighbors (Coordinate coordinate, int visionDistance) {
         List<Coordinate> directionNeighbors = Neighbor.valueOf(myNeighborsToConsider).getNeighbors();
         Set<Cell> visionNeighbors = new LinkedHashSet<Cell>();
-        //List<Cell> visionNeighbors = new ArrayList<Cell>();
         for(int i = 1; i < visionDistance + 1; i++) {
             for(Coordinate direction : directionNeighbors) {
                 Coordinate nextVisionCoordinate = coordinate.add(direction.scale(i));
@@ -60,7 +36,6 @@ public abstract class NeighborsHandler {
             }
         }
         
-        List<Cell> blah =  new ArrayList<Cell>(visionNeighbors);
         return new ArrayList<Cell>(visionNeighbors);
     }
 
@@ -75,9 +50,7 @@ public abstract class NeighborsHandler {
     }
 
     public List<Cell> getSurroundingNeighbors (Coordinate coordinate) {
-        List<Coordinate> blah = Neighbor.valueOf(myNeighborsToConsider).getNeighbors();
-        return getNeighbors(Neighbor.valueOf(myNeighborsToConsider).getNeighbors(),
-                            coordinate);
+        return getNeighbors(Neighbor.valueOf(myNeighborsToConsider).getNeighbors(), coordinate);
     }
 
     public List<Cell> getOrthogonalNeighbors (Coordinate coordinate) {

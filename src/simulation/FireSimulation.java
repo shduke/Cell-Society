@@ -10,13 +10,10 @@ import cell.FireCell;
 import cell.State;
 import grid.Coordinate;
 import grid.Neighbor;
-
-
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
-
 import javafx.scene.paint.Color;
 
 
@@ -41,6 +38,7 @@ public class FireSimulation extends Simulation {
         for (Cell neighborCell : getNeighborsHandler()
                 .getSurroundingNeighbors(cell.getMyGridCoordinate())) {
             if (neighborCell.getMyCurrentState().equals(FireState.BURNING)) {
+                System.out.println(cell.getMyGridCoordinate());
                 return true;
             }
         }
@@ -111,46 +109,40 @@ public class FireSimulation extends Simulation {
         FireCell cell = new FireCell(currentState, coordinate);
         int r = (int) coordinate.getX();
         int c = (int) coordinate.getY();
-        /*
-         * if (r == 0 || c == 0 || r == (getGrid().getNumRows() - 1) ||
-         * c == (getGrid().getNumColumns() - 1)) {
-         * cell.setMyCurrentState(State.EMPTY);
-         * }
-         */
+
+        if (getEdgeType().equals("Normal") && r == 0 || c == 0 || r == (getGrid().getNumRows() - 1) ||
+            c == (getGrid().getNumColumns() - 1)) {
+            cell.setMyCurrentState(FireState.EMPTY);
+        }
         cell.setBurnTimer(burnTime);
         return cell;
     }
 
-
     @Override
     public void initializeSimulationToolbar (SimulationToolbar toolbar) {
-        // toolbar = new SimulationToolbar();
         Slider fireSlider = new Slider(0, 100, probCatch);
         fireSlider.valueProperty().addListener(e -> this.probCatch = fireSlider.getValue());
         // fireSlider.setOnDragExited(e -> this.probCatch *= fireSlider.getValue());
         toolbar.addSlider(fireSlider, "probCatch");
-
-        Slider otherSlider = new Slider(.5, 2, 1);
-        toolbar.addSlider(otherSlider, "other shit");
     }
-//    private State randomGeneration() {
-//        Random rn = new Random();
-//        double spawnRandomNumber = rn.nextDouble() * 100;
-//        double currentProbability = 0;
-//        for(FireState state : FireState.values()) {
-//            currentProbability += state.getProbability();
-//            if(spawnRandomNumber < currentProbability) {
-//                return state;
-//            }
-//        }
-//        return FireState.valueOf(getDefaultState());
-//    }
-    
+    // private State randomGeneration() {
+    // Random rn = new Random();
+    // double spawnRandomNumber = rn.nextDouble() * 100;
+    // double currentProbability = 0;
+    // for(FireState state : FireState.values()) {
+    // currentProbability += state.getProbability();
+    // if(spawnRandomNumber < currentProbability) {
+    // return state;
+    // }
+    // }
+    // return FireState.valueOf(getDefaultState());
+    // }
+
     private enum FireState implements State {
 
-                                            EMPTY(Color.YELLOW),
-                                            TREE(Color.GREEN),
-                                            BURNING(Color.RED);
+                                             EMPTY(Color.YELLOW),
+                                             TREE(Color.GREEN),
+                                             BURNING(Color.RED);
 
         private final Color myColor;
         private double myProbability;
@@ -164,17 +156,17 @@ public class FireSimulation extends Simulation {
         public Color getColor () {
             return myColor;
         }
-        
+
         @Override
         public double getProbability () {
             return myProbability;
         }
-        
+
         @Override
         public void setProbability (double probability) {
             myProbability = probability;
         }
-        
+
     }
 
     @Override
