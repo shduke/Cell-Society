@@ -35,7 +35,7 @@ public abstract class Simulation {
     private NeighborsHandler myNeighborsHandler;
     private State myDefaultState;
     private String myNeighborsToConsider;
-    private SimulationGraph mySimulationGraph;
+    protected SimulationGraph mySimulationGraph;
     private String myEdgeType;
 
     private Dimension2D myGridSize;
@@ -46,15 +46,11 @@ public abstract class Simulation {
         initializeView();
 
         initializeSimulation(simulationConfig);
-
-        
-
+        getSimulationNames();
     }
 
     private void initializeView () {
         mySimulationGraph = new SimulationGraph();
-        // myView = new BorderPane();
-        // myView.setLeft(null);
         mySimulationToolbar = new SimulationToolbar();
     }
 
@@ -192,9 +188,7 @@ public abstract class Simulation {
     public void updateGrid () {
         myGrid.updateGrid();
         myGridView.updateView();
-        System.out.println(countCellsinGrid());
         mySimulationGraph.updateGraph(countCellsinGrid());
-
     }
 
     public NeighborsHandler getNeighborsHandler () {
@@ -326,4 +320,6 @@ public abstract class Simulation {
         return mySimulationToolbar.getRoot();
     }
     // How to go from the inputed XML ShapeType to making RectangleGrid()
+
+    public abstract void getSimulationNames ();
 }

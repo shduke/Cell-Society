@@ -27,7 +27,6 @@ public class GameOfLifeSimulation extends Simulation {
     public void step () {
         getGrid().applyFuncToCell(p -> setNextState(p));
         updateGrid();
-        countCellsinGrid();
     }
 
     private int livingNeighbors (List<Cell> neighbors) {
@@ -38,6 +37,15 @@ public class GameOfLifeSimulation extends Simulation {
             }
         }
         return count;
+    }
+    
+    @Override
+    public void getSimulationNames () {
+        List<String> myList = new ArrayList<String>();
+        for (State n : getSimulationStates()) {
+            myList.add(n.name());
+        }
+        mySimulationGraph.addToLegend(myList);
     }
 
     public void setNextState (Cell cell) {
@@ -81,8 +89,8 @@ public class GameOfLifeSimulation extends Simulation {
 
         List<Integer> myOutput = new ArrayList<Integer>();
         myOutput.add(stepNum - 1);
-        myOutput.add(livingCount);
         myOutput.add(emptyCount);
+        myOutput.add(livingCount);
         return myOutput;
 
     }
