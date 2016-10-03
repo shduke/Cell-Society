@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import applicationView.SimulationToolbar;
 import cell.Cell;
 import cell.GameOfLifeCell;
 import cell.State;
@@ -84,6 +85,12 @@ public class GameOfLifeSimulation extends Simulation {
         myOutput.add(livingCount);
         myOutput.add(emptyCount);
         return myOutput;
+        
+    }
+
+    @Override
+    public void initializeSimulationToolbar (SimulationToolbar toolbar) {
+        // TODO Auto-generated method stub
         
     }
 

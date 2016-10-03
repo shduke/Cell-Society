@@ -3,6 +3,7 @@ package simulation;
 import grid.*;
 import java.awt.Color;
 import java.util.*;
+import applicationView.SimulationToolbar;
 import cell.*;
 
 
@@ -325,6 +326,12 @@ public class PredatorPreySimulation extends Simulation {
         myOutput.add(sharkCount);
         myOutput.add(emptyCount);
         return myOutput;
+    }
+
+    @Override
+    public void initializeSimulationToolbar (SimulationToolbar toolbar) {
+        // TODO Auto-generated method stub
+        
     }
 
 }

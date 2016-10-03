@@ -16,7 +16,7 @@
 			<sugarGrowBackInterval>1</sugarGrowBackInterval>
 			<sugarGrowBackRate>1</sugarGrowBackRate>
 			<maxPatchSugar>4</maxPatchSugar>
-			<initialAgents>100</initialAgents>
+			<initialAgents>10</initialAgents>
 		</SimulationConfig>
 		<Cells InitialSetup="Specific">
 		</Cells>

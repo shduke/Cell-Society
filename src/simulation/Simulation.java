@@ -12,28 +12,44 @@ import grid.RectangleGridView;
 import grid.ToroidalEdgeNeighborsHandler;
 import javafx.geometry.Dimension2D;
 import javafx.scene.Group;
+import javafx.scene.Node;
+import javafx.scene.layout.BorderPane;
+import applicationView.SimulationToolbar;
 
 
 public abstract class Simulation {
     private String myCellShape = "Square";
 
     /// these 3 fields could be put in a gridViewController
+    private BorderPane myView;
     private Group myRoot;
+    private SimulationToolbar mySimulationToolbar;
     private Grid myGrid;
     private GridView myGridView;
     private NeighborsHandler myNeighborsHandler;
     private String myDefaultState;
     protected int stepNum;
 
+    public Simulation (Map<String, Map<String, String>> simulationConfig) {
+        
+        initializeView();
+        
+        initializeSimulation(simulationConfig);
+   
+        myView.setCenter(myGridView.getRoot());
+        myView.setRight(mySimulationToolbar.getRoot());
+
+    }
+
+    private void initializeView() {
+        myView = new BorderPane();
+        mySimulationToolbar = new SimulationToolbar();
+    }
     public int getStepNum () {
         return stepNum;
     }
 
-    Simulation (Map<String, Map<String, String>> simulationConfig) {
-        initializeSimulation(simulationConfig);
-    }
-    
-    public abstract List<Integer> countCellsinGrid();
+    public abstract List<Integer> countCellsinGrid ();
 
     public Grid getGrid () {
         return myGrid;
@@ -57,11 +73,13 @@ public abstract class Simulation {
         initializeSimulationDetails(simulationConfig.get("SimulationConfig"));
         initializeGrid(simulationConfig);
         generateMap(getGrid().getNumRows(), getGrid().getNumColumns(), getGrid());
-        //temp calculations to mess with grid size
-        Double myWidth = Double .parseDouble(simulationConfig.get("GeneralConfig").get("gridWidth"));
-        Double myHeight = Double .parseDouble(simulationConfig.get("GeneralConfig").get("gridHeight"));
-        myWidth = myWidth/2;
-        myHeight = myHeight/2;
+        // temp calculations to mess with grid size
+        Double myWidth = Double.parseDouble(simulationConfig.get("GeneralConfig").get("gridWidth"));
+        Double myHeight =
+                Double.parseDouble(simulationConfig.get("GeneralConfig").get("gridHeight"));
+        myWidth = myWidth / 2;
+        myHeight = myHeight / 2;
+        initializeSimulationToolbar(mySimulationToolbar);
         setGridView(new RectangleGridView(new Dimension2D(myWidth, myHeight), getGrid()));
         setNeighbors(new ToroidalEdgeNeighborsHandler(myCellShape, myGrid));
     }
@@ -92,15 +110,19 @@ public abstract class Simulation {
 
     public abstract Cell createCell (Coordinate coordinate, String currentState);
 
-    /** Return the grid view
+    public abstract void initializeSimulationToolbar (SimulationToolbar toolbar);
+
+    /**
+     * Return the grid view
      * 
      * @return
      */
-    public Group getSimulationView() {
-        ///****THIS ONE******
-        return this.myRoot;
+    public Node getSimulationView () {
+
+        /// ****THIS ONE******
+        return this.myView;
     }
-    
+
     public GridView getGridView () {
         return myGridView;
     }
@@ -153,9 +175,9 @@ public abstract class Simulation {
             }
         }
     }
-    
-    public void handleMapGeneration(String generationType) {
-        
+
+    public void handleMapGeneration (String generationType) {
+
     }
 
     // How to go from the inputed XML ShapeType to making RectangleGrid()

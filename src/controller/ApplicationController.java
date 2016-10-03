@@ -55,9 +55,9 @@ public class ApplicationController {
         simulationController = new SimulationController(root2, height, width);
         root.relocate(0, 0);
         root.getChildren().add(root2);
-        mySimToolbar = new SimulationToolbar();
-        mySimToolbar.initSimToolbar(height, 50, myScene);
-        simulationController.setMySimToolbar(mySimToolbar);
+        //mySimToolbar = new SimulationToolbar();
+        //mySimToolbar.initSimToolbar(height, 50, myScene);
+        //simulationController.setMySimToolbar(mySimToolbar);
         myToolbar.initToolbar(30, width, myScene);
         handleEvents(width, root);
         return myScene;

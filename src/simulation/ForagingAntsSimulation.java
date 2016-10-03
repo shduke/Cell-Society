@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 import cell.AntCell;
 import java.util.Map;
+import applicationView.SimulationToolbar;
 import cell.Cell;
 import cell.EmptyCell;
 import grid.Coordinate;
@@ -240,6 +241,12 @@ public class ForagingAntsSimulation extends Simulation {
         List<Integer> myOutput = new ArrayList<Integer>();
         myOutput.add(stepNum-1);
         return myOutput;
+    }
+
+    @Override
+    public void initializeSimulationToolbar (SimulationToolbar toolbar) {
+        // TODO Auto-generated method stub
+        
     }
 
 }

@@ -1,6 +1,7 @@
 package simulation;
 
 import java.util.stream.Collectors;
+import applicationView.SimulationToolbar;
 import cell.AgentCell;
 import cell.Cell;
 import cell.EmptyCell;
@@ -141,6 +142,12 @@ public class SegregationSimulation extends Simulation {
         myOutput.add(oCount);
         myOutput.add(emptyCount);
         return myOutput;
+    }
+
+    @Override
+    public void initializeSimulationToolbar (SimulationToolbar toolbar) {
+        // TODO Auto-generated method stub
+        
     }
 
 }

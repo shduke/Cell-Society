@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import applicationView.SimulationToolbar;
 import cell.Cell;
 import cell.State;
 import cell.SugarAgentCell;
@@ -35,10 +36,13 @@ public class SugarSimulation extends Simulation {
     }
 
     @Override
-    public void countCellsinGrid () {
+    public List<Integer> countCellsinGrid () {
         // TODO Auto-generated method stub
-        System.out.println("There are " + myNumAgents + " remaining");
-        System.out.println("There are " + myMovingAgents + " moving");
+        List<Integer> cellCounts = new ArrayList<Integer>();
+        cellCounts.add(myTicker);
+        cellCounts.add(myNumAgents);
+
+        return cellCounts;
     }
 
     @Override
@@ -52,6 +56,7 @@ public class SugarSimulation extends Simulation {
         countCellsinGrid();
         getGrid().updateGrid();
         this.getGridView().updateView();
+        myTicker++;
     }
 
     private void updatePatches () {
@@ -81,7 +86,7 @@ public class SugarSimulation extends Simulation {
                 }
                 else if (!(agent.getMyNextState() == State.DEAD)) {
                     if (agent.getMyCurrentState() == State.ALIVE) {
-                        //myNumAgents++;
+                        // myNumAgents++;
                     }
                     updateAgent(agent, cell);
                 }
@@ -141,19 +146,28 @@ public class SugarSimulation extends Simulation {
         // int sugarGrowBackRate = new Random().nextInt(mySugarGrowBackRate) + 1;
         // SugarPatchCell cell = ne
         Random r = new Random();
+        int vision = r.nextInt(myMaxVision) + 1;
+        int initialSugar = r.nextInt(myMaxInitialSugar - 5) + 5;
+        int metabolism = r.nextInt(myMaxMetabolism);
+        SugarAgentCell agent =
+                new SugarAgentCell(State.ALIVE, coordinate, vision, initialSugar, metabolism);
         // int initialSugar = new Random().nextInt(myMaxInitialSugar);
         int maxSugar = r.nextInt(myMaxPatchSugar);
         SugarPatchCell cell = new SugarPatchCell(State.EMPTY, coordinate, maxSugar);
-        if (r.nextInt(10) < 3 && myInitialAgents > 0) {
-            int vision = r.nextInt(myMaxVision) + 1;
-            int initialSugar = r.nextInt(myMaxInitialSugar - 5) + 5;
-            int metabolism = r.nextInt(myMaxMetabolism);
-            SugarAgentCell agent =
-                    new SugarAgentCell(State.ALIVE, coordinate, vision, initialSugar, metabolism);
+        if (State.valueOf(currentState.toUpperCase()) == State.ALIVE) {
+            cell.initAgent(agent);
+        }
+        else if (r.nextInt(10) < 3 && myInitialAgents > 0) {
             cell.initAgent(agent);
             myInitialAgents--;
         }
         return cell;
+    }
+
+    @Override
+    public void initializeSimulationToolbar (SimulationToolbar toolbar) {
+        // TODO Auto-generated method stub
+        
     }
 
 }

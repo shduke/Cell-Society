@@ -15,6 +15,7 @@ public class SimulationController {
     private List<Simulation> mySimulations;
     private XMLParser parser = new XMLParser();
     private Group simulationRoot;
+    private SimulationToolbar mySimToolbar;
 
     SimulationController (Group simulationRoot, int height, int width) {
         this.mySimulations = new ArrayList<Simulation>();
@@ -32,7 +33,7 @@ public class SimulationController {
         Element rootElement = parser.getRootElement(xmlFilename);
 
         if (mySimulations.size() > 0) {
-            mySimulations.get(mySimulations.size() - 1).getSimulationView().getChildren().clear();
+            mySimulations.get(mySimulations.size() - 1).getSimulationView();
             mySimulations.remove(mySimulations.size() - 1);
         }
         this.mySimulations.add(0, parser.createSimulation(rootElement));
@@ -51,16 +52,16 @@ public class SimulationController {
         return mySimulations.get(0);
     }
 
-    private SimulationToolbar mySimToolbar;
     
-    public void setMySimToolbar (SimulationToolbar mySimToolbar) {
-        this.mySimToolbar = mySimToolbar;
-    }
+    
+    //public void setMySimToolbar (SimulationToolbar mySimToolbar) {
+    //    this.mySimToolbar = mySimToolbar;
+    //}
 
     public void updateSimulations () {
         
         for (Simulation s : mySimulations) {
-            mySimToolbar.updateGraph(s.countCellsinGrid());
+            //mySimToolbar.updateGraph(s.countCellsinGrid());
             s.step();
         }
     }
