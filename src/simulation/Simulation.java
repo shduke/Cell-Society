@@ -10,7 +10,6 @@ import grid.Coordinate;
 import grid.Grid;
 import grid.GridView;
 import grid.HexagonGridView;
-import grid.Neighbor;
 import grid.NeighborsHandler;
 import grid.NormalEdgeNeighborsHandler;
 import grid.RectangleGridView;
@@ -18,14 +17,18 @@ import grid.ToroidalEdgeNeighborsHandler;
 import grid.TriangleGridView;
 import javafx.geometry.Dimension2D;
 import javafx.scene.Group;
-import javafx.scene.shape.Shape;
+import javafx.scene.Node;
+import javafx.scene.layout.BorderPane;
+import applicationView.SimulationToolbar;
 
 
 public abstract class Simulation {
     private String myCellShape = "Square";
 
     /// these 3 fields could be put in a gridViewController
+    private BorderPane myView;
     private Group myRoot;
+    private SimulationToolbar mySimulationToolbar;
     private Grid myGrid;
     private GridView myGridView;
     private NeighborsHandler myNeighborsHandler;
@@ -34,19 +37,30 @@ public abstract class Simulation {
 
     private String myEdgeType;
 
-
     private Dimension2D myGridSize;
     protected int stepNum;
+
+    public Simulation (Map<String, Map<String, String>> simulationConfig) {
+
+        initializeView();
+
+        initializeSimulation(simulationConfig);
+
+        myView.setCenter(myGridView.getRoot());
+        myView.setRight(mySimulationToolbar.getRoot());
+
+    }
+
+    private void initializeView () {
+        myView = new BorderPane();
+        mySimulationToolbar = new SimulationToolbar();
+    }
 
     public int getStepNum () {
         return stepNum;
     }
 
-    Simulation (Map<String, Map<String, String>> simulationConfig) {
-        initializeSimulation(simulationConfig);
-    }
-
-    public abstract void countCellsinGrid ();
+    public abstract List<Integer> countCellsinGrid ();
 
     public Grid getGrid () {
         return myGrid;
@@ -70,19 +84,23 @@ public abstract class Simulation {
     public void initializeSimulation (Map<String, Map<String, String>> simulationConfig) {
         initializeSimulationDetails(simulationConfig.get("SimulationConfig"));
         initializeGrid(simulationConfig);
+        initializeSimulationToolbar(mySimulationToolbar);
+
         initializeGeneralDetails(simulationConfig.get("GeneralConfig"));
-        //generateMap();
+        // generateMap();
         /*
          * setGridView(new RectangleGridView(new Dimension2D(Double
          * .parseDouble(simulationConfig.get("GeneralConfig").get("gridWidth")), Double
          * .parseDouble(simulationConfig.get("GeneralConfig").get("gridHeight"))),
          * getGrid()));
          */
-        /*setGridView(new RectangleGridView(new Dimension2D(Double
-                .parseDouble(simulationConfig.get("GeneralConfig").get("gridWidth")), Double
-                        .parseDouble(simulationConfig.get("GeneralConfig").get("gridHeight"))),
-                                          getGrid()));*/
-        //setNeighborsHandler(new NormalEdgeNeighborsHandler(myCellShape, myGrid));
+        /*
+         * setGridView(new RectangleGridView(new Dimension2D(Double
+         * .parseDouble(simulationConfig.get("GeneralConfig").get("gridWidth")), Double
+         * .parseDouble(simulationConfig.get("GeneralConfig").get("gridHeight"))),
+         * getGrid()));
+         */
+        // setNeighborsHandler(new NormalEdgeNeighborsHandler(myCellShape, myGrid));
     }
 
     public void initializeGrid (Map<String, Map<String, String>> simulationConfig) {
@@ -91,15 +109,16 @@ public abstract class Simulation {
                 .parseInt(simulationConfig.get("GeneralConfig").get("numberOfRows")), Integer
                         .parseInt(simulationConfig.get("GeneralConfig").get("numberOfRows")),
                          cellGrid));
-        setDefaultState(getSimulationState(simulationConfig.get("GeneralConfig").get("defaultState")));
+        setDefaultState(getSimulationState(simulationConfig.get("GeneralConfig")
+                .get("defaultState")));
         populateGridWithSpecificValues(simulationConfig.get("Cells"));
         handleMapGeneration(simulationConfig.get("GeneralConfig"));
         generateMap();
-        
-    //    setDefaultState(  simulationConfig.get("GeneralConfig").get("defaultState"));
+
+        // setDefaultState( simulationConfig.get("GeneralConfig").get("defaultState"));
     }
-    
-    public void populateGridWithSpecificValues(Map<String, String> cells) {
+
+    public void populateGridWithSpecificValues (Map<String, String> cells) {
         for (Map.Entry<String, String> entry : cells.entrySet()) {
             String[] coordinateStrings = entry.getKey().split("_");
             Cell cell =
@@ -112,21 +131,28 @@ public abstract class Simulation {
 
     private void initializeGeneralDetails (Map<String, String> generalConfig) {
         setGridSize(new Dimension2D(Double.parseDouble(generalConfig.get("gridWidth")),
-                                    Double.parseDouble(generalConfig.get("gridHeight")))); //TEMPORARY - NEEDS TO BE SET BY VIEW CONTROLLER
+                                    Double.parseDouble(generalConfig.get("gridHeight")))); // TEMPORARY
+                                                                                           // -
+                                                                                           // NEEDS
+                                                                                           // TO BE
+                                                                                           // SET BY
+                                                                                           // VIEW
+                                                                                           // CONTROLLER
         setCellShape(generalConfig.get("cellShape"));
-        //myCellShape = generalConfig.get("cellShape");
-        //myDefaultState = getSimulationState( generalConfig.get("defaultState"));
-        //setDefaultState(getSimulationState(generalConfig.get("defaultState")));
+        // myCellShape = generalConfig.get("cellShape");
+        // myDefaultState = getSimulationState( generalConfig.get("defaultState"));
+        // setDefaultState(getSimulationState(generalConfig.get("defaultState")));
         setNeighborsToConsider(generalConfig.get("neighborsToConsider"));
-        //myNeighborsToConsider = generalConfig.get("neighborsToConsider");//link to neighborHandler
+        // myNeighborsToConsider = generalConfig.get("neighborsToConsider");//link to
+        // neighborHandler
         setEdgeType(generalConfig.get("edgeType"));
-        //myEdgeType = generalConfig.get("edgeType");
+        // myEdgeType = generalConfig.get("edgeType");
     }
 
     private void setDefaultState (State state) {
         myDefaultState = state;
     }
-    
+
     public State getDefaultState () {
         return myDefaultState;
     }
@@ -135,19 +161,19 @@ public abstract class Simulation {
 
     public abstract Cell createCell (Coordinate coordinate, State currentState);
 
-    /*
-     * public abstract void generateMap (int numberOfRows,
-     * int numberOfColumns,
-     * Grid cellGrid);
-     */
+    public abstract void initializeSimulationToolbar (SimulationToolbar toolbar);
 
     /**
      * Return the grid view
      * 
      * @return
      */
-    public Group getSimulationView () {
-        return this.myRoot;
+
+    public Node getSimulationView () {
+
+        /// ****THIS ONE******
+        return this.myView;
+
     }
 
     public GridView getGridView () {
@@ -158,17 +184,6 @@ public abstract class Simulation {
         myRoot = new Group();
         this.myGridView = gridView;
         this.myRoot.getChildren().add(myGridView.getRoot());
-    }
-
-    public void addGridViewSceneGraph (Group root) {
-        root.getChildren().add(myGridView.getRoot());
-    }
-
-    public void removeGridViewSceneGraph (Group root) {
-        root.getChildren().clear();
-        // myGridView.getRoot().getChildren().clear();
-        // root.getChildren().removeAll(myGridView.getRoot().getChildren());
-        // root.getChildren().remove(myGridView.getRoot());
     }
 
     /// if laggy change order
@@ -227,43 +242,47 @@ public abstract class Simulation {
         }
     }
 
-    /*public void handleNeighborsToConsider (String neighborsToConsider) {
-        if (neighborsToConsider.equals("Hexagon")) {
-           setNeighborsToConsider(neighborsToConsider);
-        }
-    }*/
+    /*
+     * public void handleNeighborsToConsider (String neighborsToConsider) {
+     * if (neighborsToConsider.equals("Hexagon")) {
+     * setNeighborsToConsider(neighborsToConsider);
+     * }
+     * }
+     */
 
-    public abstract State[] getSimulationStates();
-    public abstract State getSimulationState(String simulationState);
-        
-    private State stateGenerator() {
+    public abstract State[] getSimulationStates ();
+
+    public abstract State getSimulationState (String simulationState);
+
+    private State stateGenerator () {
         Random rn = new Random();
         double spawnRandomNumber = rn.nextDouble() * 100;
         double currentProbability = 0;
-        for(State state : getSimulationStates()) {
+        for (State state : getSimulationStates()) {
             currentProbability += state.getProbability();
-            if(spawnRandomNumber < currentProbability) {
+            if (spawnRandomNumber < currentProbability) {
                 return state;
             }
         }
         return getDefaultState();
     }
-        
-    public void handleMapGeneration ( Map<String, String> generalConfig) {
+
+    public void handleMapGeneration (Map<String, String> generalConfig) {
         String generationType = generalConfig.get("generationType");
         if (generationType.equals("Random")) {
-            for(State state : getSimulationStates()) {
+            for (State state : getSimulationStates()) {
                 state.setProbability(100.0 / getSimulationStates().length);
-            }     
+            }
         }
         else if (generationType.equals("Probability")) {
-            for(State state : getSimulationStates()) {
+            for (State state : getSimulationStates()) {
                 System.out.println(generalConfig.get(state.name() + "_Probability"));
-                state.setProbability(Double.parseDouble(generalConfig.get(state.name() + "_Probability")));
+                state.setProbability(Double
+                        .parseDouble(generalConfig.get(state.name() + "_Probability")));
             }
         }
         else if (generationType.equals("Specific")) {
-            for(State state : getSimulationStates()) {
+            for (State state : getSimulationStates()) {
                 state.setProbability(0);
             }
         }
@@ -277,7 +296,7 @@ public abstract class Simulation {
     public void setGridSize (Dimension2D myGridSize) {
         this.myGridSize = myGridSize;
     }
-    
+
     public String getEdgeType () {
         return myEdgeType;
     }
@@ -294,6 +313,6 @@ public abstract class Simulation {
     public void setNeighborsToConsider (String neighborsToConsider) {
         myNeighborsToConsider = neighborsToConsider.toUpperCase();
     }
-    
+
     // How to go from the inputed XML ShapeType to making RectangleGrid()
 }

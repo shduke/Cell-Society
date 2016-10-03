@@ -1,8 +1,10 @@
 package simulation;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import applicationView.SimulationToolbar;
 import cell.Cell;
 import cell.GameOfLifeCell;
 import cell.State;
@@ -10,7 +12,7 @@ import grid.Coordinate;
 import grid.Grid;
 import grid.Neighbor;
 import javafx.scene.paint.Color;
-import simulation.FireSimulation.FireState;
+
 
 
 public class GameOfLifeSimulation extends Simulation {
@@ -56,9 +58,8 @@ public class GameOfLifeSimulation extends Simulation {
 
     }
 
-
     @Override
-    public void countCellsinGrid () {
+    public List<Integer> countCellsinGrid () {
         // TODO Auto-generated method stub
         stepNum = getStepNum();
         System.out.println("Num of steps: " + stepNum);
@@ -76,12 +77,24 @@ public class GameOfLifeSimulation extends Simulation {
         System.out.println("Empty: " + emptyCount);
         stepNum++;
 
+        List<Integer> myOutput = new ArrayList<Integer>();
+        myOutput.add(stepNum - 1);
+        myOutput.add(livingCount);
+        myOutput.add(emptyCount);
+        return myOutput;
+
+    }
+
+    @Override
+    public void initializeSimulationToolbar (SimulationToolbar toolbar) {
+        // TODO Auto-generated method stub
+
     }
 
     private enum GameOfLifeState implements State {
 
-                                                  EMPTY(Color.GHOSTWHITE),
-                                                  LIVING(Color.DARKGREEN);
+                                                   EMPTY(Color.GHOSTWHITE),
+                                                   LIVING(Color.DARKGREEN);
 
         private final Color myColor;
         private double myProbability;
@@ -94,11 +107,12 @@ public class GameOfLifeSimulation extends Simulation {
         public Color getColor () {
             return myColor;
         }
+
         
         public double getProbability () {
             return myProbability;
         }
-        
+
         public void setProbability (double probability) {
             myProbability = probability;
         }

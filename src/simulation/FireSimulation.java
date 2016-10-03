@@ -1,16 +1,27 @@
 package simulation;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import applicationView.SimulationToolbar;
 import cell.Cell;
 import cell.FireCell;
 import cell.State;
 import grid.Coordinate;
 import grid.Neighbor;
+
+
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
+
 import javafx.scene.paint.Color;
 
 
 public class FireSimulation extends Simulation {
+
     private double probCatch;
     private int burnTime;
 
@@ -22,7 +33,8 @@ public class FireSimulation extends Simulation {
     public void step () {
         getGrid().applyFuncToCell(p -> setNextState(p));
         updateGrid();
-        countCellsinGrid();
+        System.out.println(probCatch);
+        // countCellsinGrid();
     }
 
     public boolean hasBurningNeighbor (Cell cell) {
@@ -36,13 +48,14 @@ public class FireSimulation extends Simulation {
     }
 
     @Override
-    public void countCellsinGrid () {
+    public List<Integer> countCellsinGrid () {
         stepNum = getStepNum();
         System.out.println("Num of steps: " + stepNum);
         int burningCount = 0;
         int treeCount = 0;
         int emptyCount = 0;
         for (Cell cell : getGrid().getImmutableCellGrid().values()) {
+
             if (cell.getMyCurrentState().equals(FireState.BURNING)) {
                 burningCount++;
             }
@@ -57,6 +70,12 @@ public class FireSimulation extends Simulation {
         System.out.println("Tree: " + treeCount);
         System.out.println("Empty: " + emptyCount);
         stepNum++;
+        List<Integer> myOutput = new ArrayList<Integer>();
+        myOutput.add(stepNum - 1);
+        myOutput.add(burningCount);
+        myOutput.add(treeCount);
+        myOutput.add(emptyCount);
+        return myOutput;
     }
 
     // is switching on cell state bad?
@@ -102,6 +121,18 @@ public class FireSimulation extends Simulation {
         return cell;
     }
 
+
+    @Override
+    public void initializeSimulationToolbar (SimulationToolbar toolbar) {
+        // toolbar = new SimulationToolbar();
+        Slider fireSlider = new Slider(0, 100, probCatch);
+        fireSlider.valueProperty().addListener(e -> this.probCatch = fireSlider.getValue());
+        // fireSlider.setOnDragExited(e -> this.probCatch *= fireSlider.getValue());
+        toolbar.addSlider(fireSlider, "probCatch");
+
+        Slider otherSlider = new Slider(.5, 2, 1);
+        toolbar.addSlider(otherSlider, "other shit");
+    }
 //    private State randomGeneration() {
 //        Random rn = new Random();
 //        double spawnRandomNumber = rn.nextDouble() * 100;
@@ -115,7 +146,7 @@ public class FireSimulation extends Simulation {
 //        return FireState.valueOf(getDefaultState());
 //    }
     
-    public enum FireState implements State {
+    private enum FireState implements State {
 
                                             EMPTY(Color.YELLOW),
                                             TREE(Color.GREEN),

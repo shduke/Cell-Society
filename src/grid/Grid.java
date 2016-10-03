@@ -32,12 +32,6 @@ public class Grid implements Iterable<Cell> {
         return getImmutableCellGrid().values().iterator();
     }
 
-    /*
-     * public Iterator<Entry<Coordinate, Cell>> getMutableCellGridIterator () {
-     * return getCellGrid().entrySet().iterator();
-     * }
-     */
-    //Cell:funcName();
     public void applyFuncToCell(Consumer<Cell> func) {
         getImmutableCellGrid().values().forEach(func);
     }

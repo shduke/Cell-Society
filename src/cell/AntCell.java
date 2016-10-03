@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Random;
 import grid.Coordinate;
 import grid.Neighbor;
+import simulation.ForagingAntsSimulation.ForagingAntState;
 
 
 public class AntCell extends Cell {
@@ -17,7 +18,7 @@ public class AntCell extends Cell {
 
     public AntCell (Coordinate coordinate, int lifetime) {
 
-        super(State.FOODSEARCH, coordinate);
+        super(ForagingAntState.FOODSEARCH, coordinate);
         myLifetime = lifetime;
 
     }
@@ -29,13 +30,13 @@ public class AntCell extends Cell {
         System.out.println("This ant does " + (this.hasFood() ? "" : " not ") +
                            " have food and is going " + this.getMyCurrentState());
         if (this.hasFood()) {
-            this.setMyCurrentState(State.HOMESEARCH);
-            this.setMyNextState(State.HOMESEARCH);
+            this.setMyCurrentState(ForagingAntState.HOMESEARCH);
+            this.setMyNextState(ForagingAntState.HOMESEARCH);
         }
         myMovingStatus = false;
         myLifetime--;
         if (myLifetime == 0) {
-            setMyNextState(State.DEAD);
+            setMyNextState(ForagingAntState.DEAD);
         }
     }
 
@@ -44,7 +45,7 @@ public class AntCell extends Cell {
     }
 
     public boolean isDeadOrMoving () {
-        return getMyNextState() == State.DEAD || myMovingStatus;
+        return getMyNextState() == ForagingAntState.DEAD || myMovingStatus;
     }
 
     public ForagingAntCell forage (List<Cell> neighbors) {
@@ -88,6 +89,7 @@ public class AntCell extends Cell {
     }
 
     public ForagingAntCell getBestNeighbor (List<Cell> neighbors, boolean food) {
+        Collections.shuffle(neighbors);
         ForagingAntCell bestCell = null;
         double mostPheromones = -1;
         for (Cell c : neighbors) {
