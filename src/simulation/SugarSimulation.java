@@ -1,7 +1,6 @@
 package simulation;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -55,7 +54,6 @@ public class SugarSimulation extends Simulation {
 
     @Override
     public void step () {
-
         updateAgents();
         if (myTicker % mySugarGrowBackInterval == 0) {
             growBackSugar();
@@ -65,8 +63,6 @@ public class SugarSimulation extends Simulation {
         updateGrid();
         myTicker++;
     }
-
-    
 
     @Override
     public void initializeSimulationDetails (Map<String, String> simulationConfig) {
@@ -81,8 +77,6 @@ public class SugarSimulation extends Simulation {
 
     @Override
     public Cell createCell (Coordinate coordinate, State currentState) {
-        // int sugarGrowBackRate = new Random().nextInt(mySugarGrowBackRate) + 1;
-        // SugarPatchCell cell = ne
         Random r = new Random();
         int vision = r.nextInt(myMaxVision) + 1;
         int initialSugar = r.nextInt(myMaxInitialSugar - 5) + 5;

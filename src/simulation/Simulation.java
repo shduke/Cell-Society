@@ -25,8 +25,6 @@ import applicationView.SimulationToolbar;
 
 public abstract class Simulation {
     private String myCellShape = "Square";
-
-    /// these 3 fields could be put in a gridViewController
     private BorderPane myView;
     private Group myRoot;
     private SimulationToolbar mySimulationToolbar;
@@ -35,16 +33,14 @@ public abstract class Simulation {
     private NeighborsHandler myNeighborsHandler;
     private State myDefaultState;
     private String myNeighborsToConsider;
-    protected SimulationGraph mySimulationGraph;
     private String myEdgeType;
-
     private Dimension2D myGridSize;
+    
     protected int stepNum;
+    protected SimulationGraph mySimulationGraph;
 
     public Simulation (Map<String, Map<String, String>> simulationConfig) {
-
         initializeView();
-
         initializeSimulation(simulationConfig);
         getSimulationNames();
     }
@@ -141,10 +137,7 @@ public abstract class Simulation {
      */
 
     public BorderPane getSimulationView () {
-
-        /// ****THIS ONE******
         return this.myView;
-
     }
 
     public GridView getGridView () {
