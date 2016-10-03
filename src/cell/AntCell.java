@@ -88,6 +88,7 @@ public class AntCell extends Cell {
     }
 
     public ForagingAntCell getBestNeighbor (List<Cell> neighbors, boolean food) {
+        Collections.shuffle(neighbors);
         ForagingAntCell bestCell = null;
         double mostPheromones = -1;
         for (Cell c : neighbors) {
