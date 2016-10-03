@@ -30,33 +30,12 @@ public class PredatorPreySimulation extends Simulation {
         super(simulationConfig);
     }
 
-    /*
-     * @Override
-     * public void generateMap (int numberOfRows,
-     * int numberOfColumns,
-     * Grid cellGrid) {
-     * for (int r = 0; r < numberOfRows; r++) {
-     * for (int c = 0; c < numberOfColumns; c++) {
-     * Coordinate coordinate = new Coordinate(r, c);
-     * if (!cellGrid.isCreated(coordinate)) {
-     * EmptyCell cell = new EmptyCell(coordinate);
-     * 
-     * cellGrid.addCell(cell);
-     * }
-     * 
-     * }
-     * }
-     * }
-     */
-
     @Override
     public void step () {
 
         updateSharks();
         updateFishes();
         updateGrid();
-        //this.getGridView().updateView();
-        //countCellsinGrid();
 
     }
 
@@ -316,6 +295,15 @@ public class PredatorPreySimulation extends Simulation {
     @Override
     public State[] getSimulationStates () {
         return PredatorPreyState.values();
+    }
+    
+    @Override
+    public void getSimulationNames () {
+        List<String> myList = new ArrayList<String>();
+        for (State n : getSimulationStates()) {
+            myList.add(n.name());
+        }
+        mySimulationGraph.addToLegend(myList);
     }
 
     @Override

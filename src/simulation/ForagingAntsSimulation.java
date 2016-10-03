@@ -252,6 +252,15 @@ public class ForagingAntsSimulation extends Simulation {
     public State[] getSimulationStates () {
         return ForagingAntState.values();
     }
+    
+    @Override
+    public void getSimulationNames () {
+        List<String> myList = new ArrayList<String>();
+        for (State n : getSimulationStates()) {
+            myList.add(n.name());
+        }
+        mySimulationGraph.addToLegend(myList);
+    }
 
     @Override
     public State getSimulationState (String simulationState) {
