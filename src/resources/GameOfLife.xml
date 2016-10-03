@@ -7,9 +7,13 @@
 			<gridHeight>500</gridHeight>
 			<numberOfRows>10</numberOfRows>
 			<numberOfColumns>10</numberOfColumns>
+			<defaultState>Empty</defaultState>
+			<cellShape>Rectangle</cellShape>
+			<neighborsToConsider>Square</neighborsToConsider>
+			<edgeType>Normal</edgeType>
+			<generationType>Random</generationType>
 		</GeneralConfig>
 		<SimulationConfig>
-			<default>Empty</default>
 		</SimulationConfig>
 		<Cells InitialSetup="Specific">
 			<cell_5_5>Living</cell_5_5>

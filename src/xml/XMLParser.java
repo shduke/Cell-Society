@@ -68,17 +68,17 @@ public class XMLParser {
     }
 
     private Map<String, String> generateSectionConfig (Element rootElement, String section) {
-        Map<String, String> initCells = new HashMap<String, String>();
-        NodeList cells = getChildNodesOfTag(section, rootElement);
-        for (int i = 0; i < cells.getLength(); i++) {
-            if (cells.item(i).getFirstChild() != null) {
-                String keyTag = cells.item(i).getNodeName();
-                String valSimData = cells.item(i).getFirstChild().getNodeValue();
-                initCells.put(keyTag, valSimData);
+        Map<String, String> sectionMap = new HashMap<String, String>();
+        NodeList items = getChildNodesOfTag(section, rootElement);
+        for (int i = 0; i < items.getLength(); i++) {
+            if (items.item(i).getFirstChild() != null) {
+                String keyTag = items.item(i).getNodeName();
+                String valSimData = items.item(i).getFirstChild().getNodeValue();
+                sectionMap.put(keyTag, valSimData);
             }
         }
         // printMap(initCells);
-        return initCells;
+        return sectionMap;
     }
 
     private String getSimulationType (Element rootElement) {
