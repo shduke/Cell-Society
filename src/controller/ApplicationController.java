@@ -2,7 +2,9 @@ package controller;
 
 import javafx.animation.Animation.Status;
 import javafx.event.EventHandler;
+import java.util.List;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import Exceptions.XMLException;
 import applicationView.SimulationToolbar;
@@ -16,7 +18,6 @@ import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import xml.XMLParser;
 
 
 public class ApplicationController {
@@ -24,12 +25,13 @@ public class ApplicationController {
     private static final double SECOND_DELAY = 1000.0;
     private Toolbar myToolbar;
     private Timeline myTimeline;
-    private XMLParser myParser = new XMLParser();
     private final ResourceBundle GUIResources;
     private Scene myScene;
     private Group root;
+    private Group root2 = new Group();
     private SimulationController simulationController;
     private File myFile;
+    private SimulationToolbar mySimToolbar;
 
     public ApplicationController () {
         GUIResources = ResourceBundle.getBundle("resources/English");
@@ -46,21 +48,26 @@ public class ApplicationController {
         return TITLE;
     }
     
+    
     public Scene init (int width, int height) {
         root = new Group();
-        myScene = new Scene(root, width, height, Color.WHITE);
-        simulationController = new SimulationController(root);
+        myScene = new Scene(root, width, height, Color.BLACK);
+        simulationController = new SimulationController(root2, height, width);
+        root.relocate(0, 0);
+        root.getChildren().add(root2);
+        //mySimToolbar = new SimulationToolbar();
+        //mySimToolbar.initSimToolbar(height, 50, myScene);
+        //simulationController.setMySimToolbar(mySimToolbar);
         myToolbar.initToolbar(30, width, myScene);
-        SimulationToolbar mySimToolbar = new SimulationToolbar();
-        mySimToolbar.initSimToolbar(height, 50, myScene);
         handleEvents(width, root);
         return myScene;
     }
+    
 
     private void update () {
         setSpeed();
-        getSimulationController().getSimulation().step();
-
+        getSimulationController().updateSimulations();
+        
     }
 
     public void play () {
@@ -79,7 +86,7 @@ public class ApplicationController {
         if (myTimeline.getStatus() == Status.RUNNING) {
             myTimeline.stop();
         }
-        simulationController.getSimulation().step();
+        simulationController.updateSimulations();
     }
 
     public void setSpeed () {
@@ -104,6 +111,7 @@ public class ApplicationController {
     public void openFile (File myFile) throws XMLException{
         try {
             String filePath = myFile.getAbsolutePath();
+            myToolbar.removeToolbar(root);
             simulationController.initializeSimulation(filePath);
             myToolbar.initToolbar(30, 500, myScene);
             handleEvents(500, root);
@@ -141,4 +149,5 @@ public class ApplicationController {
     public SimulationController getSimulationController () {
         return simulationController;
     }
+    
 }

@@ -2,6 +2,7 @@ package cell;
 
 import java.util.List;
 import grid.Coordinate;
+import simulation.SugarSimulation.SugarState;
 
 
 public class SugarAgentCell extends Cell {
@@ -22,8 +23,8 @@ public class SugarAgentCell extends Cell {
     }
 
     public SugarAgentCell (SugarAgentCell cell) {
-        super(State.EMPTY, cell.getMyGridCoordinate());
-        this.setMyNextState(State.ALIVE);
+        super(SugarState.EMPTY, cell.getMyGridCoordinate());
+        this.setMyNextState(SugarState.ALIVE);
         myVision = cell.myVision;
         mySugar = cell.mySugar;
         myMetabolism = cell.myMetabolism;
@@ -45,10 +46,10 @@ public class SugarAgentCell extends Cell {
     public void update () {
         mySugar -= myMetabolism;
         if (mySugar <= 0) {
-            this.setMyNextState(State.DEAD);
+            this.setMyNextState(SugarState.DEAD);
         }
         //if(this.getMyNextState() == null){
-          //  this.setMyNextState(State.ALIVE);
+          //  this.setMyNextState(SugarState.ALIVE);
         //}
         
     }

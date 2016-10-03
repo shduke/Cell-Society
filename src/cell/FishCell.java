@@ -1,6 +1,7 @@
 package cell;
 
 import grid.Coordinate;
+import simulation.PredatorPreySimulation.PredatorPreyState;
 
 
 public class FishCell extends Cell {
@@ -9,17 +10,17 @@ public class FishCell extends Cell {
     private int myCurrentBreedTime;
 
     public FishCell (int row, int col, int breedTime) {
-        super(State.FISH, new Coordinate(row, col));
+        super(PredatorPreyState.FISH, new Coordinate(row, col));
         myMaxBreedTime = breedTime;
         myCurrentBreedTime = myMaxBreedTime;
     }
     public FishCell(Coordinate coord, int breedTime) {
-        super(State.FISH, coord);
+        super(PredatorPreyState.FISH, coord);
         myMaxBreedTime = breedTime;
         myCurrentBreedTime = myMaxBreedTime;
     }
     public FishCell(FishCell fish, Coordinate coord){
-        super(State.FISH, coord);
+        super(PredatorPreyState.FISH, coord);
         myMaxBreedTime = fish.myMaxBreedTime;
         myCurrentBreedTime = fish.myCurrentBreedTime;
     }

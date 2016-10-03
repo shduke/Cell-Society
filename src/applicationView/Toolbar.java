@@ -2,10 +2,13 @@ package applicationView;
 
 import java.util.ResourceBundle;
 import javafx.event.EventHandler;
+import javafx.geometry.HPos;
+import javafx.geometry.VPos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.input.*;
 
@@ -28,16 +31,22 @@ public class Toolbar {
         GUIResources = ResourceBundle.getBundle(initFile + fileName);
     }
 
+    private HBox myToolbar;
+    
     public void initToolbar (int height, int width, Scene myScene) {
         Group root = (Group) myScene.getRoot();
         myScene.setRoot(root);
-        HBox myToolbar = new HBox(height);
+        myToolbar = new HBox(height);
         slider = new Slider(0.5, 2, 1);
         pause = new Button(GUIResources.getString("PlayCommand"));
         step = new Button(GUIResources.getString("StepCommand"));
         loadXMLbutton = new Button(GUIResources.getString("LoadXML"));
         myToolbar.getChildren().addAll(slider, pause, step, loadXMLbutton);
         root.getChildren().add(myToolbar);
+    }
+    
+    public void removeToolbar(Group root) {
+        root.getChildren().remove(myToolbar);
     }
 
     public double getSpeed () {

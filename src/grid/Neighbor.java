@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 
-public enum Neighbor {//refactor?
+public enum Neighbor {// refactor?
                       SQUARE(
                              "TOPLEFT",
                              "MIDLEFT",
@@ -19,7 +19,13 @@ public enum Neighbor {//refactor?
                       CARDINAL("MIDLEFT", "TOPMID", "BOTTOMMID", "MIDRIGHT"),
                       SQUAREORTHOGONAL("MIDLEFT", "TOPMID", "BOTTOMMID", "MIDRIGHT"),
                       HEXAGON("MIDLEFT", "TOPMID", "BOTTOMMID", "MIDRIGHT", "TOPLEFT", "TOPRIGHT"),
-                      HEXAGONORTHOGONAL("MIDLEFT", "TOPMID", "BOTTOMMID", "MIDRIGHT", "TOPLEFT", "TOPRIGHT");
+                      HEXAGONORTHOGONAL(
+                                        "MIDLEFT",
+                                        "TOPMID",
+                                        "BOTTOMMID",
+                                        "MIDRIGHT",
+                                        "TOPLEFT",
+                                        "TOPRIGHT");
 
     private List<Coordinate> neighbors;
 
