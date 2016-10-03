@@ -3,76 +3,68 @@ package simulation;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import cell.AntCell;
 import java.util.Map;
 import applicationView.SimulationToolbar;
+import cell.AntCell;
 import cell.Cell;
-import cell.EmptyCell;
+import cell.ForagingAntCell;
 import grid.Coordinate;
-import grid.Grid;
-import grid.Neighbor;
 import javafx.scene.control.Slider;
 import javafx.scene.paint.Color;
-import cell.ForagingAntCell;
 import cell.State;
 
 
 public class ForagingAntsSimulation extends Simulation {
 
+    private static final double MIN_DIFFUSE_SLIDER = 0.001;
+    private static final double MAX_DIFFUSE_SLIDER = 0.2;
+    private static final double MIN_LIFETIME_SLIDER = 10;
+    private static final double MAX_LIFETIME_SLIDER = 1000;
     private ForagingAntCell myNest;
-    private List<Coordinate> foodCells;
+    private List<Coordinate> myFoodCells;
     private double myMaxPheromones;
     private double myDiffusionRate;
     private double myEvaporationRate;
     private int myAntLifetime;
     private int myMaxAnts;
-    private int totalAnts;
+    private int myTotalAnts;
     private int myFoodGathered;
-    private double k;
-    private double n;
+    private double myK;
+    private double myN;
 
     public ForagingAntsSimulation (Map<String, Map<String, String>> simulationConfig) {
         super(simulationConfig);
-
     }
 
     @Override
     public void step () {
-        System.out.println("Food gathered: " + myFoodGathered);
+        stepNum++;
         diffuse();
         myNest.spawn(myAntLifetime);
         updateAnts();
         updateCells();
-        getGrid().updateGrid();
-        this.getGridView().updateView();
+        updateGrid();
 
     }
 
     private void updateCells () {
         Iterator<Cell> cells = getGrid().iterator();
         while (cells.hasNext()) {
-            ForagingAntCell cell = (ForagingAntCell) cells.next();
+            ForagingAntCell cell = (ForagingAntCell)cells.next();
             cell.update();
         }
     }
 
     private void updateAnts () {
-        totalAnts = 0;
+        myTotalAnts = 0;
         Iterator<Cell> cells = getGrid().iterator();
         while (cells.hasNext()) {
-            ForagingAntCell cell = (ForagingAntCell) cells.next();
-            // cell.update();
-            if (cell.getAnts().size() > 0) {
-                // //Systemout.println(cell.getMyGridCoordinate());
-            }
+            ForagingAntCell cell = (ForagingAntCell)cells.next();
             for (AntCell a : cell.getAnts()) {
-                // Systemout.println("Cell " + a.getMyGridCoordinate());
-                // Systemout.println("orientation " + a.getMyOrientation());
-                totalAnts++;
+                myTotalAnts++;
                 updateAnt(a);
             }
         }
-        // Systemout.println("There are " + totalAnts + " ants");
     }
 
     public void updateAnt (AntCell ant) {
@@ -80,38 +72,33 @@ public class ForagingAntsSimulation extends Simulation {
         if (ant.getMyNextState() == ForagingAntState.DEAD) {
             return;
         }
-        // dropPheromones(ant, ant.getMyCurrentState()==ForagingAntState.FOODSEARCH);
         if (isAtFoodSource(ant)) {
-            System.out.println("Found food");
             if (!ant.hasFood()) {
                 ant.pickUpFood();
             }
             ant.setMyCurrentState(ForagingAntState.HOMESEARCH);
             ant.setMyNextState(ForagingAntState.HOMESEARCH);
-            // dropPheromones(ant, false);
             ForagingAntCell bestHome = getBestDirection(ant, false);
-            if (bestHome != null)
+            if (bestHome != null) {
                 ant.setOrientation(bestHome);
+            }
             goHome(ant);
         }
         else if (isAtNest(ant)) {
-            System.out.println("At nest");
             if (ant.hasFood()) {
-                System.out.println("Drop food");
                 ant.dropFood();
                 myFoodGathered++;
             }
             ant.setMyCurrentState(ForagingAntState.FOODSEARCH);
             ant.setMyNextState(ForagingAntState.FOODSEARCH);
-            // dropPheromones(ant, true);
             ForagingAntCell bestFood = getBestDirection(ant, true);
-            if (bestFood != null)
+            if (bestFood != null) {
                 ant.setOrientation(bestFood);
+            }
             forage(ant);
         }
         else {
             if (ant.getMyCurrentState() == ForagingAntState.FOODSEARCH) {
-
                 forage(ant);
             }
             else {
@@ -119,8 +106,6 @@ public class ForagingAntsSimulation extends Simulation {
             }
             ant.setMyNextState(ant.getMyCurrentState());
         }
-
-        // List<Cell> neighbors = getNeighbors().getNeighbors(, coordinate)
     }
 
     private void goHome (AntCell ant) {
@@ -163,7 +148,7 @@ public class ForagingAntsSimulation extends Simulation {
 
     private void dropPheromones (AntCell ant, boolean food) {
         ForagingAntCell cell =
-                (ForagingAntCell) getGrid().getCellGrid().get(ant.getMyGridCoordinate());
+                (ForagingAntCell)getGrid().getCellGrid().get(ant.getMyGridCoordinate());
         if (food) {
             if (isAtNest(ant)) {
                 cell.setMaxPheromones(false);
@@ -195,16 +180,13 @@ public class ForagingAntsSimulation extends Simulation {
     }
 
     private boolean isAtFoodSource (AntCell ant) {
-        if (foodCells.contains(ant.getMyGridCoordinate())) {
-            // Systemout.println("FOUND FOOD");
-        }
-        return foodCells.contains(ant.getMyGridCoordinate());
+        return myFoodCells.contains(ant.getMyGridCoordinate());
     }
 
     private void diffuse () {
         Iterator<Cell> cells = getGrid().iterator();
         while (cells.hasNext()) {
-            ForagingAntCell cell = (ForagingAntCell) cells.next();
+            ForagingAntCell cell = (ForagingAntCell)cells.next();
             cell.diffuseAndEvaporate(getSquareNeighbors(cell), myDiffusionRate, myEvaporationRate);
         }
     }
@@ -214,11 +196,11 @@ public class ForagingAntsSimulation extends Simulation {
         this.myMaxPheromones = Double.parseDouble(simulationConfig.get("maxPheromones"));
         this.myDiffusionRate = Double.parseDouble(simulationConfig.get("diffusionRate"));
         this.myEvaporationRate = Double.parseDouble(simulationConfig.get("evaporationRate"));
-        this.k = Double.parseDouble(simulationConfig.get("k"));
-        this.n = Double.parseDouble(simulationConfig.get("n"));
+        this.myK = Double.parseDouble(simulationConfig.get("k"));
+        this.myN = Double.parseDouble(simulationConfig.get("n"));
         this.myMaxAnts = Integer.parseInt(simulationConfig.get("maxAnts"));
         this.myAntLifetime = Integer.parseInt(simulationConfig.get("antLifetime"));
-        this.foodCells = new ArrayList<Coordinate>();
+        this.myFoodCells = new ArrayList<Coordinate>();
         this.myFoodGathered = 0;
     }
 
@@ -226,13 +208,13 @@ public class ForagingAntsSimulation extends Simulation {
     public Cell createCell (Coordinate coordinate, State currentState) {
         ForagingAntCell cell =
                 new ForagingAntCell(ForagingAntState.EMPTY, coordinate, myMaxPheromones, myMaxAnts,
-                                    k, n);
+                                    myK, myN);
         if (currentState == ForagingAntState.NEST) {
             myNest = cell;
             cell.setPheromones(myMaxPheromones, false);
         }
         else if (currentState == ForagingAntState.FOOD) {
-            foodCells.add(cell.getMyGridCoordinate());
+            myFoodCells.add(cell.getMyGridCoordinate());
             cell.setPheromones(myMaxPheromones, true);
         }
         return cell;
@@ -240,26 +222,29 @@ public class ForagingAntsSimulation extends Simulation {
 
     @Override
     public List<Integer> countCellsinGrid () {
-        System.out.println("Gathered food: " + myFoodGathered);
-        // TODO Auto-generated method stub
         List<Integer> myOutput = new ArrayList<Integer>();
         myOutput.add(stepNum - 1);
+        myOutput.add(myFoodGathered);
+        myOutput.add(myTotalAnts);
         return myOutput;
     }
 
     @Override
     public void initializeSimulationToolbar (SimulationToolbar toolbar) {
-        Slider diffusionSlider = new Slider(.005, .2, .01);
+        Slider diffusionSlider =
+                new Slider(MIN_DIFFUSE_SLIDER, MAX_DIFFUSE_SLIDER, myDiffusionRate);
         diffusionSlider.valueProperty()
                 .addListener(e -> myDiffusionRate = diffusionSlider.getValue());
         toolbar.addSlider(diffusionSlider, "myDiffusionRate");
-        Slider evaporationSlider = new Slider(.005, .2, .01);
+        Slider evaporationSlider =
+                new Slider(MIN_DIFFUSE_SLIDER, MAX_DIFFUSE_SLIDER, myEvaporationRate);
         evaporationSlider.valueProperty()
                 .addListener(e -> myEvaporationRate = evaporationSlider.getValue());
         toolbar.addSlider(evaporationSlider, "myEvaporationRate");
-        Slider antLifetimeSlider = new Slider(10, 1000, 500);
+        Slider antLifetimeSlider =
+                new Slider(MIN_LIFETIME_SLIDER, MAX_LIFETIME_SLIDER, myAntLifetime);
         antLifetimeSlider.valueProperty()
-                .addListener(e -> myAntLifetime = (int) antLifetimeSlider.getValue());
+                .addListener(e -> myAntLifetime = (int)antLifetimeSlider.getValue());
         toolbar.addSlider(antLifetimeSlider, "antLifetime");
     }
 

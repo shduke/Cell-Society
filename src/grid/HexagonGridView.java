@@ -14,10 +14,10 @@ public class HexagonGridView extends GridView {
 
     @Override
     public void displayGrid () {
-        double cellHeight = (gridSize.getHeight() / (grid.getNumRows() + 0.5));
-        for (int r = 0; r < grid.getNumRows(); r++) {
-            for (int c = 0; c < grid.getNumColumns(); c++) {
-                Hexagon gridCellDisplay = new Hexagon(cellHeight, gridSize.getWidth(), grid.getNumColumns());
+        double cellHeight = (myGridSize.getHeight() / (myGrid.getNumRows() + 0.5));
+        for (int r = 0; r < myGrid.getNumRows(); r++) {
+            for (int c = 0; c < myGrid.getNumColumns(); c++) {
+                Hexagon gridCellDisplay = new Hexagon(cellHeight, myGridSize.getWidth(), myGrid.getNumColumns());
                 double xView = c * gridCellDisplay.getStretchedEffectiveWidth() +  gridCellDisplay.getStretchedWidth() / 2;//+ (cellHeight / 2);
                 double yView = r * cellHeight - ((cellHeight / 2) * (c % 2)) + cellHeight / 2;
                 gridCellDisplay.setLayoutX(xView);

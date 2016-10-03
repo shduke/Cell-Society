@@ -12,10 +12,10 @@ public class RectangleGridView extends GridView {
 
     @Override
     public void displayGrid () {
-        double cellWidth = gridSize.getWidth() / grid.getNumRows();
-        double cellHeight = gridSize.getHeight() / grid.getNumRows();
-        for (int r = 0; r < grid.getNumRows(); r++) {
-            for (int c = 0; c < grid.getNumColumns(); c++) {
+        double cellWidth = myGridSize.getWidth() / myGrid.getNumRows();
+        double cellHeight = myGridSize.getHeight() / myGrid.getNumRows();
+        for (int r = 0; r < myGrid.getNumRows(); r++) {
+            for (int c = 0; c < myGrid.getNumColumns(); c++) {
                 Double xView = r * cellWidth;
                 Double yView = c * cellHeight;
                 Rectangle gridCellDisplay = new Rectangle(cellWidth, cellHeight);

@@ -16,6 +16,8 @@ import java.util.*;
 public class SegregationSimulation extends Simulation {
 
     private double myAgentSatisfiedRatio;
+    private int myXCount;
+    private int myOCount;
 
     public SegregationSimulation (Map<String, Map<String, String>> simulationConfig) {
         super(simulationConfig);
@@ -49,7 +51,13 @@ public class SegregationSimulation extends Simulation {
             else if (cell.getMyCurrentState() == SegregationState.X ||
                      cell.getMyCurrentState() == SegregationState.O) {
                 if (cell.getMyNextState() != SegregationState.EMPTY)
-                    updateAgent((AgentCell) cell);
+                    if (cell.getMyCurrentState() == SegregationState.X) {
+                        myXCount++;
+                    }
+                    else {
+                        myOCount++;
+                    }
+                updateAgent((AgentCell) cell);
             }
 
         }
@@ -128,30 +136,12 @@ public class SegregationSimulation extends Simulation {
     @Override
     public List<Integer> countCellsinGrid () {
         stepNum = getStepNum();
-        System.out.println("Num of steps: " + stepNum);
-        int xCount = 0;
-        int oCount = 0;
-        int emptyCount = 0;
-        for (Cell cell : getGrid().getImmutableCellGrid().values()) {
-            if (cell.getMyCurrentState().equals(SegregationState.X)) {
-                xCount++;
-            }
-            if (cell.getMyCurrentState().equals(SegregationState.O)) {
-                oCount++;
-            }
-            if (cell.getMyCurrentState().equals(SegregationState.EMPTY)) {
-                emptyCount++;
-            }
-        }
-        System.out.println("X:" + xCount);
-        System.out.println("O: " + oCount);
-        System.out.println("Empty: " + emptyCount);
         stepNum++;
         List<Integer> myOutput = new ArrayList<Integer>();
         myOutput.add(stepNum - 1);
-        myOutput.add(xCount);
-        myOutput.add(oCount);
-        myOutput.add(emptyCount);
+        myOutput.add(myXCount);
+        myOutput.add(myOCount);
+        myOutput.add(getGrid().getNumColumns() * getGrid().getNumRows() - myXCount - myOCount);
         return myOutput;
     }
 
