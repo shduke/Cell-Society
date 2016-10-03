@@ -4,6 +4,7 @@ import grid.*;
 import java.util.*;
 import applicationView.SimulationToolbar;
 import cell.*;
+import javafx.scene.control.Slider;
 import javafx.scene.paint.*;
 
 
@@ -305,7 +306,9 @@ public class PredatorPreySimulation extends Simulation {
 
     @Override
     public void initializeSimulationToolbar (SimulationToolbar toolbar) {
-        // TODO Auto-generated method stub
+        Slider preyBreedSlider = new Slider(1, 10, myPreyBreedTime);
+        preyBreedSlider.valueProperty()
+                .addListener(e -> myPreyBreedTime = (int) preyBreedSlider.getValue());
 
     }
 
@@ -320,10 +323,10 @@ public class PredatorPreySimulation extends Simulation {
     }
 
     public enum PredatorPreyState implements State {
-                                                     EMPTY(Color.BLUE),
-                                                     SHARK(Color.RED),
-                                                     FISH(Color.YELLOW),
-                                                     DEAD(Color.BLUE);
+                                                    EMPTY(Color.BLUE),
+                                                    SHARK(Color.RED),
+                                                    FISH(Color.YELLOW),
+                                                    DEAD(Color.BLUE);
 
         private final Color myColor;
         private double myProbability;

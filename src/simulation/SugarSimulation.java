@@ -170,10 +170,15 @@ public class SugarSimulation extends Simulation {
 
     @Override
     public void initializeSimulationToolbar (SimulationToolbar toolbar) {
-        // TODO Auto-generated method stub
-        Slider intervalSlider = new Slider(0,10,1);
+        Slider intervalSlider = new Slider(0, 10, 1);
+        intervalSlider.setMajorTickUnit(1);
+        intervalSlider.valueProperty()
+                .addListener(e -> mySugarGrowBackInterval = (int) intervalSlider.getValue());
         toolbar.addSlider(intervalSlider, "sugarGrowBackInterval");
-        Slider rateSlider = new Slider(0,10,1);
+        Slider rateSlider = new Slider(0, 10, 1);
+        rateSlider.setMajorTickUnit(1);
+        rateSlider.valueProperty()
+                .addListener(e -> mySugarGrowBackRate = (int) rateSlider.getValue());
         toolbar.addSlider(rateSlider, "sugarGrowBackRate");
 
     }
