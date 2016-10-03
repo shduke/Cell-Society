@@ -3,7 +3,7 @@ package simulation;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import cell.Ant;
+import cell.AntCell;
 import java.util.Map;
 import cell.Cell;
 import cell.EmptyCell;
@@ -24,6 +24,7 @@ public class ForagingAntsSimulation extends Simulation {
     private int myAntLifetime;
     private int myMaxAnts;
     private int totalAnts;
+    private int myFoodGathered;
     private double k;
     private double n;
 
@@ -34,7 +35,7 @@ public class ForagingAntsSimulation extends Simulation {
 
     @Override
     public void step () {
-
+        System.out.println("Food gathered: " + myFoodGathered);
         diffuse();
         myNest.spawn(myAntLifetime);
         updateAnts();
@@ -59,25 +60,30 @@ public class ForagingAntsSimulation extends Simulation {
             ForagingAntCell cell = (ForagingAntCell) cells.next();
             // cell.update();
             if (cell.getAnts().size() > 0) {
-                //System.out.println(cell.getMyGridCoordinate());
+                // //Systemout.println(cell.getMyGridCoordinate());
             }
-            for (Ant a : cell.getAnts()) {
-                System.out.println("Cell " + a.getMyGridCoordinate());
-                System.out.println("orientation " +a.getMyOrientation());
+            for (AntCell a : cell.getAnts()) {
+                // Systemout.println("Cell " + a.getMyGridCoordinate());
+                // Systemout.println("orientation " + a.getMyOrientation());
                 totalAnts++;
                 updateAnt(a);
             }
         }
-        System.out.println("There are " + totalAnts + " ants");
+        // Systemout.println("There are " + totalAnts + " ants");
     }
 
-    public void updateAnt (Ant ant) {
+    public void updateAnt (AntCell ant) {
         ant.update();
         if (ant.getMyNextState() == State.DEAD) {
             return;
         }
         // dropPheromones(ant, ant.getMyCurrentState()==State.FOODSEARCH);
         if (isAtFoodSource(ant)) {
+            System.out.println("Found food");
+            if (!ant.hasFood()) {
+                ant.pickUpFood();
+            }
+            ant.setMyCurrentState(State.HOMESEARCH);
             ant.setMyNextState(State.HOMESEARCH);
             // dropPheromones(ant, false);
             ForagingAntCell bestHome = getBestDirection(ant, false);
@@ -86,6 +92,13 @@ public class ForagingAntsSimulation extends Simulation {
             goHome(ant);
         }
         else if (isAtNest(ant)) {
+            System.out.println("At nest");
+            if (ant.hasFood()) {
+                System.out.println("Drop food");
+                ant.dropFood();
+                myFoodGathered++;
+            }
+            ant.setMyCurrentState(State.FOODSEARCH);
             ant.setMyNextState(State.FOODSEARCH);
             // dropPheromones(ant, true);
             ForagingAntCell bestFood = getBestDirection(ant, true);
@@ -107,8 +120,7 @@ public class ForagingAntsSimulation extends Simulation {
         // List<Cell> neighbors = getNeighbors().getNeighbors(, coordinate)
     }
 
-    private void goHome (Ant ant) {
-        // TODO calculate neighbors based on direction
+    private void goHome (AntCell ant) {
         List<Cell> neighbors =
                 getNeighborsHandler().getDirectionNeighbors(ant.getMyGridCoordinate(),
                                                      ant.getMyOrientation());
@@ -120,15 +132,13 @@ public class ForagingAntsSimulation extends Simulation {
             dropPheromones(ant, false);
             ant.willMove();
             nextCell.addAnt(ant);
-            // ant.setMyNextGridCoordinate(nextCell.getMyGridCoordinate());
-            // ((ForagingAntCell) getGrid().getCell(ant.getMyGridCoordinate())).addAnt(ant);
         }
     }
 
     /**
      * @param ant
      */
-    private void forage (Ant ant) {
+    private void forage (AntCell ant) {
         List<Cell> neighbors =
                 getNeighborsHandler().getDirectionNeighbors(ant.getMyGridCoordinate(),
                                                      ant.getMyOrientation());
@@ -138,8 +148,8 @@ public class ForagingAntsSimulation extends Simulation {
         }
         if (nextCell != null) {
             dropPheromones(ant, true);
-            System.out.println(nextCell.fullOfAnts());
-            System.out.println("Ant will move: " + ant.isDeadOrMoving());
+            // Systemout.println(nextCell.fullOfAnts());
+            // Systemout.println("Ant will move: " + ant.isDeadOrMoving());
             ant.willMove();
             nextCell.addAnt(ant);
             // ant.setMyNextGridCoordinate(nextCell.getMyGridCoordinate());
@@ -148,7 +158,7 @@ public class ForagingAntsSimulation extends Simulation {
 
     }
 
-    private void dropPheromones (Ant ant, boolean food) {
+    private void dropPheromones (AntCell ant, boolean food) {
         ForagingAntCell cell =
                 (ForagingAntCell) getGrid().getCellGrid().get(ant.getMyGridCoordinate());
         if (food) {
@@ -164,24 +174,25 @@ public class ForagingAntsSimulation extends Simulation {
                 cell.setMaxPheromones(true);
             }
             else {
+                System.out.println("Add food pheromones");
                 cell.addPheromones(getSquareNeighbors(cell), true);
             }
         }
     }
 
-    private ForagingAntCell getBestDirection (Ant ant, boolean food) {
-        List<Cell> neighbors = getNeighborsHandler().getSurroundingNeighbors(ant.getMyGridCoordinate());
+    private ForagingAntCell getBestDirection (AntCell ant, boolean food) {
+        List<Cell> neighbors = getNeighbors().getSurroundingNeighbors(ant.getMyGridCoordinate());
         return ant.getBestNeighbor(neighbors, food);
 
     }
 
-    private boolean isAtNest (Ant ant) {
+    private boolean isAtNest (AntCell ant) {
         return myNest.getMyGridCoordinate().equals(ant.getMyGridCoordinate());
     }
 
-    private boolean isAtFoodSource (Ant ant) {
+    private boolean isAtFoodSource (AntCell ant) {
         if (foodCells.contains(ant.getMyGridCoordinate())) {
-            System.out.println("FOUND FOOD");
+            // Systemout.println("FOUND FOOD");
         }
         return foodCells.contains(ant.getMyGridCoordinate());
     }
@@ -204,11 +215,11 @@ public class ForagingAntsSimulation extends Simulation {
         this.myMaxAnts = Integer.parseInt(simulationConfig.get("maxAnts"));
         this.myAntLifetime = Integer.parseInt(simulationConfig.get("antLifetime"));
         this.foodCells = new ArrayList<Coordinate>();
+        this.myFoodGathered = 0;
     }
 
     @Override
     public Cell createCell (Coordinate coordinate, String currentState) {
-        // State state = State.valueOf(currentState.toUpperCase());
         ForagingAntCell cell =
                 new ForagingAntCell(State.EMPTY, coordinate, myMaxPheromones, myMaxAnts, k, n);
         if (currentState.equals("Nest")) {
@@ -222,12 +233,11 @@ public class ForagingAntsSimulation extends Simulation {
         return cell;
     }
 
-
     @Override
     public void countCellsinGrid () {
+        System.out.println("Gathered food: " + myFoodGathered);
         // TODO Auto-generated method stub
-        
+
     }
 
-   
 }

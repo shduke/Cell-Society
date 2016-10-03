@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Title Name="Normal Sugar">
+	<author>Michael</author>
+		<Simulation SimulationType="Sugar">
+		<GeneralConfig>
+			<gridWidth>500</gridWidth>
+			<gridHeight>500</gridHeight>
+			<numberOfRows>20</numberOfRows>
+			<numberOfColumns>20</numberOfColumns>
+		</GeneralConfig>
+		<SimulationConfig>
+			<default>Empty</default>
+			<maxInitialSugar>25</maxInitialSugar>	
+			<maxVision>6</maxVision>
+			<maxMetabolism>4</maxMetabolism>
+			<sugarGrowBackInterval>1</sugarGrowBackInterval>
+			<sugarGrowBackRate>1</sugarGrowBackRate>
+			<maxPatchSugar>4</maxPatchSugar>
+			<initialAgents>100</initialAgents>
+		</SimulationConfig>
+		<Cells InitialSetup="Specific">
+		</Cells>
+	</Simulation>
+</Title>
