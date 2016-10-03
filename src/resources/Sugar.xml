@@ -15,7 +15,7 @@
 		</GeneralConfig>
 		<SimulationConfig>
 			<maxInitialSugar>25</maxInitialSugar>	
-			<maxVision>10</maxVision>
+			<maxVision>3</maxVision>
 			<maxMetabolism>4</maxMetabolism>
 			<sugarGrowBackInterval>3</sugarGrowBackInterval>
 			<sugarGrowBackRate>1</sugarGrowBackRate>

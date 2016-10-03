@@ -1,24 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Title Name="Specific Fire">
+<Title Name="Bad Config File">
 	<author>Sean</author>
 	<Simulation SimulationType="Fire">
 		<GeneralConfig>
 			<gridWidth>500</gridWidth>
-			<gridHeight>500</gridHeight>
 			<numberOfRows>10</numberOfRows>
 			<numberOfColumns>10</numberOfColumns>
 			<defaultState>Tree</defaultState>
-			<cellShape>Triangle</cellShape>
-			<neighborsToConsider>Square</neighborsToConsider>
+			<neighborsToConsider>Cardinal</neighborsToConsider>
 			<edgeType>Normal</edgeType>
 			<generationType>Specific</generationType>
 		</GeneralConfig>
 		<SimulationConfig>
-			<burnTime>2</burnTime>
-    		<probCatch>100</probCatch>
+    		<probCatch>50</probCatch>
 		</SimulationConfig>
 		<Cells>
-			<cell_7_1>Burning</cell_7_1>
+			<cell_5_5>Burning</cell_5_5>
 			<cell_0_0>Burning</cell_0_0>
 			<cell_5_3>Empty</cell_5_3>
 		</Cells>

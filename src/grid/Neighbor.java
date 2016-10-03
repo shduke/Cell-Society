@@ -18,7 +18,8 @@ public enum Neighbor {// refactor?
                       DIAGONAL("TOPLEFT", "TOPRIGHT", "BOTTOMRIGHT", "BOTTOMLEFT"),
                       CARDINAL("MIDLEFT", "TOPMID", "BOTTOMMID", "MIDRIGHT"),
                       SQUAREORTHOGONAL("MIDLEFT", "TOPMID", "BOTTOMMID", "MIDRIGHT"),
-                      HEXAGON("MIDLEFT", "TOPMID", "BOTTOMMID", "MIDRIGHT", "TOPLEFT", "TOPRIGHT"),
+                      HEXAGON("MIDLEFT", "TOPMID", "BOTTOMMID", "MIDRIGHT", "BOTTOMLEFT", "BOTTOMRIGHT"),
+                      HEXAGONEVEN("MIDLEFT", "MIDRIGHT", "TOPMID", "BOTTOMLEFT", "BOTTOMRIGHT", "BOTTOMMID"),
                       HEXAGONORTHOGONAL(
                                         "MIDLEFT",
                                         "TOPMID",

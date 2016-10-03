@@ -85,20 +85,6 @@ public abstract class Simulation {
         initializeSimulationToolbar(mySimulationToolbar);
 
         initializeGeneralDetails(simulationConfig.get("GeneralConfig"));
-        // generateMap();
-        /*
-         * setGridView(new RectangleGridView(new Dimension2D(Double
-         * .parseDouble(simulationConfig.get("GeneralConfig").get("gridWidth")), Double
-         * .parseDouble(simulationConfig.get("GeneralConfig").get("gridHeight"))),
-         * getGrid()));
-         */
-        /*
-         * setGridView(new RectangleGridView(new Dimension2D(Double
-         * .parseDouble(simulationConfig.get("GeneralConfig").get("gridWidth")), Double
-         * .parseDouble(simulationConfig.get("GeneralConfig").get("gridHeight"))),
-         * getGrid()));
-         */
-        // setNeighborsHandler(new NormalEdgeNeighborsHandler(myCellShape, myGrid));
     }
 
     public void initializeGrid (Map<String, Map<String, String>> simulationConfig) {
@@ -109,6 +95,7 @@ public abstract class Simulation {
                          cellGrid));
         setDefaultState(getSimulationState(simulationConfig.get("GeneralConfig")
                 .get("defaultState")));
+        myEdgeType = simulationConfig.get("GeneralConfig").get("edgeType");
         populateGridWithSpecificValues(simulationConfig.get("Cells"));
         handleMapGeneration(simulationConfig.get("GeneralConfig"));
         generateMap();
