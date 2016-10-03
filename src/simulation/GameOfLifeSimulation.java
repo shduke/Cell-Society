@@ -1,5 +1,6 @@
 package simulation;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -7,9 +8,6 @@ import cell.Cell;
 import cell.GameOfLifeCell;
 import cell.State;
 import grid.Coordinate;
-import grid.Grid;
-import grid.Neighbor;
-
 
 public class GameOfLifeSimulation extends Simulation {
 
@@ -64,7 +62,7 @@ public class GameOfLifeSimulation extends Simulation {
     }
 
     @Override
-    public void countCellsinGrid () {
+    public List<Integer> countCellsinGrid () {
         // TODO Auto-generated method stub
         stepNum = getStepNum();
         System.out.println("Num of steps: " + stepNum);
@@ -81,6 +79,11 @@ public class GameOfLifeSimulation extends Simulation {
         System.out.println("Living:" + livingCount);
         System.out.println("Empty: " + emptyCount);
         stepNum++;
+        List<Integer> myOutput = new ArrayList<Integer>();
+        myOutput.add(stepNum-1);
+        myOutput.add(livingCount);
+        myOutput.add(emptyCount);
+        return myOutput;
         
     }
 

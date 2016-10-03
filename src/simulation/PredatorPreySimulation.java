@@ -195,7 +195,6 @@ public class PredatorPreySimulation extends Simulation {
 
         babyFish.setMyCurrentState(State.EMPTY);
         babyFish.setMyNextState(State.FISH);
-        // return babyShark;
         getGrid().getCellGrid().put(babyFish.getMyGridCoordinate(), babyFish);
     }
 
@@ -207,7 +206,6 @@ public class PredatorPreySimulation extends Simulation {
 
         babyShark.setMyCurrentState(State.EMPTY);
         babyShark.setMyNextState(State.SHARK);
-        // return babyShark;
         getGrid().getCellGrid().put(babyShark.getMyGridCoordinate(), babyShark);
     }
 
@@ -298,8 +296,7 @@ public class PredatorPreySimulation extends Simulation {
     }
 
     @Override
-    public void countCellsinGrid () {
-        // TODO Auto-generated method stub
+    public List<Integer> countCellsinGrid () {
         stepNum = getStepNum();
         System.out.println("Num of steps: " + stepNum);
         int fishCount = 0;
@@ -322,6 +319,12 @@ public class PredatorPreySimulation extends Simulation {
         System.out.println("Running fish " + myFishCount);
         System.out.println("Running shark " + mySharkCount);
         stepNum++;
+        List<Integer> myOutput = new ArrayList<Integer>();
+        myOutput.add(stepNum-1);
+        myOutput.add(fishCount);
+        myOutput.add(sharkCount);
+        myOutput.add(emptyCount);
+        return myOutput;
     }
 
 }

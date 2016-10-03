@@ -1,6 +1,7 @@
 package applicationView;
-
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import controller.ApplicationController;
 import javafx.scene.Group;
@@ -9,13 +10,16 @@ import javafx.scene.layout.VBox;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.Button;
+import javafx.scene.chart.XYChart.Data;
+import javafx.scene.chart.XYChart.Series;
+
 
 public class SimulationToolbar {
-
     private final ResourceBundle GUIResources;
     ApplicationController myAppController = new ApplicationController();
     Group root;
+    private Series<Number, Number> firstSeries= new XYChart.Series<Number, Number>();
+    private ArrayList<Integer> myGraphValues;
     
     public SimulationToolbar() {
         GUIResources = ResourceBundle.getBundle("resources/English");
@@ -24,25 +28,31 @@ public class SimulationToolbar {
     public void initSimToolbar(int height, int width, Scene myScene) {
         root = (Group)myScene.getRoot();
         VBox mySimToolbar = new VBox();
-        mySimToolbar.getChildren().addAll(createGraph(myScene));
+        mySimToolbar.getChildren().add(createGraph(myScene));
         checkRunningSim();
-        //root.getChildren().add(mySimToolbar);
+        root.getChildren().add(mySimToolbar);
+
     }
+    
+    private LineChart<Number,Number> myLineChart = new LineChart<Number,Number>(new NumberAxis(),new NumberAxis());
     
     private LineChart<Number, Number> createGraph(Scene myScene) {
    
         final NumberAxis x_axis = new NumberAxis();
         final NumberAxis y_axis = new NumberAxis();
         x_axis.setLabel(GUIResources.getString("XAxis"));
-        final LineChart<Number,Number> myLineChart = 
-                new LineChart<Number,Number>(x_axis,y_axis);
-        myLineChart.setTitle(GUIResources.getString("ChartTitle"));
-        XYChart.Series firstSeries = new XYChart.Series();
-        //temp to get this to work
-        firstSeries.getData().add(new XYChart.Data(3, 15));
-        myLineChart.getData().add(firstSeries);
-        //root.getChildren().add(myLineChart);
+        //myLineChart.setTitle(GUIResources.getString("ChartTitle"));
+        myLineChart.setPrefWidth(500);
+        myLineChart.setPrefHeight(40);
+        myLineChart.setTranslateY(370);
         return myLineChart;
+    }
+    
+    public Series<Number, Number> updateGraph (List<Integer> myOutput) {
+        firstSeries.getData().add(new Data<Number, Number>(myOutput.get(0), myOutput.get(1)));
+        System.out.println("Hi " + firstSeries.getData());
+        myLineChart.getData().add(firstSeries);
+        return firstSeries;
     }
     
     private void checkRunningSim() {

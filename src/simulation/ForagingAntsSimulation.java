@@ -234,10 +234,12 @@ public class ForagingAntsSimulation extends Simulation {
     }
 
     @Override
-    public void countCellsinGrid () {
+    public List<Integer> countCellsinGrid () {
         System.out.println("Gathered food: " + myFoodGathered);
         // TODO Auto-generated method stub
-
+        List<Integer> myOutput = new ArrayList<Integer>();
+        myOutput.add(stepNum-1);
+        return myOutput;
     }
 
 }
