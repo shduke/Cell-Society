@@ -27,7 +27,7 @@ public class PredatorPreySimulation extends Simulation {
         super(simulationConfig);
     }
 
-    @Override
+    /*@Override
     public void generateMap (int numberOfRows,
                              int numberOfColumns,
                              Grid cellGrid) {
@@ -42,7 +42,7 @@ public class PredatorPreySimulation extends Simulation {
 
             }
         }
-    }
+    }*/
 
     @Override
     public void step () {
@@ -107,7 +107,7 @@ public class PredatorPreySimulation extends Simulation {
 
     private void updateShark (SharkCell shark) {
         List<Cell> neighbors =
-                getNeighbors().getSurroundingNeighbors(shark.getMyGridCoordinate());
+                getNeighborsHandler().getSurroundingNeighbors(shark.getMyGridCoordinate());
                                             
         List<Cell> canMoveOrBreed = getOpenCells(neighbors);
         List<Cell> foodCells = getEdibleCells(neighbors);
@@ -135,7 +135,7 @@ public class PredatorPreySimulation extends Simulation {
     private void updateFish (FishCell fish) {
         fish.update();
         List<Cell> neighbors =
-                getNeighbors().getSurroundingNeighbors(fish.getMyGridCoordinate());
+                getNeighborsHandler().getSurroundingNeighbors(fish.getMyGridCoordinate());
                                          
         List<Cell> canMoveOrBreed = getOpenCells(neighbors);
         breed(fish, canMoveOrBreed);

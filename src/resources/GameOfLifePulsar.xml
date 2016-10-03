@@ -7,6 +7,11 @@
 			<gridHeight>500</gridHeight>
 			<numberOfRows>20</numberOfRows>
 			<numberOfColumns>20</numberOfColumns>
+			<defaultState>Empty</defaultState>
+			<cellShape>Rectangle</cellShape>
+			<neighborsToConsider>Square</neighborsToConsider>
+			<edgeType>Normal</edgeType>
+			<generationType>Specific</generationType>
 		</GeneralConfig>
 		<SimulationConfig>
 			<default>Empty</default>

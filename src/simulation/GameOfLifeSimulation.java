@@ -9,6 +9,8 @@ import cell.State;
 import grid.Coordinate;
 import grid.Grid;
 import grid.Neighbor;
+import javafx.scene.paint.Color;
+import simulation.FireSimulation.FireState;
 
 
 public class GameOfLifeSimulation extends Simulation {
@@ -27,7 +29,7 @@ public class GameOfLifeSimulation extends Simulation {
     private int livingNeighbors (List<Cell> neighbors) {
         int count = 0;
         for (Cell cell : neighbors) {
-            if (cell.getMyCurrentState().equals(State.LIVING)) {
+            if (cell.getMyCurrentState().equals(GameOfLifeState.LIVING)) {
                 count++;
             }
         }
@@ -36,12 +38,13 @@ public class GameOfLifeSimulation extends Simulation {
 
     public void setNextState (Cell cell) {
         int numberOfLivingNeighbors =
-                livingNeighbors(getNeighbors().getSurroundingNeighbors(cell.getMyGridCoordinate()));
+                livingNeighbors(getNeighborsHandler()
+                        .getSurroundingNeighbors(cell.getMyGridCoordinate()));
         if (numberOfLivingNeighbors == 3) {
-            cell.setMyNextState(State.LIVING);
+            cell.setMyNextState(GameOfLifeState.LIVING);
         }
         else if (numberOfLivingNeighbors < 2 || numberOfLivingNeighbors > 3) {
-            cell.setMyNextState(State.EMPTY);
+            cell.setMyNextState(GameOfLifeState.EMPTY);
         }
         else {
             cell.setMyNextState(cell.getMyCurrentState());
@@ -53,15 +56,6 @@ public class GameOfLifeSimulation extends Simulation {
 
     }
 
-    @Override
-    public Cell createCell (Coordinate coordinate, String currentState) {
-        GameOfLifeCell cell =
-                new GameOfLifeCell(State.valueOf(currentState.toUpperCase()), coordinate);
-        if (new Random().nextInt(2) == 1) {
-            cell.setMyCurrentState(State.LIVING);
-        }
-        return cell;
-    }
 
     @Override
     public void countCellsinGrid () {
@@ -71,17 +65,60 @@ public class GameOfLifeSimulation extends Simulation {
         int livingCount = 0;
         int emptyCount = 0;
         for (Cell cell : getGrid().getImmutableCellGrid().values()) {
-            if(cell.getMyCurrentState().equals(State.LIVING)) {
+            if (cell.getMyCurrentState().equals(GameOfLifeState.LIVING)) {
                 livingCount++;
             }
-            if(cell.getMyCurrentState().equals(State.EMPTY)) {
+            if (cell.getMyCurrentState().equals(GameOfLifeState.EMPTY)) {
                 emptyCount++;
             }
         }
         System.out.println("Living:" + livingCount);
         System.out.println("Empty: " + emptyCount);
         stepNum++;
+
+    }
+
+    private enum GameOfLifeState implements State {
+
+                                                  EMPTY(Color.GHOSTWHITE),
+                                                  LIVING(Color.DARKGREEN);
+
+        private final Color myColor;
+        private double myProbability;
+
+        GameOfLifeState (Color color) {
+            myColor = color;
+            myProbability = 0;
+        }
+
+        public Color getColor () {
+            return myColor;
+        }
         
+        public double getProbability () {
+            return myProbability;
+        }
+        
+        public void setProbability (double probability) {
+            myProbability = probability;
+        }
+    }
+
+    @Override
+    public Cell createCell (Coordinate coordinate, State currentState) {
+        GameOfLifeCell cell = new GameOfLifeCell(currentState, coordinate);
+        return cell;
+    }
+
+    @Override
+    public State[] getSimulationStates () {
+        return GameOfLifeState.values();
+    }
+
+    @Override
+    public State getSimulationState (String simulationState) {
+        return GameOfLifeState.valueOf(simulationState.toUpperCase());
+
     }
 
 }

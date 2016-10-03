@@ -122,7 +122,7 @@ public class ForagingAntsSimulation extends Simulation {
 
     private void goHome (AntCell ant) {
         List<Cell> neighbors =
-                getNeighbors().getDirectionNeighbors(ant.getMyGridCoordinate(),
+                getNeighborsHandler().getDirectionNeighbors(ant.getMyGridCoordinate(),
                                                      ant.getMyOrientation());
         ForagingAntCell nextCell = ant.goHome(neighbors);
         if (nextCell == null) {
@@ -140,7 +140,7 @@ public class ForagingAntsSimulation extends Simulation {
      */
     private void forage (AntCell ant) {
         List<Cell> neighbors =
-                getNeighbors().getDirectionNeighbors(ant.getMyGridCoordinate(),
+                getNeighborsHandler().getDirectionNeighbors(ant.getMyGridCoordinate(),
                                                      ant.getMyOrientation());
         ForagingAntCell nextCell = ant.forage(neighbors);
         if (nextCell == null) {

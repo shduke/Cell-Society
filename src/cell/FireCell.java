@@ -1,6 +1,7 @@
 package cell;
 
 import grid.Coordinate;
+import javafx.scene.paint.Color;
 
 
 public class FireCell extends Cell {
@@ -21,6 +22,5 @@ public class FireCell extends Cell {
     public void setBurnTimer (int burnTimer) {
         this.burnTimer = burnTimer;
     }
-    
 
 }

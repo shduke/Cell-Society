@@ -7,9 +7,16 @@
 			<gridHeight>500</gridHeight>
 			<numberOfRows>10</numberOfRows>
 			<numberOfColumns>10</numberOfColumns>
+			<defaultState>Tree</defaultState>
+			<cellShape>Rectangle</cellShape>
+			<neighborsToConsider>Square</neighborsToConsider>
+			<edgeType>Normal</edgeType>
+			<generationType>Probability</generationType>
+			<BURNING_Probability>10.0</BURNING_Probability>
+			<TREE_Probability>60.0</TREE_Probability>
+			<EMPTY_Probability>30.0</EMPTY_Probability>
 		</GeneralConfig>
 		<SimulationConfig>
-			<default>Tree</default>
 			<burnTime>3</burnTime>
     		<probCatch>50</probCatch>
 		</SimulationConfig>
