@@ -254,33 +254,14 @@ public class PredatorPreySimulation extends Simulation {
     @Override
     public List<Integer> countCellsinGrid () {
         stepNum = getStepNum();
-        System.out.println("Num of steps: " + stepNum);
-        int fishCount = 0;
-        int sharkCount = 0;
         int emptyCount = 0;
-        for (Cell cell : getGrid().getImmutableCellGrid().values()) {
-            if (cell.getMyCurrentState().equals(PredatorPreyState.FISH)) {
-                fishCount++;
-            }
-            if (cell.getMyCurrentState().equals(PredatorPreyState.SHARK)) {
-                sharkCount++;
-            }
-            if (cell.getMyCurrentState().equals(PredatorPreyState.EMPTY)) {
-                emptyCount++;
-            }
-        }
-        System.out.println("Fish: " + fishCount);
-        System.out.println("Shark: " + sharkCount);
-        System.out.println("Empty: " + emptyCount);
-        System.out.println("Running fish " + myFishCount);
-        System.out.println("Running shark " + mySharkCount);
+        emptyCount = getGrid().getNumRows()*(getGrid().getNumColumns())-myFishCount-mySharkCount;
         stepNum++;
         List<Integer> myOutput = new ArrayList<Integer>();
         myOutput.add(stepNum - 1);
-        myOutput.add(fishCount);
-        myOutput.add(sharkCount);
         myOutput.add(emptyCount);
-        System.out.println(myOutput);
+        myOutput.add(mySharkCount);
+        myOutput.add(myFishCount);
         return myOutput;
     }
 
