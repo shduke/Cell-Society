@@ -1,7 +1,6 @@
 package applicationView;
 
 import java.util.List;
-import java.util.ResourceBundle;
 import javafx.geometry.Side;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
@@ -21,8 +20,7 @@ public class SimulationGraph {
 
     public LineChart<Number, Number> createGraph () {
         myLineChart.setPrefHeight(50);
-        myLineChart.getData().addAll(myFirstSeries);
-        // myLineChart.setTitle(GUIResources.getString("ChartTitle"));
+        myLineChart.getData().add(myFirstSeries);
         myLineChart.setLegendVisible(true);
         myLineChart.setLegendSide(Side.RIGHT);
         myLineChart.setCreateSymbols(false);
@@ -37,7 +35,7 @@ public class SimulationGraph {
         }
         if (myList.size() > 2) {
             myThirdSeries.setName(myList.get(2));
-            myLineChart.getData().addAll(myThirdSeries);
+            myLineChart.getData().add(myThirdSeries);
         }
     }
 
