@@ -21,7 +21,7 @@ public class SimulationGraph {
 
     public LineChart<Number, Number> createGraph () {
         myLineChart.setPrefHeight(50);
-        myLineChart.getData().addAll(myFirstSeries, mySecondSeries, myThirdSeries);
+        myLineChart.getData().addAll(myFirstSeries);
         // myLineChart.setTitle(GUIResources.getString("ChartTitle"));
         myLineChart.setLegendVisible(true);
         myLineChart.setLegendSide(Side.RIGHT);
@@ -33,9 +33,11 @@ public class SimulationGraph {
         myFirstSeries.setName(myList.get(0));
         if (myList.size() > 1) {
             mySecondSeries.setName(myList.get(1));
+            myLineChart.getData().add(mySecondSeries);
         }
         if (myList.size() > 2) {
             myThirdSeries.setName(myList.get(2));
+            myLineChart.getData().addAll(myThirdSeries);
         }
     }
 
