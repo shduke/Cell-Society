@@ -8,6 +8,7 @@ import cell.EmptyCell;
 import cell.State;
 import grid.Coordinate;
 import grid.Neighbor;
+import javafx.scene.control.Slider;
 import javafx.scene.paint.Color;
 import java.util.*;
 
@@ -148,26 +149,28 @@ public class SegregationSimulation extends Simulation {
 
     @Override
     public void initializeSimulationToolbar (SimulationToolbar toolbar) {
-        // TODO Auto-generated method stub
+        Slider satisfiedSlider = new Slider(0, 1, myAgentSatisfiedRatio);
+        satisfiedSlider.valueProperty()
+                .addListener(e -> myAgentSatisfiedRatio = satisfiedSlider.getValue());
+        toolbar.addSlider(satisfiedSlider, "satisfiedRatio");
 
     }
 
     @Override
     public State[] getSimulationStates () {
-        // TODO Auto-generated method stub
-        return null;
+        return SegregationState.values();
     }
 
     @Override
     public State getSimulationState (String simulationState) {
-        // TODO Auto-generated method stub
-        return null;
+
+        return SegregationState.valueOf(simulationState.toUpperCase());
     }
 
     public enum SegregationState implements State {
-                                                    EMPTY(Color.WHITE),
-                                                    X(Color.RED),
-                                                    O(Color.BLUE);
+                                                   EMPTY(Color.WHITE),
+                                                   X(Color.RED),
+                                                   O(Color.BLUE);
 
         private final Color myColor;
         private double myProbability;

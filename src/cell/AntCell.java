@@ -5,7 +5,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 import grid.Coordinate;
-import grid.Neighbor;
 import simulation.ForagingAntsSimulation.ForagingAntState;
 
 
@@ -54,7 +53,7 @@ public class AntCell extends Cell {
             double random = new Random().nextDouble() * total;
             double counter = 0;
             for (Cell c : neighbors) {
-                ForagingAntCell cell = (ForagingAntCell) c;
+                ForagingAntCell cell = (ForagingAntCell)c;
                 counter += cell.getProb();
                 if (random < counter && !cell.fullOfAnts()) {
 
@@ -93,7 +92,7 @@ public class AntCell extends Cell {
         ForagingAntCell bestCell = null;
         double mostPheromones = -1;
         for (Cell c : neighbors) {
-            ForagingAntCell cell = (ForagingAntCell) c;
+            ForagingAntCell cell = (ForagingAntCell)c;
             if (cell.getPheromones(food) >= mostPheromones && !cell.fullOfAnts()) {
                 mostPheromones = cell.getPheromones(food);
                 bestCell = cell;
@@ -125,7 +124,7 @@ public class AntCell extends Cell {
     private void removeFullCells (List<Cell> neighbors) {
         Iterator<Cell> iter = neighbors.iterator();
         while (iter.hasNext()) {
-            if (((ForagingAntCell) iter.next()).fullOfAnts()) {
+            if (((ForagingAntCell)iter.next()).fullOfAnts()) {
                 iter.remove();
             }
         }
@@ -134,7 +133,7 @@ public class AntCell extends Cell {
     private double getProbSum (List<Cell> neighbors) {
         double sum = 0;
         for (Cell cell : neighbors) {
-            sum += ((ForagingAntCell) cell).getProb();
+            sum += ((ForagingAntCell)cell).getProb();
         }
         return sum;
     }
@@ -143,8 +142,8 @@ public class AntCell extends Cell {
         Coordinate otherCoord = otherCell.getMyGridCoordinate();
         Coordinate thisCoord = this.getMyGridCoordinate();
 
-        int x = (int) (otherCoord.getX() - thisCoord.getX());
-        int y = (int) (otherCoord.getY() - thisCoord.getY());
+        int x = (int)(otherCoord.getX() - thisCoord.getX());
+        int y = (int)(otherCoord.getY() - thisCoord.getY());
         // return new Coordinate(x, y);
         myOrientation = new Coordinate(x, y);
 

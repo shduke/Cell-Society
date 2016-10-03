@@ -19,6 +19,7 @@ import javafx.geometry.Dimension2D;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.layout.BorderPane;
+import applicationView.SimulationGraph;
 import applicationView.SimulationToolbar;
 
 
@@ -34,7 +35,7 @@ public abstract class Simulation {
     private NeighborsHandler myNeighborsHandler;
     private State myDefaultState;
     private String myNeighborsToConsider;
-
+    private SimulationGraph mySimulationGraph;
     private String myEdgeType;
 
     private Dimension2D myGridSize;
@@ -46,14 +47,14 @@ public abstract class Simulation {
 
         initializeSimulation(simulationConfig);
 
-        myView.setCenter(myGridView.getRoot());
-        myView.setRight(mySimulationToolbar.getRoot());
+        
 
     }
 
     private void initializeView () {
-        myView = new BorderPane();
-        myView.setLeft(null);
+        mySimulationGraph = new SimulationGraph();
+        // myView = new BorderPane();
+        // myView.setLeft(null);
         mySimulationToolbar = new SimulationToolbar();
     }
 
@@ -191,6 +192,8 @@ public abstract class Simulation {
     public void updateGrid () {
         myGrid.updateGrid();
         myGridView.updateView();
+        System.out.println(countCellsinGrid());
+        mySimulationGraph.updateGraph(countCellsinGrid());
 
     }
 
@@ -315,5 +318,12 @@ public abstract class Simulation {
         myNeighborsToConsider = neighborsToConsider.toUpperCase();
     }
 
+    public SimulationGraph getGraphView () {
+        return mySimulationGraph;
+    }
+
+    public Node getSimulationToolbar () {
+        return mySimulationToolbar.getRoot();
+    }
     // How to go from the inputed XML ShapeType to making RectangleGrid()
 }

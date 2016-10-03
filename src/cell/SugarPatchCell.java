@@ -8,7 +8,6 @@ public class SugarPatchCell extends Cell {
 
     private int mySugar;
     private int myMaxSugar;
-    // private int myGrowBackRate;
     private SugarAgentCell myAgent;
     private SugarAgentCell myNextAgent;
 
@@ -33,8 +32,9 @@ public class SugarPatchCell extends Cell {
     }
 
     public void growBack (int rate) {
-        if (mySugar + rate <= myMaxSugar)
+        if (mySugar + rate <= myMaxSugar) {
             mySugar += rate;
+        }
     }
 
     public SugarAgentCell getAgent () {
