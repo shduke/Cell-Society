@@ -15,17 +15,9 @@ public enum Neighbor {//refactor?
                              "TOPRIGHT",
                              "MIDRIGHT",
                              "BOTTOMRIGHT"),
-                      TRIANGLESURROUNDING("TOPLEFT",
-                                          "MIDLEFT",
-                                          "BOTTOMLEFT",
-                                          "TOPMID",
-                                          "BOTTOMMID",
-                                          "TOPRIGHT",
-                                          "MIDRIGHT",
-                                          "BOTTOMRIGHT"),
-                      ORTHOGONAL("MIDLEFT", "TOPMID", "BOTTOMMID", "MIDRIGHT"),
-                      DIAGONALS("TOPLEFT", "BOTTOMLEFT", "TOPRIGHT", "BOTTOMRIGHT"),
-                      HEXAGONSURROUNDING("MIDLEFT", "TOPMID", "BOTTOMMID", "MIDRIGHT", "TOPLEFT", "TOPRIGHT");
+                      SQUAREORTHOGONAL("MIDLEFT", "TOPMID", "BOTTOMMID", "MIDRIGHT"),
+                      HEXAGONSURROUNDING("MIDLEFT", "TOPMID", "BOTTOMMID", "MIDRIGHT", "TOPLEFT", "TOPRIGHT"),
+                      HEXAGONORTHOGONAL("MIDLEFT", "TOPMID", "BOTTOMMID", "MIDRIGHT", "TOPLEFT", "TOPRIGHT");
 
     private List<Coordinate> neighbors;
 

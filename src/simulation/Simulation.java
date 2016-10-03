@@ -31,6 +31,7 @@ public abstract class Simulation {
     private NeighborsHandler myNeighborsHandler;
     private State myDefaultState;
     private String myNeighborsToConsider;
+
     private String myEdgeType;
 
 
@@ -59,9 +60,9 @@ public abstract class Simulation {
         return myCellShape;
     }
 
-    public void setCellShape (String CellShape) {
-        this.myCellShape = CellShape;
-        handleCellShape();
+    public void setCellShape (String cellShape) {
+        handleCellShape(cellShape);
+        this.myCellShape = cellShape;
     }
 
     public abstract void step ();
@@ -116,7 +117,8 @@ public abstract class Simulation {
         //myCellShape = generalConfig.get("cellShape");
         //myDefaultState = getSimulationState( generalConfig.get("defaultState"));
         //setDefaultState(getSimulationState(generalConfig.get("defaultState")));
-        myNeighborsToConsider = generalConfig.get("neighborsToConsider");//link to neighborHandler
+        setNeighborsToConsider(generalConfig.get("neighborsToConsider"));
+        //myNeighborsToConsider = generalConfig.get("neighborsToConsider");//link to neighborHandler
         setEdgeType(generalConfig.get("edgeType"));
         //myEdgeType = generalConfig.get("edgeType");
     }
@@ -204,32 +206,32 @@ public abstract class Simulation {
         }
     }
 
-    public void handleCellShape () {
-        if (myCellShape.equals("Rectangle")) {
+    public void handleCellShape (String cellShape) {
+        if (cellShape.equals("Rectangle")) {
             setGridView(new RectangleGridView(myGridSize, myGrid));
         }
-        else if (myCellShape.equals("Triangle")) {
+        else if (cellShape.equals("Triangle")) {
             setGridView(new TriangleGridView(myGridSize, myGrid));
         }
-        else if (myCellShape.equals("Hexagon")) {
+        else if (cellShape.equals("Hexagon")) {
             setGridView(new HexagonGridView(myGridSize, myGrid));
         }
     }
 
-    public void handleEdgeType () {
-        if (myEdgeType.equals("Normal")) {
+    public void handleEdgeType (String edgeType) {
+        if (edgeType.equals("Normal")) {
             setNeighborsHandler(new NormalEdgeNeighborsHandler(myNeighborsToConsider, myGrid));
         }
-        else if (myEdgeType.equals("Toriodal")) {
+        else if (edgeType.equals("Toriodal")) {
             setNeighborsHandler(new ToroidalEdgeNeighborsHandler(myNeighborsToConsider, myGrid));
         }
     }
 
-    public void handleNeighborsToConsider (String neighborsToconsider) {
-        if (neighborsToconsider.equals("Hexagon")) {
-
+    /*public void handleNeighborsToConsider (String neighborsToConsider) {
+        if (neighborsToConsider.equals("Hexagon")) {
+           setNeighborsToConsider(neighborsToConsider);
         }
-    }
+    }*/
 
     public abstract State[] getSimulationStates();
     public abstract State getSimulationState(String simulationState);
@@ -283,9 +285,17 @@ public abstract class Simulation {
     }
 
     public void setEdgeType (String edgeType) {
+        handleEdgeType(edgeType);
         this.myEdgeType = edgeType;
-        handleEdgeType();
     }
 
+    public String getNeighborsToConsider () {
+        return myNeighborsToConsider;
+    }
+
+    public void setNeighborsToConsider (String neighborsToConsider) {
+        myNeighborsToConsider = neighborsToConsider.toUpperCase();
+    }
+    
     // How to go from the inputed XML ShapeType to making RectangleGrid()
 }
