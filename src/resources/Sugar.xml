@@ -15,12 +15,12 @@
 		</GeneralConfig>
 		<SimulationConfig>
 			<maxInitialSugar>25</maxInitialSugar>	
-			<maxVision>3</maxVision>
+			<maxVision>6</maxVision>
 			<maxMetabolism>4</maxMetabolism>
-			<sugarGrowBackInterval>3</sugarGrowBackInterval>
+			<sugarGrowBackInterval>1</sugarGrowBackInterval>
 			<sugarGrowBackRate>1</sugarGrowBackRate>
-			<maxPatchSugar>6</maxPatchSugar>
-			<initialAgents>2</initialAgents>
+			<maxPatchSugar>4</maxPatchSugar>
+			<initialAgents>100</initialAgents>
 		</SimulationConfig>
 		<Cells>
 		</Cells>
