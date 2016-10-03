@@ -27,7 +27,7 @@ public class FireSimulation extends Simulation {
 
     public boolean hasBurningNeighbor (Cell cell) {
         for (Cell neighborCell : getNeighborsHandler()
-                .getOrthogonalNeighbors(cell.getMyGridCoordinate())) {
+                .getSurroundingNeighbors(cell.getMyGridCoordinate())) {
             if (neighborCell.getMyCurrentState().equals(FireState.BURNING)) {
                 return true;
             }
@@ -129,14 +129,17 @@ public class FireSimulation extends Simulation {
             myProbability = 0;
         }
 
+        @Override
         public Color getColor () {
             return myColor;
         }
         
+        @Override
         public double getProbability () {
             return myProbability;
         }
         
+        @Override
         public void setProbability (double probability) {
             myProbability = probability;
         }

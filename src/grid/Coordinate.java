@@ -16,6 +16,10 @@ public class Coordinate {
     public Coordinate subtract (Coordinate coordinate) {
         return new Coordinate(x - coordinate.getX(), y - coordinate.getY());
     }
+    
+    public Coordinate scale (double scaleFactor) {
+        return new Coordinate(x * scaleFactor, y * scaleFactor);
+    }
 
     @Override
     public boolean equals (Object obj) {

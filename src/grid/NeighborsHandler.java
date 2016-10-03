@@ -2,6 +2,7 @@ package grid;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.PriorityQueue;
 import cell.Cell;
 import grid.Neighbor;
 
@@ -44,6 +45,25 @@ public abstract class NeighborsHandler {
      * }
      */
 
+    public List<Cell> getVisionNeighbors (Coordinate coordinate, int visionDistance) {
+        List<Cell> visionNeighbors = new ArrayList<Cell>();
+        PriorityQueue<Cell> visionQueue = new PriorityQueue<Cell>(getSurroundingNeighbors(coordinate));
+        for(int i = 0; i < visionDistance; i++) {
+            int bound = visionQueue.size();
+            int index = 0;
+            while(index < bound) {
+                Cell cell = visionQueue.poll();
+                visionNeighbors.add(cell);
+                Coordinate nextVisionCoordinate = cell.getMyGridCoordinate().add(coordinate.scale(i));
+                if(getMyGrid().isCreated(nextVisionCoordinate)) {
+                    visionQueue.add(getMyGrid().getCell(nextVisionCoordinate));
+                }
+                index++;
+            }
+        }
+        return visionNeighbors;
+    }
+    
     public List<Cell> getDirectionNeighbors (Coordinate coordinate,
                                              Coordinate directionCoordinate) {
         Coordinate neighborDirectionCoordinate = coordinate.add(directionCoordinate);

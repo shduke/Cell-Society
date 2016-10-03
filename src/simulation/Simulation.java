@@ -222,7 +222,7 @@ public abstract class Simulation {
         if (edgeType.equals("Normal")) {
             setNeighborsHandler(new NormalEdgeNeighborsHandler(myNeighborsToConsider, myGrid));
         }
-        else if (edgeType.equals("Toriodal")) {
+        else if (edgeType.equals("Toroidal")) {
             setNeighborsHandler(new ToroidalEdgeNeighborsHandler(myNeighborsToConsider, myGrid));
         }
     }
