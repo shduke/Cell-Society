@@ -13,6 +13,7 @@ import cell.State;
 import cell.SugarAgentCell;
 import cell.SugarPatchCell;
 import grid.Coordinate;
+import javafx.scene.control.Slider;
 import javafx.scene.paint.Color;
 
 
@@ -97,7 +98,8 @@ public class SugarSimulation extends Simulation {
 
     private void updateAgent (SugarAgentCell agent, SugarPatchCell current) {
         List<Cell> neighbors =
-                getNeighborsHandler().getOrthogonalNeighbors(agent.getMyGridCoordinate());
+                getNeighborsHandler().getVisionNeighbors(agent.getMyGridCoordinate(),
+                                                         agent.getVision());
         // getNeighbors(agent.getMyGridCoordinate(), agent.getVision());
         SugarPatchCell moveTo = agent.findSugar(neighbors, current.getSugar());
         if (moveTo != null) {
@@ -169,25 +171,27 @@ public class SugarSimulation extends Simulation {
     @Override
     public void initializeSimulationToolbar (SimulationToolbar toolbar) {
         // TODO Auto-generated method stub
+        Slider intervalSlider = new Slider(0,10,1);
+        toolbar.addSlider(intervalSlider, "sugarGrowBackInterval");
+        Slider rateSlider = new Slider(0,10,1);
+        toolbar.addSlider(rateSlider, "sugarGrowBackRate");
 
     }
 
     @Override
     public State[] getSimulationStates () {
-        // TODO Auto-generated method stub
-        return null;
+        return SugarState.values();
     }
 
     @Override
     public State getSimulationState (String simulationState) {
-        // TODO Auto-generated method stub
-        return null;
+        return SugarState.valueOf(simulationState.toUpperCase());
     }
 
     public enum SugarState implements State {
-                                              ALIVE(Color.RED),
-                                              DEAD(Color.BLACK),
-                                              EMPTY(Color.WHITE);
+                                             ALIVE(Color.RED),
+                                             DEAD(Color.BLACK),
+                                             EMPTY(Color.WHITE);
 
         private final Color myColor;
         private double myProbability;
