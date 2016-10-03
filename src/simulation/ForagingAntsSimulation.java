@@ -110,7 +110,7 @@ public class ForagingAntsSimulation extends Simulation {
     private void goHome (Ant ant) {
         // TODO calculate neighbors based on direction
         List<Cell> neighbors =
-                getMyNeighborsHandler().getDirectionNeighbors(ant.getMyGridCoordinate(),
+                getNeighborsHandler().getDirectionNeighbors(ant.getMyGridCoordinate(),
                                                      ant.getMyOrientation());
         ForagingAntCell nextCell = ant.goHome(neighbors);
         if (nextCell == null) {
@@ -130,7 +130,7 @@ public class ForagingAntsSimulation extends Simulation {
      */
     private void forage (Ant ant) {
         List<Cell> neighbors =
-                getMyNeighborsHandler().getDirectionNeighbors(ant.getMyGridCoordinate(),
+                getNeighborsHandler().getDirectionNeighbors(ant.getMyGridCoordinate(),
                                                      ant.getMyOrientation());
         ForagingAntCell nextCell = ant.forage(neighbors);
         if (nextCell == null) {
@@ -170,7 +170,7 @@ public class ForagingAntsSimulation extends Simulation {
     }
 
     private ForagingAntCell getBestDirection (Ant ant, boolean food) {
-        List<Cell> neighbors = getMyNeighborsHandler().getSurroundingNeighbors(ant.getMyGridCoordinate());
+        List<Cell> neighbors = getNeighborsHandler().getSurroundingNeighbors(ant.getMyGridCoordinate());
         return ant.getBestNeighbor(neighbors, food);
 
     }

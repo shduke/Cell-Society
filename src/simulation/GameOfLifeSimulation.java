@@ -37,7 +37,7 @@ public class GameOfLifeSimulation extends Simulation {
 
     public void setNextState (Cell cell) {
         int numberOfLivingNeighbors =
-                livingNeighbors(getMyNeighborsHandler()
+                livingNeighbors(getNeighborsHandler()
                         .getSurroundingNeighbors(cell.getMyGridCoordinate()));
         if (numberOfLivingNeighbors == 3) {
             cell.setMyNextState(GameOfLifeState.LIVING);
@@ -92,13 +92,23 @@ public class GameOfLifeSimulation extends Simulation {
                                                   LIVING(Color.DARKGREEN);
 
         private final Color myColor;
+        private final double myProbability;
 
         GameOfLifeState (Color color) {
             myColor = color;
+            myProbability = 100.0 / (GameOfLifeState.values().length);
         }
 
         public Color getColor () {
             return myColor;
+        }
+        
+        public double getProbability () {
+            return myProbability;
+        }
+        
+        public double setProbability (double probability) {
+            return myProbability;
         }
     }
 

@@ -53,7 +53,7 @@ public class SegregationSimulation extends Simulation {
 
     private boolean isUnsatisfied (AgentCell cell) {
         List<Cell> neighbors =
-                getMyNeighborsHandler().getSurroundingNeighbors(cell.getMyGridCoordinate());
+                getNeighborsHandler().getSurroundingNeighbors(cell.getMyGridCoordinate());
 
         int totalNeighbors = 0;
         int friendlyNeighbors = 0;

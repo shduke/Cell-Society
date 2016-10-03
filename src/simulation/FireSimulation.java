@@ -26,7 +26,7 @@ public class FireSimulation extends Simulation {
     }
 
     public boolean hasBurningNeighbor (Cell cell) {
-        for (Cell neighborCell : getMyNeighborsHandler()
+        for (Cell neighborCell : getNeighborsHandler()
                 .getOrthogonalNeighbors(cell.getMyGridCoordinate())) {
             if (neighborCell.getMyCurrentState().equals(FireState.BURNING)) {
                 return true;
@@ -88,8 +88,8 @@ public class FireSimulation extends Simulation {
     }
 
     @Override
-    public Cell createCell (Coordinate coordinate, String currentState) {
-        FireCell cell = new FireCell(FireState.valueOf(currentState.toUpperCase()), coordinate);
+    public Cell createCell (Coordinate coordinate, State currentState) {
+        FireCell cell = new FireCell(currentState, coordinate);
         int r = (int) coordinate.getX();
         int c = (int) coordinate.getY();
         /*
@@ -102,21 +102,61 @@ public class FireSimulation extends Simulation {
         return cell;
     }
 
-    private enum FireState implements State {
+//    private State randomGeneration() {
+//        Random rn = new Random();
+//        double spawnRandomNumber = rn.nextDouble() * 100;
+//        double currentProbability = 0;
+//        for(FireState state : FireState.values()) {
+//            currentProbability += state.getProbability();
+//            if(spawnRandomNumber < currentProbability) {
+//                return state;
+//            }
+//        }
+//        return FireState.valueOf(getDefaultState());
+//    }
+    
+    public enum FireState implements State {
 
                                             EMPTY(Color.YELLOW),
                                             TREE(Color.GREEN),
                                             BURNING(Color.RED);
 
         private final Color myColor;
+        private double myProbability;
 
         FireState (Color color) {
             myColor = color;
+            myProbability = 0;
         }
 
         public Color getColor () {
             return myColor;
         }
+        
+        public double getProbability () {
+            return myProbability;
+        }
+        
+        public void setProbability (double probability) {
+            myProbability = probability;
+        }
+        
+    }
+
+    @Override
+    public State[] getSimulationStates () {
+        return FireState.values();
+    }
+
+    @Override
+    public State getSimulationState (String simulationState) {
+        return FireState.valueOf(simulationState.toUpperCase());
+    }
+
+    @Override
+    public double getSpawnProbability (double currentProbability) {
+        // TODO Auto-generated method stub
+        return 0;
     }
 
 }
