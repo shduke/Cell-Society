@@ -7,7 +7,6 @@ import cell.Cell;
 import cell.EmptyCell;
 import cell.State;
 import grid.Coordinate;
-import grid.Neighbor;
 import javafx.scene.control.Slider;
 import javafx.scene.paint.Color;
 import java.util.*;
@@ -21,7 +20,6 @@ public class SegregationSimulation extends Simulation {
 
     public SegregationSimulation (Map<String, Map<String, String>> simulationConfig) {
         super(simulationConfig);
-        // generateMap(getGrid().getNumRows(), getGrid().getNumColumns(), getGrid());
     }
 
     @Override

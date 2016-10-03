@@ -25,8 +25,6 @@ import applicationView.SimulationToolbar;
 
 public abstract class Simulation {
     private String myCellShape = "Square";
-
-    /// these 3 fields could be put in a gridViewController
     private BorderPane myView;
     private Group myRoot;
     private SimulationToolbar mySimulationToolbar;
@@ -35,16 +33,14 @@ public abstract class Simulation {
     private NeighborsHandler myNeighborsHandler;
     private State myDefaultState;
     private String myNeighborsToConsider;
-    protected SimulationGraph mySimulationGraph;
     private String myEdgeType;
-
     private Dimension2D myGridSize;
+    
     protected int stepNum;
+    protected SimulationGraph mySimulationGraph;
 
     public Simulation (Map<String, Map<String, String>> simulationConfig) {
-
         initializeView();
-
         initializeSimulation(simulationConfig);
         getSimulationNames();
     }
@@ -99,8 +95,6 @@ public abstract class Simulation {
         populateGridWithSpecificValues(simulationConfig.get("Cells"));
         handleMapGeneration(simulationConfig.get("GeneralConfig"));
         generateMap();
-
-        // setDefaultState( simulationConfig.get("GeneralConfig").get("defaultState"));
     }
 
     public void populateGridWithSpecificValues (Map<String, String> cells) {
@@ -116,22 +110,10 @@ public abstract class Simulation {
 
     private void initializeGeneralDetails (Map<String, String> generalConfig) {
         setGridSize(new Dimension2D(Double.parseDouble(generalConfig.get("gridWidth")),
-                                    Double.parseDouble(generalConfig.get("gridHeight")))); // TEMPORARY
-                                                                                           // -
-                                                                                           // NEEDS
-                                                                                           // TO BE
-                                                                                           // SET BY
-                                                                                           // VIEW
-                                                                                           // CONTROLLER
+                                    Double.parseDouble(generalConfig.get("gridHeight"))));
         setCellShape(generalConfig.get("cellShape"));
-        // myCellShape = generalConfig.get("cellShape");
-        // myDefaultState = getSimulationState( generalConfig.get("defaultState"));
-        // setDefaultState(getSimulationState(generalConfig.get("defaultState")));
         setNeighborsToConsider(generalConfig.get("neighborsToConsider"));
-        // myNeighborsToConsider = generalConfig.get("neighborsToConsider");//link to
-        // neighborHandler
         setEdgeType(generalConfig.get("edgeType"));
-        // myEdgeType = generalConfig.get("edgeType");
     }
 
     private void setDefaultState (State state) {
@@ -155,10 +137,7 @@ public abstract class Simulation {
      */
 
     public BorderPane getSimulationView () {
-
-        /// ****THIS ONE******
         return this.myView;
-
     }
 
     public GridView getGridView () {
@@ -171,7 +150,6 @@ public abstract class Simulation {
         this.myRoot.getChildren().add(myGridView.getRoot());
     }
 
-    /// if laggy change order
     public void updateGrid () {
         myGrid.updateGrid();
         myGridView.updateView();
@@ -226,14 +204,6 @@ public abstract class Simulation {
             setNeighborsHandler(new ToroidalEdgeNeighborsHandler(myNeighborsToConsider, myGrid));
         }
     }
-
-    /*
-     * public void handleNeighborsToConsider (String neighborsToConsider) {
-     * if (neighborsToConsider.equals("Hexagon")) {
-     * setNeighborsToConsider(neighborsToConsider);
-     * }
-     * }
-     */
 
     public abstract State[] getSimulationStates ();
 
@@ -306,7 +276,6 @@ public abstract class Simulation {
     public Node getSimulationToolbar () {
         return mySimulationToolbar.getRoot();
     }
-    // How to go from the inputed XML ShapeType to making RectangleGrid()
 
     public abstract void getSimulationNames ();
 }

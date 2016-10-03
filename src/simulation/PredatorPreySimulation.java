@@ -13,12 +13,6 @@ import javafx.scene.paint.*;
  */
 public class PredatorPreySimulation extends Simulation {
 
-    /*
-     * PredatorPreySimulation (Dimension2D gridViewSize) {
-     * super(gridViewSize);
-     * // TODO Auto-generated constructor stub
-     * }
-     */
     private Neighbor myNeighborType;
     private int myPreyBreedTime;
     private int myPredatorBreedTime;
