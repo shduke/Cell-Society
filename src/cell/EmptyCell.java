@@ -9,4 +9,8 @@ public class EmptyCell extends Cell {
     public EmptyCell (Coordinate coordinate) {
         super(PredatorPreyState.EMPTY, coordinate);
     }
+    
+    public EmptyCell (Coordinate coordinate, State state) {
+        super(state, coordinate);
+    }
 }

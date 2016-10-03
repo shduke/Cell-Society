@@ -70,7 +70,6 @@ public class FireSimulation extends Simulation {
         return myOutput;
     }
 
-    // is switching on cell state bad?
     public void setNextState (Cell cell) {
         if (cell.getMyCurrentState().equals(FireState.TREE)) {
             cell.setMyNextState(FireState.TREE);
@@ -104,7 +103,8 @@ public class FireSimulation extends Simulation {
         int r = (int) coordinate.getX();
         int c = (int) coordinate.getY();
 
-        if (getEdgeType().equals("Normal") && r == 0 || c == 0 || r == (getGrid().getNumRows() - 1) ||
+        if (getEdgeType().equals("Normal") && r == 0 || c == 0 ||
+            r == (getGrid().getNumRows() - 1) ||
             c == (getGrid().getNumColumns() - 1)) {
             cell.setMyCurrentState(FireState.EMPTY);
         }
@@ -160,7 +160,7 @@ public class FireSimulation extends Simulation {
     public State getSimulationState (String simulationState) {
         return FireState.valueOf(simulationState.toUpperCase());
     }
-    
+
     @Override
     public void getSimulationNames () {
         List<String> myList = new ArrayList<String>();

@@ -26,7 +26,7 @@ public class SimulationController {
     SimulationController (Group simulationRoot, int height, int width) {
         this.mySimulations = new ArrayList<Simulation>();
         this.simulationRoot = simulationRoot;
-        File simulationConfig = new File("src/resources/SugarSimulation.xml");
+        File simulationConfig = new File("src/resources/Segregation.xml");
         initializeSimulation(simulationConfig.getAbsolutePath());
     }
 
