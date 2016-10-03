@@ -14,7 +14,7 @@
 			<generationType>Specific</generationType>
 		</GeneralConfig>
 		<SimulationConfig>
-			<default>Empty</default>
+			<numToReproduce>3</numToReproduce>
 		</SimulationConfig>
 		<Cells InitialSetup="Specific">
 			<cell_4_6>Living</cell_4_6>

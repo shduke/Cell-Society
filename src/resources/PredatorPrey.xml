@@ -7,9 +7,13 @@
 			<gridHeight>500</gridHeight>
 			<numberOfRows>10</numberOfRows>
 			<numberOfColumns>10</numberOfColumns>
+			<defaultState>Empty</defaultState>
+			<cellShape>Triangle</cellShape>
+			<neighborsToConsider>Square</neighborsToConsider>
+			<edgeType>Toroidal</edgeType>
+			<generationType>Specific</generationType>
 		</GeneralConfig>
 		<SimulationConfig>
-			<default>Empty</default>
 			<preyBreedTime>5</preyBreedTime>
 			<predatorBreedTime>16</predatorBreedTime>
 			<sharkMaxHealth>15</sharkMaxHealth>	

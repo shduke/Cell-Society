@@ -11,11 +11,13 @@ import cell.State;
 import grid.Coordinate;
 import grid.Grid;
 import grid.Neighbor;
+import javafx.scene.control.Slider;
 import javafx.scene.paint.Color;
 
 
-
 public class GameOfLifeSimulation extends Simulation {
+
+    private int myNumToReproduce;
 
     public GameOfLifeSimulation (Map<String, Map<String, String>> simulationConfig) {
         super(simulationConfig);
@@ -25,7 +27,6 @@ public class GameOfLifeSimulation extends Simulation {
     public void step () {
         getGrid().applyFuncToCell(p -> setNextState(p));
         updateGrid();
-        countCellsinGrid();
     }
 
     private int livingNeighbors (List<Cell> neighbors) {
@@ -37,15 +38,25 @@ public class GameOfLifeSimulation extends Simulation {
         }
         return count;
     }
+    
+    @Override
+    public void getSimulationNames () {
+        List<String> myList = new ArrayList<String>();
+        for (State n : getSimulationStates()) {
+            myList.add(n.name());
+        }
+        mySimulationGraph.addToLegend(myList);
+    }
 
     public void setNextState (Cell cell) {
         int numberOfLivingNeighbors =
                 livingNeighbors(getNeighborsHandler()
                         .getSurroundingNeighbors(cell.getMyGridCoordinate()));
-        if (numberOfLivingNeighbors == 3) {
+        if (numberOfLivingNeighbors == myNumToReproduce) {
             cell.setMyNextState(GameOfLifeState.LIVING);
         }
-        else if (numberOfLivingNeighbors < 2 || numberOfLivingNeighbors > 3) {
+        else if (numberOfLivingNeighbors < myNumToReproduce - 1 ||
+                 numberOfLivingNeighbors > myNumToReproduce) {
             cell.setMyNextState(GameOfLifeState.EMPTY);
         }
         else {
@@ -55,12 +66,11 @@ public class GameOfLifeSimulation extends Simulation {
 
     @Override
     public void initializeSimulationDetails (Map<String, String> simulationConfig) {
-
+        myNumToReproduce = Integer.parseInt(simulationConfig.get("numToReproduce"));
     }
 
     @Override
     public List<Integer> countCellsinGrid () {
-        // TODO Auto-generated method stub
         stepNum = getStepNum();
         System.out.println("Num of steps: " + stepNum);
         int livingCount = 0;
@@ -79,16 +89,18 @@ public class GameOfLifeSimulation extends Simulation {
 
         List<Integer> myOutput = new ArrayList<Integer>();
         myOutput.add(stepNum - 1);
-        myOutput.add(livingCount);
         myOutput.add(emptyCount);
+        myOutput.add(livingCount);
         return myOutput;
 
     }
 
     @Override
     public void initializeSimulationToolbar (SimulationToolbar toolbar) {
-        // TODO Auto-generated method stub
-
+        Slider myReproduceSlider = new Slider(1, 6, 3);
+        myReproduceSlider.valueProperty()
+                .addListener(e -> myNumToReproduce = (int) myReproduceSlider.getValue());
+        toolbar.addSlider(myReproduceSlider, "neighborsToReproduce");
     }
 
     private enum GameOfLifeState implements State {
@@ -109,7 +121,6 @@ public class GameOfLifeSimulation extends Simulation {
             return myColor;
         }
 
-        
         @Override
         public double getProbability () {
             return myProbability;

@@ -22,12 +22,12 @@ import javafx.event.ActionEvent;
 
 public class SimulationToolbar {
     private final ResourceBundle GUIResources;
-    ApplicationController myAppController = new ApplicationController();
-    Group root;
-    List<Slider> mySliders;
+    private ApplicationController myAppController = new ApplicationController();
+    private Group root;
+    private List<Slider> mySliders;
     private Series<Number, Number> firstSeries = new XYChart.Series<Number, Number>();
     private ArrayList<Integer> myGraphValues;
-    VBox myToolbar;
+    private VBox myToolbar;
 
     public SimulationToolbar () {
         myToolbar = new VBox();

@@ -4,6 +4,7 @@ import grid.*;
 import java.util.*;
 import applicationView.SimulationToolbar;
 import cell.*;
+import javafx.scene.control.Slider;
 import javafx.scene.paint.*;
 
 
@@ -29,33 +30,12 @@ public class PredatorPreySimulation extends Simulation {
         super(simulationConfig);
     }
 
-    /*
-     * @Override
-     * public void generateMap (int numberOfRows,
-     * int numberOfColumns,
-     * Grid cellGrid) {
-     * for (int r = 0; r < numberOfRows; r++) {
-     * for (int c = 0; c < numberOfColumns; c++) {
-     * Coordinate coordinate = new Coordinate(r, c);
-     * if (!cellGrid.isCreated(coordinate)) {
-     * EmptyCell cell = new EmptyCell(coordinate);
-     * 
-     * cellGrid.addCell(cell);
-     * }
-     * 
-     * }
-     * }
-     * }
-     */
-
     @Override
     public void step () {
 
         updateSharks();
         updateFishes();
-        getGrid().updateGrid();
-        this.getGridView().updateView();
-        countCellsinGrid();
+        updateGrid();
 
     }
 
@@ -300,30 +280,42 @@ public class PredatorPreySimulation extends Simulation {
         myOutput.add(fishCount);
         myOutput.add(sharkCount);
         myOutput.add(emptyCount);
+        System.out.println(myOutput);
         return myOutput;
     }
 
     @Override
     public void initializeSimulationToolbar (SimulationToolbar toolbar) {
-        // TODO Auto-generated method stub
-
+        Slider preyBreedSlider = new Slider(1, 10, myPreyBreedTime);
+        preyBreedSlider.valueProperty()
+                .addListener(e -> myPreyBreedTime = (int) preyBreedSlider.getValue());
+        toolbar.addSlider(preyBreedSlider, "preyBreedTime");
     }
 
     @Override
     public State[] getSimulationStates () {
         return PredatorPreyState.values();
     }
+    
+    @Override
+    public void getSimulationNames () {
+        List<String> myList = new ArrayList<String>();
+        for (State n : getSimulationStates()) {
+            myList.add(n.name());
+        }
+        mySimulationGraph.addToLegend(myList);
+    }
 
     @Override
     public State getSimulationState (String simulationState) {
-        return PredatorPreyState.valueOf(simulationState);
+        return PredatorPreyState.valueOf(simulationState.toUpperCase());
     }
 
     public enum PredatorPreyState implements State {
-                                                     EMPTY(Color.BLUE),
-                                                     SHARK(Color.RED),
-                                                     FISH(Color.YELLOW),
-                                                     DEAD(Color.BLUE);
+                                                    EMPTY(Color.BLUE),
+                                                    SHARK(Color.RED),
+                                                    FISH(Color.YELLOW),
+                                                    DEAD(Color.BLUE);
 
         private final Color myColor;
         private double myProbability;

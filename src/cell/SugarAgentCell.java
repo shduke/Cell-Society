@@ -32,9 +32,9 @@ public class SugarAgentCell extends Cell {
 
     public SugarPatchCell findSugar (List<Cell> neighbors, int currentSugar) {
         SugarPatchCell bestCell = null;
-        int maxSugar = -1;//currentSugar;
+        int maxSugar = -1;
         for (Cell c : neighbors) {
-            SugarPatchCell cell = (SugarPatchCell) c;
+            SugarPatchCell cell = (SugarPatchCell)c;
             if (cell.getSugar() > maxSugar && cell.isEmpty()) {
                 bestCell = cell;
                 maxSugar = cell.getSugar();
@@ -54,11 +54,11 @@ public class SugarAgentCell extends Cell {
         
     }
     
-    public boolean isDead() {
+    public boolean isDead () {
         return this.mySugar <= 0;
     }
     
-    public int getVision() {
+    public int getVision () {
         return myVision;
     }
     public void eat (SugarPatchCell cell) {

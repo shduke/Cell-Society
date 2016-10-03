@@ -11,6 +11,7 @@ import cell.EmptyCell;
 import grid.Coordinate;
 import grid.Grid;
 import grid.Neighbor;
+import javafx.scene.control.Slider;
 import javafx.scene.paint.Color;
 import cell.ForagingAntCell;
 import cell.State;
@@ -248,13 +249,32 @@ public class ForagingAntsSimulation extends Simulation {
 
     @Override
     public void initializeSimulationToolbar (SimulationToolbar toolbar) {
-        // TODO Auto-generated method stub
-
+        Slider diffusionSlider = new Slider(.005, .2, .01);
+        diffusionSlider.valueProperty()
+                .addListener(e -> myDiffusionRate = diffusionSlider.getValue());
+        toolbar.addSlider(diffusionSlider, "myDiffusionRate");
+        Slider evaporationSlider = new Slider(.005, .2, .01);
+        evaporationSlider.valueProperty()
+                .addListener(e -> myEvaporationRate = evaporationSlider.getValue());
+        toolbar.addSlider(evaporationSlider, "myEvaporationRate");
+        Slider antLifetimeSlider = new Slider(10, 1000, 500);
+        antLifetimeSlider.valueProperty()
+                .addListener(e -> myAntLifetime = (int) antLifetimeSlider.getValue());
+        toolbar.addSlider(antLifetimeSlider, "antLifetime");
     }
 
     @Override
     public State[] getSimulationStates () {
         return ForagingAntState.values();
+    }
+    
+    @Override
+    public void getSimulationNames () {
+        List<String> myList = new ArrayList<String>();
+        for (State n : getSimulationStates()) {
+            myList.add(n.name());
+        }
+        mySimulationGraph.addToLegend(myList);
     }
 
     @Override
@@ -263,12 +283,12 @@ public class ForagingAntsSimulation extends Simulation {
     }
 
     public enum ForagingAntState implements State {
-                                                    FOODSEARCH(Color.GREEN),
-                                                    EMPTY(Color.WHITE),
-                                                    HOMESEARCH(Color.BLUE),
-                                                    DEAD(Color.BLACK),
-                                                    FOOD(Color.GREEN),
-                                                    NEST(Color.BLUE);
+                                                   FOODSEARCH(Color.GREEN),
+                                                   EMPTY(Color.WHITE),
+                                                   HOMESEARCH(Color.BLUE),
+                                                   DEAD(Color.BLACK),
+                                                   FOOD(Color.GREEN),
+                                                   NEST(Color.BLUE);
 
         private final Color myColor;
         private double myProbability;

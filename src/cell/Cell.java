@@ -18,37 +18,36 @@ public abstract class Cell {
 
     /* Getters and Setters */
 
-
-    public Coordinate getMyGridCoordinate() {
+    public Coordinate getMyGridCoordinate () {
         return this.myGridCoordinate;
     }
-    
-    public void setMyGridCoordinate(Coordinate myGridCoordinate) {
-        this.myGridCoordinate = myGridCoordinate;
+
+    public void setMyGridCoordinate (Coordinate gridCoordinate) {
+        this.myGridCoordinate = gridCoordinate;
     }
 
     public State getMyCurrentState () {
         return myCurrentState;
     }
 
-    public void setMyCurrentState (State myCurrentState) {
-        this.myCurrentState = myCurrentState;
+    public void setMyCurrentState (State currentState) {
+        this.myCurrentState = currentState;
     }
 
     public State getMyNextState () {
         return myNextState;
     }
 
-    public void setMyNextState (State myNextState) {
-        this.myNextState = myNextState;
+    public void setMyNextState (State nextState) {
+        this.myNextState = nextState;
     }
 
     public void updateState () {
         myCurrentState = myNextState;
         myNextState = null;
     }
-    
-    public Color getColor() {
+
+    public Color getColor () {
         return this.getMyCurrentState().getColor();
     }
 
