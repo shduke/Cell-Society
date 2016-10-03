@@ -9,9 +9,9 @@ import javafx.scene.paint.Color;
 
 public class ForagingAntCell extends Cell {
 
+    private static final int MAX_COLOR_VALUE = 255;
     private List<AntCell> myAnts;
     private List<AntCell> myNextAnts;
-
     private double myFoodPheromones;
     private double myHomePheromones;
     private double myMaxPheromones;
@@ -35,8 +35,6 @@ public class ForagingAntCell extends Cell {
         myHomePheromones = 0;
         myFoodPheromones = 0;
     }
-
-    
 
     public void update () {
 
@@ -62,7 +60,7 @@ public class ForagingAntCell extends Cell {
     public void addAnt (AntCell ant) {
 
         myNextAnts.add(ant);
-        
+
     }
 
     private void removeDeadAnts () {
@@ -89,7 +87,7 @@ public class ForagingAntCell extends Cell {
     public void addPheromones (List<Cell> neighbors, boolean food) {
         double valueToAdd = 0;
         for (Cell c : neighbors) {
-            ForagingAntCell cell = (ForagingAntCell) c;
+            ForagingAntCell cell = (ForagingAntCell)c;
             valueToAdd = Math.max(valueToAdd, cell.getPheromones(food));
         }
         double desired = Math.max(0, valueToAdd - 2);
@@ -120,7 +118,7 @@ public class ForagingAntCell extends Cell {
         myFoodPheromones -= myFoodPheromones * evaporationRate;
         myHomePheromones -= myHomePheromones * evaporationRate;
         for (Cell c : neighbors) {
-            ForagingAntCell cell = (ForagingAntCell) c;
+            ForagingAntCell cell = (ForagingAntCell)c;
             cell.myFoodPheromones =
                     Math.min(cell.myFoodPheromones + myFoodPheromones * diffusionRate,
                              myMaxPheromones);
@@ -159,10 +157,10 @@ public class ForagingAntCell extends Cell {
     public Color getColor () {
 
         if (myHomePheromones == myMaxPheromones) {
-            return Color.rgb(0, 255, 0);
+            return Color.rgb(0, MAX_COLOR_VALUE, 0);
         }
         if (myFoodPheromones == myMaxPheromones) {
-            return Color.rgb(0, 0, 255);
+            return Color.rgb(0, 0, MAX_COLOR_VALUE);
         }
         /*
          * if (myAnts.size() > 0) {
@@ -173,9 +171,11 @@ public class ForagingAntCell extends Cell {
          * return color;
          * }
          */
-        int red = (int) (((double) Math.min(myAnts.size(), myMaxAnts) / (double) myMaxAnts) * 255);
-        int green = (int) ((myHomePheromones / myMaxPheromones) * 255);
-        int blue = (int) ((myFoodPheromones / myMaxPheromones) * 255);
+        int red =
+                (int)(((double)Math.min(myAnts.size(), myMaxAnts) / (double)myMaxAnts) *
+                       MAX_COLOR_VALUE);
+        int green = (int)((myHomePheromones / myMaxPheromones) * MAX_COLOR_VALUE);
+        int blue = (int)((myFoodPheromones / myMaxPheromones) * MAX_COLOR_VALUE);
         // System.out.println(red + ", " + green +", " + blue);
         return Color.rgb(red, green, blue);
     }
