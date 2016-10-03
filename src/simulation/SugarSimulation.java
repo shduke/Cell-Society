@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.ResourceBundle;
 import applicationView.SimulationToolbar;
 import cell.Cell;
 import cell.State;
@@ -46,10 +47,9 @@ public class SugarSimulation extends Simulation {
     
     @Override
     public void getSimulationNames () {
+        ResourceBundle GUIResources = ResourceBundle.getBundle("resources/English");
         List<String> myList = new ArrayList<String>();
-        for (State n : getSimulationStates()) {
-            myList.add(n.name());
-        }
+        myList.add(GUIResources.getString("NumAgents"));
         mySimulationGraph.addToLegend(myList);
     }
 
