@@ -1,7 +1,9 @@
 package grid;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.PriorityQueue;
+import java.util.Set;
 import cell.Cell;
 import grid.Neighbor;
 // abstract class or interface
@@ -42,22 +44,36 @@ public abstract class NeighborsHandler {
 
 
     public List<Cell> getVisionNeighbors (Coordinate coordinate, int visionDistance) {
-        List<Cell> visionNeighbors = new ArrayList<Cell>();
-        PriorityQueue<Cell> visionQueue = new PriorityQueue<Cell>(getSurroundingNeighbors(coordinate));
+        List<Coordinate> directionNeighbors = Neighbor.valueOf(myNeighborsToConsider).getNeighbors();
+        Set<Cell> visionNeighbors = new LinkedHashSet<Cell>();
+        //List<Cell> visionNeighbors = new ArrayList<Cell>();
+        for(int i = 1; i < visionDistance + 1; i++) {
+            for(Coordinate direction : directionNeighbors) {
+                Coordinate nextVisionCoordinate = coordinate.add(direction.scale(i));
+                if(!getMyGrid().isCreated(nextVisionCoordinate)) {
+                    nextVisionCoordinate =
+                            handleEdgeCoordinate(coordinate, coordinate.add(direction.scale(i)));
+                }
+                visionNeighbors.add(getMyGrid().getCell(nextVisionCoordinate));
+            }
+        }
+        
+        /*PriorityQueue<Cell> visionQueue = new PriorityQueue<Cell>(getSurroundingNeighbors(coordinate));
         for(int i = 0; i < visionDistance; i++) {
             int bound = visionQueue.size();
             int index = 0;
             while(index < bound) {
                 Cell cell = visionQueue.poll();
                 visionNeighbors.add(cell);
-                Coordinate nextVisionCoordinate = cell.getMyGridCoordinate().add(coordinate.scale(i));
+                Coordinate nextVisionCoordinate = cell.getMyGridCoordinate().add(   coordinate.scale(i));
+                //Coordinate nextVisionCoordinate = cell.getMyGridCoordinate().add(coordinate.scale(i));
                 if(getMyGrid().isCreated(nextVisionCoordinate)) {
                     visionQueue.add(getMyGrid().getCell(nextVisionCoordinate));
                 }
                 index++;
             }
-        }
-        return visionNeighbors;
+        }*/
+        return new ArrayList<Cell>(visionNeighbors);
     }
 
     public List<Cell> getDirectionNeighbors (Coordinate coordinate,
@@ -70,6 +86,7 @@ public abstract class NeighborsHandler {
         return directionNeighbors;
     }
     public List<Cell> getSurroundingNeighbors (Coordinate coordinate) {
+        List<Coordinate> blah = Neighbor.valueOf(myNeighborsToConsider).getNeighbors();
         return getNeighbors(Neighbor.valueOf(myNeighborsToConsider).getNeighbors(),
                             coordinate);
     }

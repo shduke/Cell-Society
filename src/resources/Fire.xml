@@ -8,7 +8,7 @@
 			<numberOfRows>10</numberOfRows>
 			<numberOfColumns>10</numberOfColumns>
 			<defaultState>Tree</defaultState>
-			<cellShape>Rectangle</cellShape>
+			<cellShape>Square</cellShape>
 			<neighborsToConsider>Cardinal</neighborsToConsider>
 			<edgeType>Normal</edgeType>
 			<generationType>Probability</generationType>
