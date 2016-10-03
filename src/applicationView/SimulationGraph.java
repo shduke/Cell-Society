@@ -31,7 +31,6 @@ public class SimulationGraph {
         x_axis.setLabel(GUIResources.getString("XAxis"));
         myLineChart.setPrefHeight(50);
         myLineChart.getData().addAll(myFirstSeries, mySecondSeries, myThirdSeries);
-        // myLineChart.setTitle(GUIResources.getString("ChartTitle"));
         myLineChart.setLegendVisible(true);
         myLineChart.setLegendSide(Side.RIGHT);
         myLineChart.setCreateSymbols(false);
