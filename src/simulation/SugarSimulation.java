@@ -13,6 +13,7 @@ import cell.State;
 import cell.SugarAgentCell;
 import cell.SugarPatchCell;
 import grid.Coordinate;
+import javafx.scene.paint.Color;
 
 
 public class SugarSimulation extends Simulation {
@@ -80,12 +81,12 @@ public class SugarSimulation extends Simulation {
                 System.out.println(agent.getMyCurrentState());
                 System.out.println(agent.getMyNextState());
                 System.out.println(agent.isDead() + " dead?");
-                if (agent.getMyCurrentState() == State.DEAD || agent.isDead()) {
+                if (agent.getMyCurrentState() == SugarState.DEAD || agent.isDead()) {
                     cell.killAgent();
                     System.out.println("KILL");
                 }
-                else if (!(agent.getMyNextState() == State.DEAD)) {
-                    if (agent.getMyCurrentState() == State.ALIVE) {
+                else if (!(agent.getMyNextState() == SugarState.DEAD)) {
+                    if (agent.getMyCurrentState() == SugarState.ALIVE) {
                         // myNumAgents++;
                     }
                     updateAgent(agent, cell);
@@ -95,7 +96,8 @@ public class SugarSimulation extends Simulation {
     }
 
     private void updateAgent (SugarAgentCell agent, SugarPatchCell current) {
-        List<Cell> neighbors = getNeighbors().getOrthogonalNeighbors(agent.getMyGridCoordinate());
+        List<Cell> neighbors =
+                getNeighborsHandler().getOrthogonalNeighbors(agent.getMyGridCoordinate());
         // getNeighbors(agent.getMyGridCoordinate(), agent.getVision());
         SugarPatchCell moveTo = agent.findSugar(neighbors, current.getSugar());
         if (moveTo != null) {
@@ -142,7 +144,7 @@ public class SugarSimulation extends Simulation {
     }
 
     @Override
-    public Cell createCell (Coordinate coordinate, String currentState) {
+    public Cell createCell (Coordinate coordinate, State currentState) {
         // int sugarGrowBackRate = new Random().nextInt(mySugarGrowBackRate) + 1;
         // SugarPatchCell cell = ne
         Random r = new Random();
@@ -150,11 +152,11 @@ public class SugarSimulation extends Simulation {
         int initialSugar = r.nextInt(myMaxInitialSugar - 5) + 5;
         int metabolism = r.nextInt(myMaxMetabolism);
         SugarAgentCell agent =
-                new SugarAgentCell(State.ALIVE, coordinate, vision, initialSugar, metabolism);
+                new SugarAgentCell(SugarState.ALIVE, coordinate, vision, initialSugar, metabolism);
         // int initialSugar = new Random().nextInt(myMaxInitialSugar);
         int maxSugar = r.nextInt(myMaxPatchSugar);
-        SugarPatchCell cell = new SugarPatchCell(State.EMPTY, coordinate, maxSugar);
-        if (State.valueOf(currentState.toUpperCase()) == State.ALIVE) {
+        SugarPatchCell cell = new SugarPatchCell(SugarState.EMPTY, coordinate, maxSugar);
+        if (currentState == SugarState.ALIVE) {
             cell.initAgent(agent);
         }
         else if (r.nextInt(10) < 3 && myInitialAgents > 0) {
@@ -167,7 +169,50 @@ public class SugarSimulation extends Simulation {
     @Override
     public void initializeSimulationToolbar (SimulationToolbar toolbar) {
         // TODO Auto-generated method stub
-        
+
+    }
+
+    @Override
+    public State[] getSimulationStates () {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public State getSimulationState (String simulationState) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    public enum SugarState implements State {
+                                              ALIVE(Color.RED),
+                                              DEAD(Color.BLACK),
+                                              EMPTY(Color.WHITE);
+
+        private final Color myColor;
+        private double myProbability;
+
+        SugarState (Color color) {
+            myColor = color;
+            myProbability = 0;
+        }
+
+        @Override
+        public Color getColor () {
+            return myColor;
+        }
+
+        @Override
+        public double getProbability () {
+            return myProbability;
+        }
+
+        @Override
+        public void setProbability (double probability) {
+            myProbability = probability;
+
+        }
+
     }
 
 }

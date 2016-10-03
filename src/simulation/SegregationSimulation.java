@@ -8,6 +8,7 @@ import cell.EmptyCell;
 import cell.State;
 import grid.Coordinate;
 import grid.Neighbor;
+import javafx.scene.paint.Color;
 import java.util.*;
 
 
@@ -17,7 +18,7 @@ public class SegregationSimulation extends Simulation {
 
     public SegregationSimulation (Map<String, Map<String, String>> simulationConfig) {
         super(simulationConfig);
-        generateMap(getGrid().getNumRows(), getGrid().getNumColumns(), getGrid());
+        // generateMap(getGrid().getNumRows(), getGrid().getNumColumns(), getGrid());
     }
 
     @Override
@@ -32,11 +33,13 @@ public class SegregationSimulation extends Simulation {
         while (cells.hasNext()) {
 
             Cell cell = cells.next();
-            if (cell.getMyCurrentState() == State.EMPTY && cell.getMyNextState() == null) {
-                cell.setMyNextState(State.EMPTY);
+            if (cell.getMyCurrentState() == SegregationState.EMPTY &&
+                cell.getMyNextState() == null) {
+                cell.setMyNextState(SegregationState.EMPTY);
             }
-            else if (cell.getMyCurrentState() == State.X || cell.getMyCurrentState() == State.O) {
-                if (cell.getMyNextState() != State.EMPTY)
+            else if (cell.getMyCurrentState() == SegregationState.X ||
+                     cell.getMyCurrentState() == SegregationState.O) {
+                if (cell.getMyNextState() != SegregationState.EMPTY)
                     updateAgent((AgentCell) cell);
             }
 
@@ -54,12 +57,12 @@ public class SegregationSimulation extends Simulation {
 
     private boolean isUnsatisfied (AgentCell cell) {
         List<Cell> neighbors =
-                getNeighbors().getSurroundingNeighbors(cell.getMyGridCoordinate());
+                getNeighborsHandler().getSurroundingNeighbors(cell.getMyGridCoordinate());
 
         int totalNeighbors = 0;
         int friendlyNeighbors = 0;
         for (Cell c : neighbors) {
-            if (c.getMyCurrentState() == State.EMPTY) {
+            if (c.getMyCurrentState() == SegregationState.EMPTY) {
                 continue;
             }
             if (c.getMyCurrentState() == cell.getMyCurrentState()) {
@@ -78,18 +81,19 @@ public class SegregationSimulation extends Simulation {
     private void move (AgentCell cell) {
         List<Cell> openCells = new ArrayList<Cell>();
         getGrid().getCellGrid().values().stream()
-                .filter(p -> (p.getMyCurrentState() == State.EMPTY &&
-                              (p.getMyNextState() == State.EMPTY || p.getMyNextState() == null)))
+                .filter(p -> (p.getMyCurrentState() == SegregationState.EMPTY &&
+                              (p.getMyNextState() == SegregationState.EMPTY ||
+                               p.getMyNextState() == null)))
                 .collect(Collectors.toCollection( () -> openCells));
         if (openCells.size() == 0)
             return;
         Cell moveTo = openCells.get(new Random().nextInt(openCells.size()));
         AgentCell endCell = new AgentCell(cell, moveTo.getMyGridCoordinate());
-        endCell.setMyCurrentState(State.EMPTY);
+        endCell.setMyCurrentState(SegregationState.EMPTY);
         endCell.setMyNextState(cell.getMyCurrentState());
         EmptyCell startCell = new EmptyCell(cell.getMyGridCoordinate());
         startCell.setMyCurrentState(cell.getMyCurrentState());
-        startCell.setMyNextState(State.EMPTY);
+        startCell.setMyNextState(SegregationState.EMPTY);
 
         getGrid().getCellGrid().put(endCell.getMyGridCoordinate(), endCell);
         getGrid().getCellGrid().put(startCell.getMyGridCoordinate(), startCell);
@@ -102,17 +106,15 @@ public class SegregationSimulation extends Simulation {
     }
 
     @Override
-    public Cell createCell (Coordinate coordinate, String currentState) {
-        State state = State.valueOf(currentState.toUpperCase());
-        if (state == State.EMPTY) {
+    public Cell createCell (Coordinate coordinate, State currentState) {
+        if (currentState == SegregationState.EMPTY) {
             return new EmptyCell(coordinate);
         }
         else {
-            return new AgentCell(state, coordinate, myAgentSatisfiedRatio);
+            return new AgentCell(currentState, coordinate, myAgentSatisfiedRatio);
         }
 
     }
-
 
     @Override
     public List<Integer> countCellsinGrid () {
@@ -122,13 +124,13 @@ public class SegregationSimulation extends Simulation {
         int oCount = 0;
         int emptyCount = 0;
         for (Cell cell : getGrid().getImmutableCellGrid().values()) {
-            if(cell.getMyCurrentState().equals(State.X)) {
+            if (cell.getMyCurrentState().equals(SegregationState.X)) {
                 xCount++;
             }
-            if(cell.getMyCurrentState().equals(State.O)) {
+            if (cell.getMyCurrentState().equals(SegregationState.O)) {
                 oCount++;
             }
-            if(cell.getMyCurrentState().equals(State.EMPTY)) {
+            if (cell.getMyCurrentState().equals(SegregationState.EMPTY)) {
                 emptyCount++;
             }
         }
@@ -137,7 +139,7 @@ public class SegregationSimulation extends Simulation {
         System.out.println("Empty: " + emptyCount);
         stepNum++;
         List<Integer> myOutput = new ArrayList<Integer>();
-        myOutput.add(stepNum-1);
+        myOutput.add(stepNum - 1);
         myOutput.add(xCount);
         myOutput.add(oCount);
         myOutput.add(emptyCount);
@@ -147,7 +149,49 @@ public class SegregationSimulation extends Simulation {
     @Override
     public void initializeSimulationToolbar (SimulationToolbar toolbar) {
         // TODO Auto-generated method stub
-        
+
+    }
+
+    @Override
+    public State[] getSimulationStates () {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public State getSimulationState (String simulationState) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    public enum SegregationState implements State {
+                                                    EMPTY(Color.WHITE),
+                                                    X(Color.RED),
+                                                    O(Color.BLUE);
+
+        private final Color myColor;
+        private double myProbability;
+
+        SegregationState (Color color) {
+            myColor = color;
+            myProbability = 0;
+        }
+
+        @Override
+        public Color getColor () {
+            return myColor;
+        }
+
+        @Override
+        public double getProbability () {
+            return myProbability;
+        }
+
+        @Override
+        public void setProbability (double probability) {
+            myProbability = probability;
+        }
+
     }
 
 }

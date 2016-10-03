@@ -11,6 +11,7 @@ import cell.EmptyCell;
 import grid.Coordinate;
 import grid.Grid;
 import grid.Neighbor;
+import javafx.scene.paint.Color;
 import cell.ForagingAntCell;
 import cell.State;
 
@@ -75,17 +76,17 @@ public class ForagingAntsSimulation extends Simulation {
 
     public void updateAnt (AntCell ant) {
         ant.update();
-        if (ant.getMyNextState() == State.DEAD) {
+        if (ant.getMyNextState() == ForagingAntState.DEAD) {
             return;
         }
-        // dropPheromones(ant, ant.getMyCurrentState()==State.FOODSEARCH);
+        // dropPheromones(ant, ant.getMyCurrentState()==ForagingAntState.FOODSEARCH);
         if (isAtFoodSource(ant)) {
             System.out.println("Found food");
             if (!ant.hasFood()) {
                 ant.pickUpFood();
             }
-            ant.setMyCurrentState(State.HOMESEARCH);
-            ant.setMyNextState(State.HOMESEARCH);
+            ant.setMyCurrentState(ForagingAntState.HOMESEARCH);
+            ant.setMyNextState(ForagingAntState.HOMESEARCH);
             // dropPheromones(ant, false);
             ForagingAntCell bestHome = getBestDirection(ant, false);
             if (bestHome != null)
@@ -99,8 +100,8 @@ public class ForagingAntsSimulation extends Simulation {
                 ant.dropFood();
                 myFoodGathered++;
             }
-            ant.setMyCurrentState(State.FOODSEARCH);
-            ant.setMyNextState(State.FOODSEARCH);
+            ant.setMyCurrentState(ForagingAntState.FOODSEARCH);
+            ant.setMyNextState(ForagingAntState.FOODSEARCH);
             // dropPheromones(ant, true);
             ForagingAntCell bestFood = getBestDirection(ant, true);
             if (bestFood != null)
@@ -108,7 +109,7 @@ public class ForagingAntsSimulation extends Simulation {
             forage(ant);
         }
         else {
-            if (ant.getMyCurrentState() == State.FOODSEARCH) {
+            if (ant.getMyCurrentState() == ForagingAntState.FOODSEARCH) {
 
                 forage(ant);
             }
@@ -123,8 +124,8 @@ public class ForagingAntsSimulation extends Simulation {
 
     private void goHome (AntCell ant) {
         List<Cell> neighbors =
-                getNeighbors().getDirectionNeighbors(ant.getMyGridCoordinate(),
-                                                     ant.getMyOrientation());
+                getNeighborsHandler().getDirectionNeighbors(ant.getMyGridCoordinate(),
+                                                            ant.getMyOrientation());
         ForagingAntCell nextCell = ant.goHome(neighbors);
         if (nextCell == null) {
             nextCell = ant.goHome(getSquareNeighbors(ant));
@@ -141,8 +142,8 @@ public class ForagingAntsSimulation extends Simulation {
      */
     private void forage (AntCell ant) {
         List<Cell> neighbors =
-                getNeighbors().getDirectionNeighbors(ant.getMyGridCoordinate(),
-                                                     ant.getMyOrientation());
+                getNeighborsHandler().getDirectionNeighbors(ant.getMyGridCoordinate(),
+                                                            ant.getMyOrientation());
         ForagingAntCell nextCell = ant.forage(neighbors);
         if (nextCell == null) {
             nextCell = ant.forage(getSquareNeighbors(ant));
@@ -182,7 +183,8 @@ public class ForagingAntsSimulation extends Simulation {
     }
 
     private ForagingAntCell getBestDirection (AntCell ant, boolean food) {
-        List<Cell> neighbors = getNeighbors().getSurroundingNeighbors(ant.getMyGridCoordinate());
+        List<Cell> neighbors =
+                getNeighborsHandler().getSurroundingNeighbors(ant.getMyGridCoordinate());
         return ant.getBestNeighbor(neighbors, food);
 
     }
@@ -220,14 +222,15 @@ public class ForagingAntsSimulation extends Simulation {
     }
 
     @Override
-    public Cell createCell (Coordinate coordinate, String currentState) {
+    public Cell createCell (Coordinate coordinate, State currentState) {
         ForagingAntCell cell =
-                new ForagingAntCell(State.EMPTY, coordinate, myMaxPheromones, myMaxAnts, k, n);
-        if (currentState.equals("Nest")) {
+                new ForagingAntCell(ForagingAntState.EMPTY, coordinate, myMaxPheromones, myMaxAnts,
+                                    k, n);
+        if (currentState == ForagingAntState.NEST) {
             myNest = cell;
             cell.setPheromones(myMaxPheromones, false);
         }
-        else if (currentState.equals("Food")) {
+        else if (currentState == ForagingAntState.FOOD) {
             foodCells.add(cell.getMyGridCoordinate());
             cell.setPheromones(myMaxPheromones, true);
         }
@@ -239,14 +242,58 @@ public class ForagingAntsSimulation extends Simulation {
         System.out.println("Gathered food: " + myFoodGathered);
         // TODO Auto-generated method stub
         List<Integer> myOutput = new ArrayList<Integer>();
-        myOutput.add(stepNum-1);
+        myOutput.add(stepNum - 1);
         return myOutput;
     }
 
     @Override
     public void initializeSimulationToolbar (SimulationToolbar toolbar) {
         // TODO Auto-generated method stub
-        
+
+    }
+
+    @Override
+    public State[] getSimulationStates () {
+        return ForagingAntState.values();
+    }
+
+    @Override
+    public State getSimulationState (String simulationState) {
+        return ForagingAntState.valueOf(simulationState.toUpperCase());
+    }
+
+    public enum ForagingAntState implements State {
+                                                    FOODSEARCH(Color.GREEN),
+                                                    EMPTY(Color.WHITE),
+                                                    HOMESEARCH(Color.BLUE),
+                                                    DEAD(Color.BLACK),
+                                                    FOOD(Color.GREEN),
+                                                    NEST(Color.BLUE);
+
+        private final Color myColor;
+        private double myProbability;
+
+        ForagingAntState (Color color) {
+            myColor = color;
+            myProbability = 0;
+        }
+
+        @Override
+        public Color getColor () {
+
+            return myColor;
+        }
+
+        @Override
+        public double getProbability () {
+            return myProbability;
+        }
+
+        @Override
+        public void setProbability (double probability) {
+            myProbability = probability;
+        }
+
     }
 
 }

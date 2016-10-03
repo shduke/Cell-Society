@@ -1,6 +1,7 @@
 package cell;
 
 import grid.Coordinate;
+import simulation.PredatorPreySimulation.PredatorPreyState;
 
 
 public class SharkCell extends Cell {
@@ -13,7 +14,7 @@ public class SharkCell extends Cell {
 
     public SharkCell (Coordinate coordinate, int breedTime, int maxHealth) {
         
-        super(State.SHARK, coordinate);
+        super(PredatorPreyState.SHARK, coordinate);
         myMaxBreedTime = breedTime;
         myCurrentBreedTime = myMaxBreedTime;
         myMaxHealth = maxHealth;
@@ -21,7 +22,7 @@ public class SharkCell extends Cell {
     }
     
     public SharkCell (SharkCell shark,Coordinate coordinate){
-        super(State.SHARK,coordinate);
+        super(PredatorPreyState.SHARK,coordinate);
         myMaxBreedTime = shark.myMaxBreedTime;
         myCurrentBreedTime = shark.myCurrentBreedTime;
         myMaxHealth = shark.myMaxHealth;
@@ -31,13 +32,13 @@ public class SharkCell extends Cell {
     
     public void eat(FishCell fish){
         myCurrentHealth = myMaxHealth;
-        fish.setMyNextState(State.DEAD);
+        fish.setMyNextState(PredatorPreyState.DEAD);
     }
     
     public void update () {
         myCurrentBreedTime = myCurrentBreedTime == 0 ? myMaxBreedTime : myCurrentBreedTime-1;
         if(myCurrentHealth == 0){
-            this.setMyNextState(State.DEAD);
+            this.setMyNextState(PredatorPreyState.DEAD);
         }
         else{
             myCurrentHealth--;

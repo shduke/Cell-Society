@@ -20,8 +20,8 @@ public class SimulationController {
     SimulationController (Group simulationRoot, int height, int width) {
         this.mySimulations = new ArrayList<Simulation>();
         this.simulationRoot = simulationRoot;
-        simulationRoot.relocate(height/4, width/4);
-        File simulationConfig = new File("src/resources/Fire.xml");
+
+        File simulationConfig = new File("src/resources/GameOfLife.xml");
         initializeSimulation(simulationConfig.getAbsolutePath());
     }
 

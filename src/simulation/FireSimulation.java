@@ -10,10 +10,13 @@ import cell.FireCell;
 import cell.State;
 import grid.Coordinate;
 import grid.Neighbor;
+
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
+
 import javafx.scene.paint.Color;
 
 
@@ -35,9 +38,9 @@ public class FireSimulation extends Simulation {
     }
 
     public boolean hasBurningNeighbor (Cell cell) {
-        for (Cell neighborCell : getNeighbors()
+        for (Cell neighborCell : getNeighborsHandler()
                 .getOrthogonalNeighbors(cell.getMyGridCoordinate())) {
-            if (neighborCell.getMyCurrentState().equals(State.BURNING)) {
+            if (neighborCell.getMyCurrentState().equals(FireState.BURNING)) {
                 return true;
             }
         }
@@ -52,13 +55,14 @@ public class FireSimulation extends Simulation {
         int treeCount = 0;
         int emptyCount = 0;
         for (Cell cell : getGrid().getImmutableCellGrid().values()) {
-            if (cell.getMyCurrentState().equals(State.BURNING)) {
+
+            if (cell.getMyCurrentState().equals(FireState.BURNING)) {
                 burningCount++;
             }
-            if (cell.getMyCurrentState().equals(State.TREE)) {
+            if (cell.getMyCurrentState().equals(FireState.TREE)) {
                 treeCount++;
             }
-            if (cell.getMyCurrentState().equals(State.EMPTY)) {
+            if (cell.getMyCurrentState().equals(FireState.EMPTY)) {
                 emptyCount++;
             }
         }
@@ -76,23 +80,23 @@ public class FireSimulation extends Simulation {
 
     // is switching on cell state bad?
     public void setNextState (Cell cell) {
-        if (cell.getMyCurrentState().equals(State.TREE)) {
-            cell.setMyNextState(State.TREE);
+        if (cell.getMyCurrentState().equals(FireState.TREE)) {
+            cell.setMyNextState(FireState.TREE);
             Random rn = new Random();
             if (hasBurningNeighbor(cell) && rn.nextInt(100) < probCatch) {
-                cell.setMyNextState(State.BURNING);
+                cell.setMyNextState(FireState.BURNING);
                 ((FireCell) cell).setBurnTimer(burnTime);
             }
         }
-        else if (cell.getMyCurrentState().equals(State.BURNING)) {
+        else if (cell.getMyCurrentState().equals(FireState.BURNING)) {
             ((FireCell) cell).decrementBurnTimer();
-            cell.setMyNextState(State.BURNING);
+            cell.setMyNextState(FireState.BURNING);
             if (((FireCell) cell).getBurnTimer() == 0) {
-                cell.setMyNextState(State.EMPTY);
+                cell.setMyNextState(FireState.EMPTY);
             }
         }
         else {
-            cell.setMyNextState(State.EMPTY);
+            cell.setMyNextState(FireState.EMPTY);
         }
     }
 
@@ -103,8 +107,8 @@ public class FireSimulation extends Simulation {
     }
 
     @Override
-    public Cell createCell (Coordinate coordinate, String currentState) {
-        FireCell cell = new FireCell(State.valueOf(currentState.toUpperCase()), coordinate);
+    public Cell createCell (Coordinate coordinate, State currentState) {
+        FireCell cell = new FireCell(currentState, coordinate);
         int r = (int) coordinate.getX();
         int c = (int) coordinate.getY();
         /*
@@ -117,6 +121,7 @@ public class FireSimulation extends Simulation {
         return cell;
     }
 
+
     @Override
     public void initializeSimulationToolbar (SimulationToolbar toolbar) {
         // toolbar = new SimulationToolbar();
@@ -127,7 +132,56 @@ public class FireSimulation extends Simulation {
 
         Slider otherSlider = new Slider(.5, 2, 1);
         toolbar.addSlider(otherSlider, "other shit");
+    }
+//    private State randomGeneration() {
+//        Random rn = new Random();
+//        double spawnRandomNumber = rn.nextDouble() * 100;
+//        double currentProbability = 0;
+//        for(FireState state : FireState.values()) {
+//            currentProbability += state.getProbability();
+//            if(spawnRandomNumber < currentProbability) {
+//                return state;
+//            }
+//        }
+//        return FireState.valueOf(getDefaultState());
+//    }
+    
+    private enum FireState implements State {
 
+                                            EMPTY(Color.YELLOW),
+                                            TREE(Color.GREEN),
+                                            BURNING(Color.RED);
+
+        private final Color myColor;
+        private double myProbability;
+
+        FireState (Color color) {
+            myColor = color;
+            myProbability = 0;
+        }
+
+        public Color getColor () {
+            return myColor;
+        }
+        
+        public double getProbability () {
+            return myProbability;
+        }
+        
+        public void setProbability (double probability) {
+            myProbability = probability;
+        }
+        
+    }
+
+    @Override
+    public State[] getSimulationStates () {
+        return FireState.values();
+    }
+
+    @Override
+    public State getSimulationState (String simulationState) {
+        return FireState.valueOf(simulationState.toUpperCase());
     }
 
 }

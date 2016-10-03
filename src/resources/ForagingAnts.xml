@@ -7,9 +7,13 @@
 			<gridHeight>500</gridHeight>
 			<numberOfRows>30</numberOfRows>
 			<numberOfColumns>30</numberOfColumns>
+			<defaultState>Empty</defaultState>
+			<cellShape>Rectangle</cellShape>
+			<neighborsToConsider>Square</neighborsToConsider>
+			<edgeType>Normal</edgeType>
+			<generationType>Specific</generationType>
 		</GeneralConfig>
 		<SimulationConfig>
-			<default>Empty</default>
 			<maxPheromones>5000</maxPheromones>
 			<diffusionRate>0.01</diffusionRate>
 			<evaporationRate>0.01</evaporationRate>
@@ -18,7 +22,7 @@
 			<maxAnts>10</maxAnts>
 			<antLifetime>500</antLifetime>
 		</SimulationConfig>
-		<Cells InitialSetup="Specific">
+		<Cells>
 			<cell_2_2>Nest</cell_2_2>
 			<cell_20_11>Food</cell_20_11>
 			<cell_5_27>Food</cell_5_27>
