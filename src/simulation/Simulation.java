@@ -68,9 +68,9 @@ public abstract class Simulation {
     public abstract void step ();
 
     public void initializeSimulation (Map<String, Map<String, String>> simulationConfig) {
+        initializeSimulationDetails(simulationConfig.get("SimulationConfig"));
         initializeGrid(simulationConfig);
         initializeGeneralDetails(simulationConfig.get("GeneralConfig"));
-        initializeSimulationDetails(simulationConfig.get("SimulationConfig"));
         //generateMap();
         /*
          * setGridView(new RectangleGridView(new Dimension2D(Double
@@ -235,9 +235,7 @@ public abstract class Simulation {
 
     public abstract State[] getSimulationStates();
     public abstract State getSimulationState(String simulationState);
-    
-    public abstract double getSpawnProbability(double currentProbability);
-    
+        
     private State stateGenerator() {
         Random rn = new Random();
         double spawnRandomNumber = rn.nextDouble() * 100;

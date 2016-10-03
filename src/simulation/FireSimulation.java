@@ -153,10 +153,4 @@ public class FireSimulation extends Simulation {
         return FireState.valueOf(simulationState.toUpperCase());
     }
 
-    @Override
-    public double getSpawnProbability (double currentProbability) {
-        // TODO Auto-generated method stub
-        return 0;
-    }
-
 }

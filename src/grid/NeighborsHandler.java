@@ -65,7 +65,7 @@ public abstract class NeighborsHandler {
     }
 
     public List<Cell> getSurroundingNeighbors (Coordinate coordinate) {
-        return getNeighbors(Neighbor.valueOf(myNeighborsToConsider + "SURROUNDING").getNeighbors(),
+        return getNeighbors(Neighbor.valueOf(myNeighborsToConsider).getNeighbors(),
                             coordinate);
     }
 

@@ -10,6 +10,7 @@ import grid.Coordinate;
 import grid.Grid;
 import grid.Neighbor;
 import javafx.scene.paint.Color;
+import simulation.FireSimulation.FireState;
 
 
 public class GameOfLifeSimulation extends Simulation {
@@ -55,15 +56,6 @@ public class GameOfLifeSimulation extends Simulation {
 
     }
 
-    @Override
-    public Cell createCell (Coordinate coordinate, String currentState) {
-        GameOfLifeCell cell =
-                new GameOfLifeCell(GameOfLifeState.valueOf(currentState.toUpperCase()), coordinate);
-        if (new Random().nextInt(2) == 1) {
-            cell.setMyCurrentState(GameOfLifeState.LIVING);
-        }
-        return cell;
-    }
 
     @Override
     public void countCellsinGrid () {
@@ -92,11 +84,11 @@ public class GameOfLifeSimulation extends Simulation {
                                                   LIVING(Color.DARKGREEN);
 
         private final Color myColor;
-        private final double myProbability;
+        private double myProbability;
 
         GameOfLifeState (Color color) {
             myColor = color;
-            myProbability = 100.0 / (GameOfLifeState.values().length);
+            myProbability = 0;
         }
 
         public Color getColor () {
@@ -107,9 +99,26 @@ public class GameOfLifeSimulation extends Simulation {
             return myProbability;
         }
         
-        public double setProbability (double probability) {
-            return myProbability;
+        public void setProbability (double probability) {
+            myProbability = probability;
         }
+    }
+
+    @Override
+    public Cell createCell (Coordinate coordinate, State currentState) {
+        GameOfLifeCell cell = new GameOfLifeCell(currentState, coordinate);
+        return cell;
+    }
+
+    @Override
+    public State[] getSimulationStates () {
+        return GameOfLifeState.values();
+    }
+
+    @Override
+    public State getSimulationState (String simulationState) {
+        return GameOfLifeState.valueOf(simulationState.toUpperCase());
+
     }
 
 }
