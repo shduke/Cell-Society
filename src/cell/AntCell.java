@@ -23,11 +23,6 @@ public class AntCell extends Cell {
     }
 
     public void update () {
-        // System.out.println(this.getMyGridCoordinate() + " is moving to " + myNextCoordinate);
-        // this.setMyGridCoordinate(myNextCoordinate);
-        // myNextCoordinate = this.getMyGridCoordinate();
-        System.out.println("This ant does " + (this.hasFood() ? "" : " not ") +
-                           " have food and is going " + this.getMyCurrentState());
         if (this.hasFood()) {
             this.setMyCurrentState(ForagingAntState.HOMESEARCH);
             this.setMyNextState(ForagingAntState.HOMESEARCH);
@@ -61,9 +56,7 @@ public class AntCell extends Cell {
                     return cell;
                 }
             }
-            // this.wontMove();
             return null;
-
         }
         return null;
 

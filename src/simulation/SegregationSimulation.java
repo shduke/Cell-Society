@@ -1,3 +1,16 @@
+/**
+ * @author Michael Schroeder
+ * 
+ *         This class implements the Segregation Simulation. The grid is filled with AgentCells and
+ *         EmptyCells. AgentCells can have one of two states, X and O. This represents how they are
+ *         going to segregate themselves.
+ * 
+ *         This class is used by XMLParser, which returns an initialized simulation, by passing in a
+ *         map of configuration variables, which are sets up the instance variables in
+ *         initializeSimulationDetails.
+ *         
+ */
+
 package simulation;
 
 import java.util.stream.Collectors;
@@ -7,7 +20,6 @@ import cell.Cell;
 import cell.EmptyCell;
 import cell.State;
 import grid.Coordinate;
-import grid.Neighbor;
 import javafx.scene.control.Slider;
 import javafx.scene.paint.Color;
 import java.util.*;
@@ -21,7 +33,6 @@ public class SegregationSimulation extends Simulation {
 
     public SegregationSimulation (Map<String, Map<String, String>> simulationConfig) {
         super(simulationConfig);
-        // generateMap(getGrid().getNumRows(), getGrid().getNumColumns(), getGrid());
     }
 
     @Override
@@ -29,7 +40,7 @@ public class SegregationSimulation extends Simulation {
         updateAgents();
         updateGrid();
     }
-    
+
     @Override
     public void getSimulationNames () {
         List<String> myList = new ArrayList<String>();

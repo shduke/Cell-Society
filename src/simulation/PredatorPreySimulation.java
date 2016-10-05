@@ -8,17 +8,9 @@ import javafx.scene.control.Slider;
 import javafx.scene.paint.*;
 
 
-/**
- * Commented out just so I can run/test the program
- */
+
 public class PredatorPreySimulation extends Simulation {
 
-    /*
-     * PredatorPreySimulation (Dimension2D gridViewSize) {
-     * super(gridViewSize);
-     * // TODO Auto-generated constructor stub
-     * }
-     */
     private Neighbor myNeighborType;
     private int myPreyBreedTime;
     private int myPredatorBreedTime;

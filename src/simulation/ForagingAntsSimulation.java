@@ -1,3 +1,17 @@
+/**
+ * @author Michael Schroeder
+ * 
+ *         This class implements the Foraging Ants Simulation. There are ForagingAntCells, which are
+ *         the patches that contain pheromones, as well as AntCells. The AntCells move around the
+ *         ForagingAntCells, searching
+ *         either for food or the nest. This class depends on the Grid class (although it is
+ *         insulated from its implementation), the ForagingAntCell and AntCell classes, and the
+ *         NeighborsHandler class.
+ * 
+ *         This class is used by XMLParser, which returns an initialized simulation, by passing in a
+ *         map of configuration variables, which are
+ *         set in initializeSimulationDetails.
+ */
 package simulation;
 
 import java.util.ArrayList;
@@ -33,10 +47,19 @@ public class ForagingAntsSimulation extends Simulation {
     private double myK;
     private double myN;
 
+    /**
+     * Constructs a ForagingAntSimulation using the configuration detailed in the XML file
+     * 
+     * @param simulationConfig
+     */
     public ForagingAntsSimulation (Map<String, Map<String, String>> simulationConfig) {
         super(simulationConfig);
     }
 
+    /**
+     * Called every frame by SimulationController. Every Simulation has a step method, which
+     * calculates next states, and updates the grid
+     */
     @Override
     public void step () {
         stepNum++;
@@ -51,7 +74,7 @@ public class ForagingAntsSimulation extends Simulation {
     private void updateCells () {
         Iterator<Cell> cells = getGrid().iterator();
         while (cells.hasNext()) {
-            ForagingAntCell cell = (ForagingAntCell)cells.next();
+            ForagingAntCell cell = (ForagingAntCell) cells.next();
             cell.update();
         }
     }
@@ -60,15 +83,15 @@ public class ForagingAntsSimulation extends Simulation {
         myTotalAnts = 0;
         Iterator<Cell> cells = getGrid().iterator();
         while (cells.hasNext()) {
-            ForagingAntCell cell = (ForagingAntCell)cells.next();
+            ForagingAntCell cell = (ForagingAntCell) cells.next();
             for (AntCell a : cell.getAnts()) {
                 myTotalAnts++;
                 updateAnt(a);
             }
         }
     }
-
-    public void updateAnt (AntCell ant) {
+    
+    private void updateAnt (AntCell ant) {
         ant.update();
         if (ant.getMyNextState() == ForagingAntState.DEAD) {
             return;
@@ -137,19 +160,15 @@ public class ForagingAntsSimulation extends Simulation {
         }
         if (nextCell != null) {
             dropPheromones(ant, true);
-            // Systemout.println(nextCell.fullOfAnts());
-            // Systemout.println("Ant will move: " + ant.isDeadOrMoving());
             ant.willMove();
             nextCell.addAnt(ant);
-            // ant.setMyNextGridCoordinate(nextCell.getMyGridCoordinate());
-
         }
 
     }
 
     private void dropPheromones (AntCell ant, boolean food) {
         ForagingAntCell cell =
-                (ForagingAntCell)getGrid().getCellGrid().get(ant.getMyGridCoordinate());
+                (ForagingAntCell) getGrid().getCellGrid().get(ant.getMyGridCoordinate());
         if (food) {
             if (isAtNest(ant)) {
                 cell.setMaxPheromones(false);
@@ -187,7 +206,7 @@ public class ForagingAntsSimulation extends Simulation {
     private void diffuse () {
         Iterator<Cell> cells = getGrid().iterator();
         while (cells.hasNext()) {
-            ForagingAntCell cell = (ForagingAntCell)cells.next();
+            ForagingAntCell cell = (ForagingAntCell) cells.next();
             cell.diffuseAndEvaporate(getSquareNeighbors(cell), myDiffusionRate, myEvaporationRate);
         }
     }
@@ -245,7 +264,7 @@ public class ForagingAntsSimulation extends Simulation {
         Slider antLifetimeSlider =
                 new Slider(MIN_LIFETIME_SLIDER, MAX_LIFETIME_SLIDER, myAntLifetime);
         antLifetimeSlider.valueProperty()
-                .addListener(e -> myAntLifetime = (int)antLifetimeSlider.getValue());
+                .addListener(e -> myAntLifetime = (int) antLifetimeSlider.getValue());
         toolbar.addSlider(antLifetimeSlider, "antLifetime");
     }
 
@@ -253,7 +272,7 @@ public class ForagingAntsSimulation extends Simulation {
     public State[] getSimulationStates () {
         return ForagingAntState.values();
     }
-    
+
     @Override
     public void getSimulationNames () {
         ResourceBundle GUIResources = ResourceBundle.getBundle("resources/English");
