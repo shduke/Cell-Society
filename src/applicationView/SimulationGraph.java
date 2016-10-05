@@ -14,9 +14,6 @@ public class SimulationGraph {
     private Series<Number, Number> mySecondSeries = new XYChart.Series<Number, Number>();
     private Series<Number, Number> myThirdSeries = new XYChart.Series<Number, Number>();
     private LineChart<Number, Number> myLineChart = new LineChart<Number, Number>(new NumberAxis(), new NumberAxis());;
-    
-    public SimulationGraph () {
-    }
 
     public LineChart<Number, Number> createGraph () {
         myLineChart.setPrefHeight(50);
@@ -39,7 +36,7 @@ public class SimulationGraph {
         }
     }
 
-    public Series<Number, Number> updateGraph (List<Integer> myOutput) {
+    public void updateGraph (List<Integer> myOutput) {
         myFirstSeries.getData().add(new Data<Number, Number>(myOutput.get(0), myOutput.get(1)));
         if (myOutput.size() > 2) {
             mySecondSeries.getData()
@@ -48,7 +45,6 @@ public class SimulationGraph {
         if (myOutput.size() > 3) {
             myThirdSeries.getData().add(new Data<Number, Number>(myOutput.get(0), myOutput.get(3)));
         }
-        return myFirstSeries;
     }
 
 }

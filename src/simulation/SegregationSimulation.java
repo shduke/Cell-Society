@@ -119,7 +119,7 @@ public class SegregationSimulation extends Simulation {
         AgentCell endCell = new AgentCell(cell, moveTo.getMyGridCoordinate());
         endCell.setMyCurrentState(SegregationState.EMPTY);
         endCell.setMyNextState(cell.getMyCurrentState());
-        EmptyCell startCell = new EmptyCell(cell.getMyGridCoordinate());
+        EmptyCell startCell = new EmptyCell(cell.getMyGridCoordinate(), SegregationState.EMPTY);
         startCell.setMyCurrentState(cell.getMyCurrentState());
         startCell.setMyNextState(SegregationState.EMPTY);
 
@@ -136,7 +136,7 @@ public class SegregationSimulation extends Simulation {
     @Override
     public Cell createCell (Coordinate coordinate, State currentState) {
         if (currentState == SegregationState.EMPTY) {
-            return new EmptyCell(coordinate);
+            return new EmptyCell(coordinate, SegregationState.EMPTY);
         }
         else {
             return new AgentCell(currentState, coordinate, myAgentSatisfiedRatio);
@@ -179,7 +179,7 @@ public class SegregationSimulation extends Simulation {
     public enum SegregationState implements State {
                                                    EMPTY(Color.WHITE),
                                                    X(Color.RED),
-                                                   O(Color.BLUE);
+                                                   O(Color.GREEN);
 
         private final Color myColor;
         private double myProbability;
