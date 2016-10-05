@@ -4,6 +4,15 @@ import grid.Coordinate;
 import javafx.scene.paint.Color;
 
 
+/**
+ * This is the base class for every "cell" in every simulation. Every cell has a coordinate, a
+ * state, and a next state. The subclasses add extra methods, such as update (if they have
+ * persistent data), as well as other simulation-specific calculations. See AntCell or SharkCell for
+ * an example of how to extend this class.
+ * 
+ * @author Michael Schroeder
+ *
+ */
 public abstract class Cell {
 
     private State myCurrentState;

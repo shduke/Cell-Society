@@ -3,10 +3,11 @@
  * 
  *         This class implements the Foraging Ants Simulation. There are ForagingAntCells, which are
  *         the patches that contain pheromones, as well as AntCells. The AntCells move around the
- *         ForagingAntCells, searching
- *         either for food or the nest. This class depends on the Grid class (although it is
- *         insulated from its implementation), the ForagingAntCell and AntCell classes, and the
- *         NeighborsHandler class.
+ *         ForagingAntCells, searching either for food or the nest. This tracks the number of ants,
+ *         as well as the amount of food gathered, for graphing purposes. This class depends on the
+ *         Grid class (although it is insulated from its implementation), the ForagingAntCell and
+ *         AntCell classes, the NeighborsHandler class, and SimulationToolbar (which it adds its
+ *         simulation-specific sliders to).
  * 
  *         This class is used by XMLParser, which returns an initialized simulation, by passing in a
  *         map of configuration variables, which are
@@ -90,7 +91,7 @@ public class ForagingAntsSimulation extends Simulation {
             }
         }
     }
-    
+
     private void updateAnt (AntCell ant) {
         ant.update();
         if (ant.getMyNextState() == ForagingAntState.DEAD) {
@@ -231,11 +232,11 @@ public class ForagingAntsSimulation extends Simulation {
                                     myK, myN);
         if (currentState == ForagingAntState.NEST) {
             myNest = cell;
-            cell.setPheromones(myMaxPheromones, false);
+            cell.setMaxPheromones(false);
         }
         else if (currentState == ForagingAntState.FOOD) {
             myFoodCells.add(cell.getMyGridCoordinate());
-            cell.setPheromones(myMaxPheromones, true);
+            cell.setMaxPheromones(true);
         }
         return cell;
     }

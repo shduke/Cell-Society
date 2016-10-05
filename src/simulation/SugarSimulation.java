@@ -43,7 +43,7 @@ public class SugarSimulation extends Simulation {
 
         return cellCounts;
     }
-    
+
     @Override
     public void getSimulationNames () {
         ResourceBundle GUIResources = ResourceBundle.getBundle("resources/English");
@@ -85,7 +85,7 @@ public class SugarSimulation extends Simulation {
                 new SugarAgentCell(SugarState.ALIVE, coordinate, vision, initialSugar, metabolism);
         int maxSugar = r.nextInt(myMaxPatchSugar);
         SugarPatchCell cell;
-        if(currentState == SugarState.SUGAR){
+        if (currentState == SugarState.SUGAR) {
             cell = new SugarPatchCell(SugarState.EMPTY, coordinate, myMaxPatchSugar);
         }
         else {
@@ -157,7 +157,7 @@ public class SugarSimulation extends Simulation {
         }
 
     }
-    
+
     private void updatePatches () {
         Iterator<Cell> cellIter = getGrid().iterator();
         while (cellIter.hasNext()) {
@@ -175,17 +175,11 @@ public class SugarSimulation extends Simulation {
             if (cell.hasAgent()) {
 
                 SugarAgentCell agent = cell.getAgent();
-                System.out.println(agent.getMyCurrentState());
-                System.out.println(agent.getMyNextState());
-                System.out.println(agent.isDead() + " dead?");
                 if (agent.getMyCurrentState() == SugarState.DEAD || agent.isDead()) {
                     cell.killAgent();
                     System.out.println("KILL");
                 }
                 else if (!(agent.getMyNextState() == SugarState.DEAD)) {
-                    if (agent.getMyCurrentState() == SugarState.ALIVE) {
-                        // myNumAgents++;
-                    }
                     updateAgent(agent, cell);
                 }
             }
