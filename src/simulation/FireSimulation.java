@@ -163,7 +163,7 @@ public class FireSimulation extends Simulation {
         for (State n : getSimulationStates()) {
             myList.add(n.name());
         }
-        mySimulationGraph.addToLegend(myList);
+        addToLegend(myList);
     }
 
 }

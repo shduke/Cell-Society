@@ -2,7 +2,11 @@ package cell;
 
 import grid.Coordinate;
 import simulation.PredatorPreySimulation.PredatorPreyState;
-
+/**
+ * For use in PredatorPreySimulation (this is the prey)
+ * @author Michael Schroeder
+ *
+ */
 
 public class FishCell extends Cell {
 

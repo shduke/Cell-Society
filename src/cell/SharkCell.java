@@ -3,7 +3,11 @@ package cell;
 import grid.Coordinate;
 import simulation.PredatorPreySimulation.PredatorPreyState;
 
-
+/**
+ * For use in PredatorPreySimulation (this is the predator)
+ * @author Michael Schroeder
+ *
+ */
 public class SharkCell extends Cell {
 
     private int myMaxBreedTime;

@@ -56,7 +56,7 @@ public class SegregationSimulation extends Simulation {
         for (State n : getSimulationStates()) {
             myList.add(n.name());
         }
-        mySimulationGraph.addToLegend(myList);
+        addToLegend(myList);
     }
 
     private void updateAgents () {
