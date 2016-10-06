@@ -57,20 +57,7 @@ public class ForagingAntCell extends Cell {
 
         updateAnts();
     }
-
-    private void updateAnts () {
-        removeDeadAnts();
-        addNextAnts();
-    }
-
-    private void addNextAnts () {
-        for (AntCell a : myNextAnts) {
-            myAnts.add(a);
-            a.setMyGridCoordinate(this.getMyGridCoordinate());
-        }
-        myNextAnts.clear();
-    }
-
+    
     /**
      * Adds an ant that will move to this cell on the next step
      * 
@@ -79,16 +66,7 @@ public class ForagingAntCell extends Cell {
     public void addAnt (AntCell ant) {
         myNextAnts.add(ant);
     }
-
-    private void removeDeadAnts () {
-        Iterator<AntCell> iter = myAnts.iterator();
-        while (iter.hasNext()) {
-            if (iter.next().isDeadOrMoving()) {
-                iter.remove();
-            }
-        }
-    }
-
+    
     /**
      * Returns whether or not this Cell is at its maximum ant capacity
      * 
@@ -132,17 +110,7 @@ public class ForagingAntCell extends Cell {
         setPheromones(Math.max(desired, getPheromones(food)), food);
 
     }
-
-    private void setPheromones (double value, boolean food) {
-        if (food) {
-            System.out.println("Food phero " + value);
-            myFoodPheromones = value;
-        }
-        else {
-            myHomePheromones = value;
-        }
-    }
-
+    
     /**
      * Spawns a new AntCell at this ForagingAntCell
      * 
@@ -237,5 +205,37 @@ public class ForagingAntCell extends Cell {
         int green = (int) ((myHomePheromones / myMaxPheromones) * MAX_COLOR_VALUE);
         int blue = (int) ((myFoodPheromones / myMaxPheromones) * MAX_COLOR_VALUE);
         return Color.rgb(red, green, blue);
+    }
+
+    private void updateAnts () {
+        removeDeadAnts();
+        addNextAnts();
+    }
+
+    private void addNextAnts () {
+        for (AntCell a : myNextAnts) {
+            myAnts.add(a);
+            a.setMyGridCoordinate(this.getMyGridCoordinate());
+        }
+        myNextAnts.clear();
+    }
+
+    private void removeDeadAnts () {
+        Iterator<AntCell> iter = myAnts.iterator();
+        while (iter.hasNext()) {
+            if (iter.next().isDeadOrMoving()) {
+                iter.remove();
+            }
+        }
+    }
+
+    private void setPheromones (double value, boolean food) {
+        if (food) {
+            System.out.println("Food phero " + value);
+            myFoodPheromones = value;
+        }
+        else {
+            myHomePheromones = value;
+        }
     }
 }

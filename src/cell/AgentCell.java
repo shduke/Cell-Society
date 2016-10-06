@@ -1,3 +1,8 @@
+
+package cell;
+
+import grid.Coordinate;
+
 /**
  * @author Michael Schroeder
  * 
@@ -7,15 +12,6 @@
  *         similar neighbors to other neighbors, which determines whether or not it will move to a
  *         new location.
  * 
- */
-package cell;
-
-import grid.Coordinate;
-
-/**
- * 
- * @author Michael Schroeder
- *
  */
 public class AgentCell extends Cell {
 
