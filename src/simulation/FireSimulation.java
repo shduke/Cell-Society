@@ -166,7 +166,7 @@ public class FireSimulation extends Simulation {
         for (State n : getSimulationStates()) {
             myList.add(n.name());
         }
-        addToLegend(myList);
+        mySimulationGraph.addToLegend(myList);
     }
 
 }

@@ -26,11 +26,6 @@ public class SugarAgentCell extends Cell {
         myMetabolism = metabolism;
     }
 
-    /**
-     * Makes a copy of the parameter cell
-     * 
-     * @param cell - the cell to copy
-     */
     public SugarAgentCell (SugarAgentCell cell) {
         super(SugarState.EMPTY, cell.getMyGridCoordinate());
         this.setMyNextState(SugarState.ALIVE);
@@ -39,18 +34,11 @@ public class SugarAgentCell extends Cell {
         myMetabolism = cell.myMetabolism;
     }
 
-    /**
-     * Finds the best location to move to, in terms of sugar
-     * 
-     * @param neighbors - list of all the neighboring SugarPatchCells
-     * @param currentSugar
-     * @return
-     */
-    public SugarPatchCell findSugar (List<Cell> neighbors) {
+    public SugarPatchCell findSugar (List<Cell> neighbors, int currentSugar) {
         SugarPatchCell bestCell = null;
         int maxSugar = -1;
         for (Cell c : neighbors) {
-            SugarPatchCell cell = (SugarPatchCell) c;
+            SugarPatchCell cell = (SugarPatchCell)c;
             if (cell.getSugar() > maxSugar && cell.isEmpty()) {
                 bestCell = cell;
                 maxSugar = cell.getSugar();
@@ -59,38 +47,24 @@ public class SugarAgentCell extends Cell {
         return bestCell;
     }
 
-    /**
-     * Updates this cell's amount of sugar every step
-     */
     public void update () {
         mySugar -= myMetabolism;
         if (mySugar <= 0) {
             this.setMyNextState(SugarState.DEAD);
         }
+        //if(this.getMyNextState() == null){
+          //  this.setMyNextState(SugarState.ALIVE);
+        //}
+        
     }
-
-    /**
-     * 
-     * @return - true if this cell is dead
-     */
+    
     public boolean isDead () {
         return this.mySugar <= 0;
     }
-
-    /**
-     * Distance this cell can see
-     * 
-     * @return - number of cells away this cell can "see"
-     */
+    
     public int getVision () {
         return myVision;
     }
-
-    /**
-     * Eat the sugar at the given cell
-     * 
-     * @param cell - cell to take sugar from
-     */
     public void eat (SugarPatchCell cell) {
         mySugar += Math.min(myMetabolism, cell.getSugar());
         cell.setSugar(Math.max(0, cell.getSugar() - myMetabolism));
