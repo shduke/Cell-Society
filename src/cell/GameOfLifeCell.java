@@ -2,6 +2,7 @@ package cell;
 
 import grid.Coordinate;
 
+
 /**
  * 
  * @author Sean Hudson

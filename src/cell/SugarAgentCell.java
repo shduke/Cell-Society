@@ -51,11 +51,7 @@ public class SugarAgentCell extends Cell {
         mySugar -= myMetabolism;
         if (mySugar <= 0) {
             this.setMyNextState(SugarState.DEAD);
-        }
-        //if(this.getMyNextState() == null){
-          //  this.setMyNextState(SugarState.ALIVE);
-        //}
-        
+        }  
     }
     
     public boolean isDead () {
