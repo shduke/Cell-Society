@@ -15,6 +15,12 @@ public class AntCell extends Cell {
     private Coordinate myOrientation;
     private boolean myFood;
 
+    /**
+     * Construct an AntCell at the given coordinate, with the given lifetime
+     * 
+     * @param coordinate - the coordinate where the ant will be created
+     * @param lifetime - this ant's lifetime
+     */
     public AntCell (Coordinate coordinate, int lifetime) {
 
         super(ForagingAntState.FOODSEARCH, coordinate);
@@ -22,12 +28,10 @@ public class AntCell extends Cell {
 
     }
 
+    /**
+     * Called every step by ForagingAntSimulation to update the ants state and lifetime
+     */
     public void update () {
-        // System.out.println(this.getMyGridCoordinate() + " is moving to " + myNextCoordinate);
-        // this.setMyGridCoordinate(myNextCoordinate);
-        // myNextCoordinate = this.getMyGridCoordinate();
-        System.out.println("This ant does " + (this.hasFood() ? "" : " not ") +
-                           " have food and is going " + this.getMyCurrentState());
         if (this.hasFood()) {
             this.setMyCurrentState(ForagingAntState.HOMESEARCH);
             this.setMyNextState(ForagingAntState.HOMESEARCH);
@@ -39,21 +43,36 @@ public class AntCell extends Cell {
         }
     }
 
+    /**
+     * Sets this ants moving status to true (meaning it will move next update)
+     */
     public void willMove () {
         myMovingStatus = true;
     }
 
+    /**
+     * Used to tell which ants should be removed from a ForagingAntCell after each step
+     * 
+     * @return true if the ant is moving or has died, false otherwise
+     */
     public boolean isDeadOrMoving () {
         return getMyNextState() == ForagingAntState.DEAD || myMovingStatus;
     }
 
+    /**
+     * Randomly chooses the next cell an ant will move to when foraging for food based on its
+     * probability of being chosen
+     * 
+     * @param neighbors - list of neighbor cells to check
+     * @return - the next ForagingAntCell the ant will occupy, or null (if they are all full)
+     */
     public ForagingAntCell forage (List<Cell> neighbors) {
         if (tryToMove(neighbors)) {
             double total = getProbSum(neighbors);
             double random = new Random().nextDouble() * total;
             double counter = 0;
             for (Cell c : neighbors) {
-                ForagingAntCell cell = (ForagingAntCell)c;
+                ForagingAntCell cell = (ForagingAntCell) c;
                 counter += cell.getProb();
                 if (random < counter && !cell.fullOfAnts()) {
 
@@ -61,18 +80,25 @@ public class AntCell extends Cell {
                     return cell;
                 }
             }
-            // this.wontMove();
             return null;
-
         }
         return null;
 
     }
 
+    /**
+     * Sets this ants moving status to false
+     */
     public void doneMoving () {
         this.myMovingStatus = false;
     }
 
+    /**
+     * Chooses the neighboring cell with the most home pheromones
+     * 
+     * @param neighbors - list of neighboring cells to choose from
+     * @return - ForagingAntCell that the ant will move to next turn, or null
+     */
     public ForagingAntCell goHome (List<Cell> neighbors) {
         if (tryToMove(neighbors)) {
             ForagingAntCell bestNeighbor = getBestNeighbor(neighbors, false);
@@ -87,12 +113,19 @@ public class AntCell extends Cell {
         return null;
     }
 
+    /**
+     * Returns the neighbor that this AntCell should move to
+     * 
+     * @param neighbors - list of neighbors to check
+     * @param food - whether or not the ant is looking for food
+     * @return - ForagingAntCell that the Ant will move to (if not null)
+     */
     public ForagingAntCell getBestNeighbor (List<Cell> neighbors, boolean food) {
         Collections.shuffle(neighbors);
         ForagingAntCell bestCell = null;
         double mostPheromones = -1;
         for (Cell c : neighbors) {
-            ForagingAntCell cell = (ForagingAntCell)c;
+            ForagingAntCell cell = (ForagingAntCell) c;
             if (cell.getPheromones(food) >= mostPheromones && !cell.fullOfAnts()) {
                 mostPheromones = cell.getPheromones(food);
                 bestCell = cell;
@@ -101,9 +134,6 @@ public class AntCell extends Cell {
         return bestCell;
     }
 
-    /**
-     * @param neighbors
-     */
     private boolean tryToMove (List<Cell> neighbors) {
         removeFullCells(neighbors);
         if (neighbors.size() == 0) {
@@ -118,13 +148,10 @@ public class AntCell extends Cell {
         this.myMovingStatus = false;
     }
 
-    /**
-     * @param neighbors
-     */
     private void removeFullCells (List<Cell> neighbors) {
         Iterator<Cell> iter = neighbors.iterator();
         while (iter.hasNext()) {
-            if (((ForagingAntCell)iter.next()).fullOfAnts()) {
+            if (((ForagingAntCell) iter.next()).fullOfAnts()) {
                 iter.remove();
             }
         }
@@ -133,34 +160,55 @@ public class AntCell extends Cell {
     private double getProbSum (List<Cell> neighbors) {
         double sum = 0;
         for (Cell cell : neighbors) {
-            sum += ((ForagingAntCell)cell).getProb();
+            sum += ((ForagingAntCell) cell).getProb();
         }
         return sum;
     }
 
+    /**
+     * Sets this ants orientation to face otherCell
+     * 
+     * @param otherCell - the cell that this ant should face
+     */
     public void setOrientation (Cell otherCell) {
         Coordinate otherCoord = otherCell.getMyGridCoordinate();
         Coordinate thisCoord = this.getMyGridCoordinate();
 
-        int x = (int)(otherCoord.getX() - thisCoord.getX());
-        int y = (int)(otherCoord.getY() - thisCoord.getY());
+        int x = (int) (otherCoord.getX() - thisCoord.getX());
+        int y = (int) (otherCoord.getY() - thisCoord.getY());
         // return new Coordinate(x, y);
         myOrientation = new Coordinate(x, y);
 
     }
 
+    /**
+     * Returns this ants orientation
+     * 
+     * @return
+     */
     public Coordinate getMyOrientation () {
         return myOrientation;
     }
 
+    /**
+     * Returns whether or not this ant has food
+     * 
+     * @return - true if the ant has food, false otherwise
+     */
     public boolean hasFood () {
         return myFood;
     }
 
+    /**
+     * Makes the ant have food
+     */
     public void pickUpFood () {
         myFood = true;
     }
 
+    /**
+     * Sets the ants food to false
+     */
     public void dropFood () {
         myFood = false;
     }

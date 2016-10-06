@@ -89,12 +89,6 @@ public abstract class NeighborsHandler {
     public abstract Coordinate handleEdgeCoordinate (Coordinate coordinate,
                                                      Coordinate neighborRelativeCoordinate);
 
-    // public abstract List<Cell> adjustNeighbor(List<Coordinate> );
-    /*
-     * public void addUncreatedNeighbor (Coordinate uncreatedNeighbors) {
-     * uncreatedNeighborCoordinates.add(uncreatedNeighbors);
-     * }
-     */
     public Grid getMyGrid () {
         return myGrid;
     }

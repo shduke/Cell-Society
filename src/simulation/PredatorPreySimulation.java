@@ -8,9 +8,7 @@ import javafx.scene.control.Slider;
 import javafx.scene.paint.*;
 
 
-/**
- * Commented out just so I can run/test the program
- */
+
 public class PredatorPreySimulation extends Simulation {
 
     private int myPreyBreedTime;
