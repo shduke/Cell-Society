@@ -6,6 +6,7 @@ import java.util.List;
 import grid.Coordinate;
 import javafx.scene.paint.Color;
 
+
 /**
  * 
  * @author Michael Schroeder
@@ -178,6 +179,7 @@ public class ForagingAntCell extends Cell {
 
     /**
      * Sets this cells pheromones to the max value
+     * 
      * @param food - whether or not to set food or home pheromones
      */
     public void setMaxPheromones (boolean food) {

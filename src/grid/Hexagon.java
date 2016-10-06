@@ -54,10 +54,18 @@ public class Hexagon extends Polygon {
                (numberOfColumns * 2);
     }
 
+    /**
+     * Calculate the radius of the hexagon
+     * @return radius
+     */
     private double calcRadius () {
         return (myHeight / 2) / Math.sin(Math.PI / (MY_NUM_SIDES / 2));
     }
 
+    /**
+     * 
+     * @return stretched width of hexagon
+     */
     public double getStretchedWidth () {
         return myWidth + myWidthStretch * 2;
     }
@@ -66,6 +74,10 @@ public class Hexagon extends Polygon {
         return getStretchedWidth() - ((myHeight / 2) / Math.tan(Math.PI / (MY_NUM_SIDES / 2)));
     }
 
+    /**
+     * 
+     * @return effective width of the hexagon
+     */
     public double getEffectiveWidth () {
         return myEffectiveWidth;
     }

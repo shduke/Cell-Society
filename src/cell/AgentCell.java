@@ -13,6 +13,16 @@ import grid.Coordinate;
  *         new location.
  * 
  */
+package cell;
+
+import grid.Coordinate;
+
+
+/**
+ * 
+ * @author Michael Schroeder
+ *
+ */
 public class AgentCell extends Cell {
 
     private double mySatisfiedRatio;

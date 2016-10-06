@@ -5,7 +5,7 @@ import java.util.List;
 import javafx.scene.shape.Polygon;
 
 /**
- * 
+ * Creates the shape of the triangle
  * @author Sean Hudson
  *
  */

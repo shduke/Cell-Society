@@ -43,9 +43,9 @@ public abstract class GridView {
     }
 
     /**
-     * Set the lines and the colors of the grid
+     * Set the lines around the shape of the grid and set the color of each cell
      * @param shape
-     * @param coordinate key
+     * @param key (coordinate)
      */
     public void configureShape (Shape shape, Coordinate key) {
         shape.setStrokeWidth(2);
@@ -53,7 +53,7 @@ public abstract class GridView {
         if (myGrid.getImmutableCellGrid().containsKey(key)) {
             shape.setFill(myGrid.getCell(key).getColor());
 
-        } 
+        }
     }
 
     /**

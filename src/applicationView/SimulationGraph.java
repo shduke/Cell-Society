@@ -39,17 +39,10 @@ public class SimulationGraph {
         return myLineChart;
     }
 
-    /**
-     * Takes in a list of strings that include the names to be included in the
-     * legend. Then, the series names are set based on the order they are input
-     * into the list
-     * 
-     * @param myNamesForLegend
-     */
-    public void addToLegend (List<String> myNamesForLegend) {
-        myFirstSeries.setName(myNamesForLegend.get(0));
-        if (myNamesForLegend.size() > 1) {
-            mySecondSeries.setName(myNamesForLegend.get(1));
+    public void addToLegend (List<String> myList) {
+        myFirstSeries.setName(myList.get(0));
+        if (myList.size() > 1) {
+            mySecondSeries.setName(myList.get(1));
             myLineChart.getData().add(mySecondSeries);
         }
         if (myNamesForLegend.size() > 2) {
