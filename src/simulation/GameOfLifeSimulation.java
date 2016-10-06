@@ -3,14 +3,11 @@ package simulation;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 import applicationView.SimulationToolbar;
 import cell.Cell;
 import cell.GameOfLifeCell;
 import cell.State;
 import grid.Coordinate;
-import grid.Grid;
-import grid.Neighbor;
 import javafx.scene.control.Slider;
 import javafx.scene.paint.Color;
 

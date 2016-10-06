@@ -112,7 +112,6 @@ public class FireSimulation extends Simulation {
     public void initializeSimulationToolbar (SimulationToolbar toolbar) {
         Slider fireSlider = new Slider(0, 100, probCatch);
         fireSlider.valueProperty().addListener(e -> this.probCatch = fireSlider.getValue());
-        // fireSlider.setOnDragExited(e -> this.probCatch *= fireSlider.getValue());
         toolbar.addSlider(fireSlider, "probCatch");
     }
 
