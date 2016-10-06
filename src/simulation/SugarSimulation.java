@@ -16,7 +16,11 @@ import grid.Coordinate;
 import javafx.scene.control.Slider;
 import javafx.scene.paint.Color;
 
-
+/**
+ * 
+ * @author Michael Schroeder
+ *
+ */
 public class SugarSimulation extends Simulation {
 
     private int mySugarGrowBackRate;

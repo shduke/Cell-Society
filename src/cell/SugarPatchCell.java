@@ -3,7 +3,11 @@ package cell;
 import grid.Coordinate;
 import javafx.scene.paint.Color;
 
-
+/**
+ * 
+ * @author Michael Schroeder
+ *
+ */
 public class SugarPatchCell extends Cell {
 
     private int mySugar;

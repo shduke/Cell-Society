@@ -4,7 +4,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-
+/**
+ * 
+ * @author Sean Hudson
+ *
+ */
 public enum Neighbor {
                       SQUARE(
                              "TOPLEFT",

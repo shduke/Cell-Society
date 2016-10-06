@@ -8,7 +8,11 @@ import javafx.scene.control.Slider;
 import javafx.scene.paint.*;
 
 
-
+/**
+ * 
+ * @author Michael Schroeder
+ *
+ */
 public class PredatorPreySimulation extends Simulation {
 
     private int myPreyBreedTime;

@@ -12,7 +12,11 @@ import grid.Coordinate;
 import javafx.scene.control.Slider;
 import javafx.scene.paint.Color;
 
-
+/**
+ * 
+ * @author Sean Hudson
+ *
+ */
 public class FireSimulation extends Simulation {
 
     private double probCatch;
@@ -112,7 +116,6 @@ public class FireSimulation extends Simulation {
     public void initializeSimulationToolbar (SimulationToolbar toolbar) {
         Slider fireSlider = new Slider(0, 100, probCatch);
         fireSlider.valueProperty().addListener(e -> this.probCatch = fireSlider.getValue());
-        // fireSlider.setOnDragExited(e -> this.probCatch *= fireSlider.getValue());
         toolbar.addSlider(fireSlider, "probCatch");
     }
 
