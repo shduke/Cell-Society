@@ -6,7 +6,11 @@ import java.util.List;
 import grid.Coordinate;
 import javafx.scene.paint.Color;
 
-
+/**
+ * 
+ * @author Michael Schroeder
+ *
+ */
 public class ForagingAntCell extends Cell {
 
     private static final int MAX_COLOR_VALUE = 255;
@@ -63,7 +67,6 @@ public class ForagingAntCell extends Cell {
         for (AntCell a : myNextAnts) {
             myAnts.add(a);
             a.setMyGridCoordinate(this.getMyGridCoordinate());
-            // a.doneMoving();
         }
         myNextAnts.clear();
     }
@@ -233,7 +236,6 @@ public class ForagingAntCell extends Cell {
                        MAX_COLOR_VALUE);
         int green = (int) ((myHomePheromones / myMaxPheromones) * MAX_COLOR_VALUE);
         int blue = (int) ((myFoodPheromones / myMaxPheromones) * MAX_COLOR_VALUE);
-        // System.out.println(red + ", " + green +", " + blue);
         return Color.rgb(red, green, blue);
     }
 }

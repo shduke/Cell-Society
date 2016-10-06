@@ -4,7 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.shape.Polygon;
 
-
+/**
+ * 
+ * @author Sean Hudson
+ *
+ */
 public class Hexagon extends Polygon {
     private static final int MY_NUM_SIDES = 6;
     private double myWidth;

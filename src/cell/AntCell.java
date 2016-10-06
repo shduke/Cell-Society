@@ -7,7 +7,11 @@ import java.util.Random;
 import grid.Coordinate;
 import simulation.ForagingAntsSimulation.ForagingAntState;
 
-
+/**
+ * 
+ * @author Michael Schroeder
+ *
+ */
 public class AntCell extends Cell {
 
     private int myLifetime;

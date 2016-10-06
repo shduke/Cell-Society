@@ -8,7 +8,11 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Data;
 import javafx.scene.chart.XYChart.Series;
 
-
+/**
+ * 
+ * @author Kayla Schulz
+ *
+ */
 public class SimulationGraph {
     private Series<Number, Number> myFirstSeries = new XYChart.Series<Number, Number>();
     private Series<Number, Number> mySecondSeries = new XYChart.Series<Number, Number>();

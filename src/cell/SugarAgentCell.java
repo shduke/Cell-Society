@@ -4,7 +4,11 @@ import java.util.List;
 import grid.Coordinate;
 import simulation.SugarSimulation.SugarState;
 
-
+/**
+ * 
+ * @author Michael Schroeder
+ *
+ */
 public class SugarAgentCell extends Cell {
 
     private int myVision;

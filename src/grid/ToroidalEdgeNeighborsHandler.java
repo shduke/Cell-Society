@@ -1,5 +1,10 @@
 package grid;
 
+/**
+ * 
+ * @author Sean Hudson
+ *
+ */
 public class ToroidalEdgeNeighborsHandler extends NeighborsHandler {
 
     public ToroidalEdgeNeighborsHandler (String myCellShape, Grid grid) {
