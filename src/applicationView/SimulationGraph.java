@@ -45,8 +45,8 @@ public class SimulationGraph {
             mySecondSeries.setName(myList.get(1));
             myLineChart.getData().add(mySecondSeries);
         }
-        if (myNamesForLegend.size() > 2) {
-            myThirdSeries.setName(myNamesForLegend.get(2));
+        if (myList.size() > 2) {
+            myThirdSeries.setName(myList.get(2));
             myLineChart.getData().add(myThirdSeries);
         }
     }
