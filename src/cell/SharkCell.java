@@ -4,7 +4,7 @@ import grid.Coordinate;
 import simulation.PredatorPreySimulation.PredatorPreyState;
 
 /**
- * For use in PredatorPreySimulation (this is the predator)
+ * 
  * @author Michael Schroeder
  *
  */

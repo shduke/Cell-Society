@@ -280,7 +280,7 @@ public class ForagingAntsSimulation extends Simulation {
         List<String> myList = new ArrayList<String>();
         myList.add(GUIResources.getString("FoodGathered"));
         myList.add(GUIResources.getString("TotalAnts"));
-        addToLegend(myList);
+        mySimulationGraph.addToLegend(myList);
     }
 
     @Override

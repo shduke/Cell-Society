@@ -278,7 +278,7 @@ public class PredatorPreySimulation extends Simulation {
         for (State n : getSimulationStates()) {
             myList.add(n.name());
         }
-        addToLegend(myList);
+        mySimulationGraph.addToLegend(myList);
     }
 
     @Override
