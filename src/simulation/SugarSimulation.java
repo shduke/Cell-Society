@@ -53,7 +53,7 @@ public class SugarSimulation extends Simulation {
         ResourceBundle GUIResources = ResourceBundle.getBundle("resources/English");
         List<String> myList = new ArrayList<String>();
         myList.add(GUIResources.getString("NumAgents"));
-        mySimulationGraph.addToLegend(myList);
+        addToLegend(myList);
     }
 
     @Override
@@ -194,7 +194,7 @@ public class SugarSimulation extends Simulation {
         List<Cell> neighbors =
                 getNeighborsHandler().getVisionNeighbors(agent.getMyGridCoordinate(),
                                                          agent.getVision());
-        SugarPatchCell moveTo = agent.findSugar(neighbors, current.getSugar());
+        SugarPatchCell moveTo = agent.findSugar(neighbors);
         if (moveTo != null) {
             move(agent, moveTo);
             current.killAgent();

@@ -46,7 +46,7 @@ public class GameOfLifeSimulation extends Simulation {
         for (State n : getSimulationStates()) {
             myList.add(n.name());
         }
-        mySimulationGraph.addToLegend(myList);
+        addToLegend(myList);
     }
 
     public void setNextState (Cell cell) {
