@@ -12,7 +12,11 @@ import grid.Coordinate;
 import javafx.scene.control.Slider;
 import javafx.scene.paint.Color;
 
-
+/**
+ * 
+ * @author Sean Hudson
+ *
+ */
 public class FireSimulation extends Simulation {
 
     private double probCatch;

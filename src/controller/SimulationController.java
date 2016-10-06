@@ -12,7 +12,12 @@ import simulation.Simulation;
 import xml.XMLParser;
 import xml.XMLParserException;
 
-
+/**
+ * 
+ * @author Sean Hudson
+ * @author Michael Schroeder
+ *
+ */
 public class SimulationController {
 
     private static final String GUI_RESOURCES = "resources/English";

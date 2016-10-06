@@ -9,7 +9,11 @@ import javafx.scene.control.Slider;
 import javafx.scene.layout.HBox;
 import javafx.scene.input.*;
 
-
+/**
+ * 
+ * @author Kayla Schulz
+ *
+ */
 public class Toolbar {
 
     private static final double MIN_SLIDER_VALUE = 0.5;

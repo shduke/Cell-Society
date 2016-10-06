@@ -17,7 +17,12 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-
+/**
+ * 
+ * @author Kayla Schulz
+ * @author Michael Schroeder
+ *
+ */
 public class ApplicationController {
     private static final String TITLE = "Cell Society";
     private static final int TOOLBAR_HEIGHT = 30;

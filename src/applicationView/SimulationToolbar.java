@@ -7,7 +7,12 @@ import javafx.scene.paint.Color;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 
-
+/**
+ * 
+ * @author Kayla Schulz
+ * @author Michael Schroeder
+ *
+ */
 public class SimulationToolbar {
 
     private List<Slider> mySliders;

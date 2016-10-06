@@ -6,7 +6,11 @@ import java.util.List;
 import grid.Coordinate;
 import javafx.scene.paint.Color;
 
-
+/**
+ * 
+ * @author Michael Schroeder
+ *
+ */
 public class ForagingAntCell extends Cell {
 
     private static final int MAX_COLOR_VALUE = 255;

@@ -7,7 +7,11 @@ import java.util.Set;
 import cell.Cell;
 
 
-// abstract class or interface
+/**
+ * 
+ * @author Sean Hudson
+ *
+ */
 public abstract class NeighborsHandler {
     // private String myCellShape;
     private String myNeighborsToConsider;

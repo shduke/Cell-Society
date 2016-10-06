@@ -5,7 +5,11 @@ import javafx.scene.Group;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Shape;
 
-
+/**
+ * 
+ * @author Sean Hudson
+ *
+ */
 public abstract class GridView {
     private Group myRoot = new Group();
     protected Grid myGrid;

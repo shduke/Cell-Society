@@ -1,6 +1,10 @@
 package xml;
 
-
+/**
+ * 
+ * @author Sean Hudson
+ *
+ */
 public class XMLParserException extends RuntimeException {
     // for serialization
     private static final long serialVersionUID = 1L;

@@ -2,7 +2,11 @@ package grid;
 
 import javafx.geometry.Dimension2D;
 
-
+/**
+ * 
+ * @author Sean Hudson
+ *
+ */
 public class HexagonGridView extends GridView {
 
     public HexagonGridView (Dimension2D gridSize, Grid grid) {
