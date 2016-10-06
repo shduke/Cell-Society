@@ -6,7 +6,7 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.Shape;
 
 /**
- * 
+ * An abstract class that gridViews composed of different shapes can inherit from.
  * @author Sean Hudson
  *
  */
@@ -21,13 +21,23 @@ public abstract class GridView {
         displayGrid();
     }
 
+    /**
+     * Display the grid
+     */
     public abstract void displayGrid ();
 
+    /**
+     * Clear the root and display the grid
+     */
     public void updateView () {
         myRoot.getChildren().clear();
         displayGrid();
     }
 
+    /**
+     * 
+     * @return root
+     */
     public Group getRoot () {
         return myRoot;
     }
@@ -46,6 +56,10 @@ public abstract class GridView {
         }
     }
 
+    /**
+     * Add shape of cell to the root
+     * @param shape
+     */
     public void addCellToRoot (Shape shape) {
         myRoot.getChildren().add(shape);
     }

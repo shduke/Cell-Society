@@ -1,3 +1,8 @@
+
+package cell;
+
+import grid.Coordinate;
+
 /**
  * @author Michael Schroeder
  * 
