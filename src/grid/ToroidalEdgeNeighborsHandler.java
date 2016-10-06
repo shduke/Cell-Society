@@ -24,12 +24,13 @@ public class ToroidalEdgeNeighborsHandler extends NeighborsHandler {
 
     }
 
+    /**
+     * Handles when a coordinate is on the edge of the grid
+     */
     @Override
     public Coordinate handleEdgeCoordinate (Coordinate coordinate,
                                             Coordinate neighborRelativeCoordinate) {
         Coordinate offGridCoordinate = coordinate.add(neighborRelativeCoordinate);
-        // double x = Math.max(0, coordinate.getX() - neighborRelativeCoordinate.getX() *
-        // (getMyGrid().getNumColumns() - 1));
         double x = wrapCoordinate(offGridCoordinate.getX(), getMyGrid().getNumColumns());
         double y = wrapCoordinate(offGridCoordinate.getY(), getMyGrid().getNumRows());
         return new Coordinate(x, y);

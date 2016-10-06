@@ -56,10 +56,18 @@ public abstract class Simulation {
         mySimulationToolbar = new SimulationToolbar();
     }
 
+    /**
+     * 
+     * @return the current number of steps in occurring simulation
+     */
     public int getStepNum () {
         return stepNum;
     }
 
+    /**
+     * Counts the number of cells in each state for each step of the simulation
+     * @return list of integers for the data of each state
+     */
     public abstract List<Integer> countCellsinGrid ();
 
     public Grid getGrid () {

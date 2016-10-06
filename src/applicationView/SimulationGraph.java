@@ -8,6 +8,7 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Data;
 import javafx.scene.chart.XYChart.Series;
 
+
 /**
  * 
  * @author Kayla Schulz
@@ -17,7 +18,8 @@ public class SimulationGraph {
     private Series<Number, Number> myFirstSeries = new XYChart.Series<Number, Number>();
     private Series<Number, Number> mySecondSeries = new XYChart.Series<Number, Number>();
     private Series<Number, Number> myThirdSeries = new XYChart.Series<Number, Number>();
-    private LineChart<Number, Number> myLineChart = new LineChart<Number, Number>(new NumberAxis(), new NumberAxis());;
+    private LineChart<Number, Number> myLineChart =
+            new LineChart<Number, Number>(new NumberAxis(), new NumberAxis());;
 
     public LineChart<Number, Number> createGraph () {
         myLineChart.setPrefHeight(50);
@@ -27,8 +29,8 @@ public class SimulationGraph {
         myLineChart.setCreateSymbols(false);
         return myLineChart;
     }
-    
-    public void addToLegend(List<String> myList) {
+
+    public void addToLegend (List<String> myList) {
         myFirstSeries.setName(myList.get(0));
         if (myList.size() > 1) {
             mySecondSeries.setName(myList.get(1));

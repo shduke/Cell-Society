@@ -4,7 +4,9 @@ import java.util.*;
 import java.util.function.Consumer;
 import cell.*;
 
+
 /**
+ * The generic grid class that iterates through the cells
  * 
  * @author Sean Hudson
  *
@@ -21,10 +23,18 @@ public class Grid implements Iterable<Cell> {
         this.myCellGrid = initCells;
     }
 
+    /**
+     * 
+     * @return grid of cells
+     */
     public Map<Coordinate, Cell> getCellGrid () {
         return myCellGrid;
     }
 
+    /**
+     * 
+     * @return immutable grid of cells
+     */
     public Map<Coordinate, Cell> getImmutableCellGrid () {
         return Collections.unmodifiableMap(getCellGrid());
     }
@@ -34,11 +44,19 @@ public class Grid implements Iterable<Cell> {
         return getImmutableCellGrid().values().iterator();
     }
 
+    /**
+     * Applies particular function to cell
+     * 
+     * @param func
+     */
     public void applyFuncToCell (Consumer<Cell> func) {
         getImmutableCellGrid().values().forEach(func);
     }
 
-    // update (put in cell class)
+    /**
+     * Iterates through each cell and sets the next state, effectively
+     * updating the grid
+     */
     public void updateGrid () {
         for (Cell cell : getImmutableCellGrid().values()) {
             cell.setMyCurrentState(cell.getMyNextState());
@@ -59,6 +77,11 @@ public class Grid implements Iterable<Cell> {
         return myCellGrid.get(coordinate);
     }
 
+    /**
+     * add cell to the grid of cells
+     * 
+     * @param cell
+     */
     public void addCell (Cell cell) {
         myCellGrid.put(cell.getMyGridCoordinate(), cell);
     }
@@ -74,33 +97,4 @@ public class Grid implements Iterable<Cell> {
     public void setCellGrid (Map<Coordinate, Cell> cellGrid) {
         this.myCellGrid = cellGrid;
     }
-
-    /**
-     * TODO--return neighbors of the cell at this location
-     * 
-     * @param row
-     * @param col
-     * @return
-     */
-    // public abstract Neighbors getNeighbors (Cell cell, boolean diagonal);
-
-    /**
-     * @param cell
-     * @param neighbors
-     * @param x
-     * @param y
-     */
-    /*
-     * protected void checkAdjacent (Cell cell, Neighbors neighbors, int x, int y) {
-     * Coordinate coord =
-     * new Coordinate(x + cell.getMyGridCoordinate().getX(),
-     * y + cell.getMyGridCoordinate().getY());
-     * if (cellGrid.containsKey(coord)) {
-     * neighbors.addNeighbor(cellGrid.get(coord));
-     * }
-     * }
-     */
-
-    // abstract public void createNeighbors (Cell cell);
-
 }

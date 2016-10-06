@@ -70,6 +70,10 @@ public class GameOfLifeSimulation extends Simulation {
         myNumToReproduce = Integer.parseInt(simulationConfig.get("numToReproduce"));
     }
 
+    /**
+     * Counts the number of cells in each state for each step of the simulation
+     * @return list of integers for the data of each state
+     */
     @Override
     public List<Integer> countCellsinGrid () {
         stepNum = getStepNum();

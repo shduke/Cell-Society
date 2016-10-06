@@ -22,6 +22,12 @@ public abstract class NeighborsHandler {
         myGrid = grid;
     }
 
+    /**
+     * Retrieves all of the neighbors for the sugar simulation
+     * @param coordinate
+     * @param visionDistance
+     * @return arraylist of the vision neighbors
+     */
     public List<Cell> getVisionNeighbors (Coordinate coordinate, int visionDistance) {
         List<Coordinate> directionNeighbors =
                 Neighbor.valueOf(myNeighborsToConsider).getNeighbors();

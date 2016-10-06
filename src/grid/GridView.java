@@ -24,7 +24,6 @@ public abstract class GridView {
     public abstract void displayGrid ();
 
     public void updateView () {
-        // root = new Group();
         myRoot.getChildren().clear();
         displayGrid();
     }
@@ -33,21 +32,21 @@ public abstract class GridView {
         return myRoot;
     }
 
+    /**
+     * Set the lines around the shape of the grid and set the color of each cell
+     * @param shape
+     * @param key (coordinate)
+     */
     public void configureShape (Shape shape, Coordinate key) {
         shape.setStrokeWidth(2);
         shape.setStroke(Paint.valueOf("BLACK"));
         if (myGrid.getImmutableCellGrid().containsKey(key)) {
             shape.setFill(myGrid.getCell(key).getColor());
 
-        } /*
-           * else{
-           * shape.setFill(State.EMPTY.getColor()); //Need to hook up default somehow
-           * }
-           */
+        }
     }
 
     public void addCellToRoot (Shape shape) {
-        // System.out.println(root.getChildren().size());
         myRoot.getChildren().add(shape);
     }
 }
