@@ -101,7 +101,7 @@ public abstract class Simulation {
         Map<Coordinate, Cell> cellGrid = new HashMap<Coordinate, Cell>();
         setGrid(new Grid(Integer
                 .parseInt(simulationConfig.get("GeneralConfig").get("numberOfRows")), Integer
-                        .parseInt(simulationConfig.get("GeneralConfig").get("numberOfRows")),
+                        .parseInt(simulationConfig.get("GeneralConfig").get("numberOfColumns")),
                          cellGrid));
         setDefaultState(getSimulationState(simulationConfig.get("GeneralConfig")
                 .get("defaultState")));
